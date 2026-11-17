@@ -9,8 +9,8 @@
   <style>
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #F5F1EB;
-      color: #2B2B2D;
+      background-color: #F6F3EE;
+      color: #4A4643;
     }
     .font-serif-title {
       font-family: 'Playfair Display', serif;
@@ -20,8 +20,8 @@
     }
     .role-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 22px -6px rgba(43, 43, 45, 0.14);
-      border-color: #6E1E2A;
+      box-shadow: 0 10px 22px -6px rgba(90, 82, 76, 0.12);
+      border-color: #8C3B46;
     }
     @keyframes modalPop {
       from { opacity: 0; transform: scale(0.96) translateY(8px); }
@@ -31,46 +31,46 @@
       animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: #EFE9E0; }
-    ::-webkit-scrollbar-thumb { background: #C8BFB3; border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: #EFEAE2; }
+    ::-webkit-scrollbar-thumb { background: #CFC7BC; border-radius: 3px; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- HEADER MINIMALISTA -->
-  <header class="bg-[#262527] text-[#F5F1EB] border-b border-[#3A383B] sticky top-0 z-30">
+  <!-- HEADER MINIMALISTA SUAVE -->
+  <header class="bg-[#EAE3D8] text-[#4A4643] border-b border-[#DCD4C8] sticky top-0 z-30">
     <div class="max-w-[1440px] mx-auto px-4 md:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
       
       <!-- Título Oficial -->
       <div>
-        <h1 class="font-serif-title text-lg md:text-xl font-bold tracking-tight text-[#FAF8F5]">
-          Organigrama Estudio Afín <span class="text-[#C8BFB3] font-normal text-sm md:text-base">| Roles y Estructura</span>
+        <h1 class="font-serif-title text-lg md:text-xl font-bold tracking-tight text-[#3E3A37]">
+          Organigrama Estudio Afín <span class="text-[#7E7872] font-normal text-sm md:text-base">| Roles y Estructura</span>
         </h1>
       </div>
 
       <!-- Controles Limpios -->
       <div class="flex flex-wrap items-center gap-2">
         <!-- Selector de Etapa (Hoy vs Escala) -->
-        <div class="bg-[#1C1B1D] p-1 rounded-lg border border-[#3E3C40] flex items-center text-xs">
-          <button onclick="setStage('hoy')" id="btn-stage-hoy" class="px-3 py-1 rounded-md font-medium transition-all bg-[#6E1E2A] text-[#FAF8F5]">
+        <div class="bg-[#DFD7CB] p-1 rounded-lg border border-[#D1C8BA] flex items-center text-xs">
+          <button onclick="setStage('hoy')" id="btn-stage-hoy" class="px-3 py-1 rounded-md font-medium transition-all bg-[#7D343E] text-[#FAF8F5] shadow-sm">
             Hoy
           </button>
-          <button onclick="setStage('escala')" id="btn-stage-escala" class="px-3 py-1 rounded-md font-medium transition-all text-[#B8B0A6] hover:text-white">
+          <button onclick="setStage('escala')" id="btn-stage-escala" class="px-3 py-1 rounded-md font-medium transition-all text-[#68625C] hover:text-[#3E3A37]">
             Escala
           </button>
         </div>
 
         <!-- Interruptor Auditoría Ácida -->
-        <button onclick="toggleAudit()" id="btn-audit" class="px-2.5 py-1.5 rounded-lg border border-[#4A474C] bg-[#323033] text-[#D8D0C5] hover:text-white text-xs font-medium transition-all">
+        <button onclick="toggleAudit()" id="btn-audit" class="px-2.5 py-1.5 rounded-lg border border-[#D1C8BA] bg-[#F5F1EB] text-[#68625C] hover:text-[#3E3A37] text-xs font-medium transition-all">
           Auditoría: OFF
         </button>
 
         <!-- Selector PC / Móvil -->
-        <div class="bg-[#1C1B1D] p-1 rounded-lg border border-[#3E3C40] flex items-center text-xs">
-          <button onclick="setDeviceMode('desktop')" id="btn-view-desktop" class="px-2.5 py-1 rounded-md font-medium transition-all bg-[#EFE9E0] text-[#262527]">
+        <div class="bg-[#DFD7CB] p-1 rounded-lg border border-[#D1C8BA] flex items-center text-xs">
+          <button onclick="setDeviceMode('desktop')" id="btn-view-desktop" class="px-2.5 py-1 rounded-md font-medium transition-all bg-[#FAF8F5] text-[#4A4643] shadow-sm">
             PC
           </button>
-          <button onclick="setDeviceMode('mobile')" id="btn-view-mobile" class="px-2.5 py-1 rounded-md font-medium transition-all text-[#B8B0A6] hover:text-white">
+          <button onclick="setDeviceMode('mobile')" id="btn-view-mobile" class="px-2.5 py-1 rounded-md font-medium transition-all text-[#68625C] hover:text-[#3E3A37]">
             Móvil
           </button>
         </div>
@@ -78,12 +78,12 @@
     </div>
 
     <!-- Barra secundaria compacta -->
-    <div class="bg-[#EFE9E0] text-[#2B2B2D] border-b border-[#DCD4C8] px-4 md:px-6 py-2">
+    <div class="bg-[#F3EFE8] text-[#5C5752] border-b border-[#E2DBD0] px-4 md:px-6 py-2">
       <div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
         <div id="dept-filters" class="flex items-center gap-1.5 overflow-x-auto pb-0.5 md:pb-0">
           <!-- Render dinámico -->
         </div>
-        <div id="load-summary" class="flex items-center gap-3 text-[11px] text-[#5C595E]">
+        <div id="load-summary" class="flex items-center gap-3 text-[11px] text-[#78726C]">
           <!-- Render dinámico -->
         </div>
       </div>
@@ -98,19 +98,19 @@
   </main>
 
   <!-- TARJETA FLOTANTE (MODAL) AL PINCHAR UN ROL -->
-  <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#1C1B1D]/55 backdrop-blur-[2px] flex items-center justify-center p-4">
-    <div class="modal-animate w-full max-w-lg max-h-[88vh] overflow-y-auto bg-[#FAF8F5] rounded-2xl border border-[#DCD4C8] shadow-2xl p-5 md:p-6">
+  <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#6E6862]/35 backdrop-blur-[2px] flex items-center justify-center p-4">
+    <div class="modal-animate w-full max-w-lg max-h-[88vh] overflow-y-auto bg-[#FCFBF9] rounded-2xl border border-[#DED7CC] shadow-xl p-5 md:p-6">
       <div id="modal-content"></div>
     </div>
   </div>
 
   <script>
     const DEPARTMENTS = [
-      { id: 'COM', name: 'Comercial & Cliente', color: '#6E1E2A' },
-      { id: 'DIS', name: 'Diseño Estratégico', color: '#9A4E55' },
-      { id: 'LOG', name: 'Operaciones & Logística', color: '#4E5259' },
-      { id: 'TER', name: 'Montaje & Terreno', color: '#7C7269' },
-      { id: 'FIN', name: 'Admin & Finanzas', color: '#A68E74' }
+      { id: 'COM', name: 'Comercial & Cliente', color: '#7D343E' },
+      { id: 'DIS', name: 'Diseño Estratégico', color: '#A35C64' },
+      { id: 'LOG', name: 'Operaciones & Logística', color: '#7C7A78' },
+      { id: 'TER', name: 'Montaje & Terreno', color: '#948B82' },
+      { id: 'FIN', name: 'Admin & Finanzas', color: '#B39C82' }
     ];
 
     const LEVELS = [
@@ -137,7 +137,7 @@
       id: 'gerencia-general',
       dept: 'DIR',
       deptName: 'Gobierno Corporativo',
-      color: '#6E1E2A',
+      color: '#7D343E',
       level: 0,
       title: 'Gerencia General · Socias Fundadoras',
       subtitle: 'Dirección Ejecutiva, Visión Estratégica y Toma de Decisiones Finales',
@@ -301,9 +301,9 @@
     };
 
     function getStatusStyle(status) {
-      if (status === 'Interno') return { bg: 'bg-[#262527]', text: 'text-[#FAF8F5]', label: 'Equipo Interno' };
-      if (status === 'Externo') return { bg: 'bg-[#E6DDD0]', text: 'text-[#4A4238]', label: 'Externo variable' };
-      return { bg: 'bg-transparent border border-dashed border-[#6E1E2A]', text: 'text-[#6E1E2A]', label: 'Por contratar' };
+      if (status === 'Interno') return { bg: 'bg-[#736E6A]', text: 'text-[#FAF8F5]', label: 'Equipo Interno' };
+      if (status === 'Externo') return { bg: 'bg-[#EAE2D6]', text: 'text-[#5C544B]', label: 'Externo variable' };
+      return { bg: 'bg-[#F8EFEF] border border-dashed border-[#9E525C]', text: 'text-[#7D343E]', label: 'Por contratar' };
     }
 
     function setStage(stage) {
@@ -311,8 +311,8 @@
       ['hoy', 'escala'].forEach(s => {
         const btn = document.getElementById(`btn-stage-${s}`);
         btn.className = s === stage
-          ? 'px-3 py-1 rounded-md font-medium transition-all bg-[#6E1E2A] text-[#FAF8F5]'
-          : 'px-3 py-1 rounded-md font-medium transition-all text-[#B8B0A6] hover:text-white';
+          ? 'px-3 py-1 rounded-md font-medium transition-all bg-[#7D343E] text-[#FAF8F5] shadow-sm'
+          : 'px-3 py-1 rounded-md font-medium transition-all text-[#68625C] hover:text-[#3E3A37]';
       });
       renderAll();
     }
@@ -322,19 +322,19 @@
       const btn = document.getElementById('btn-audit');
       btn.textContent = state.showAudit ? 'Auditoría: ON' : 'Auditoría: OFF';
       btn.className = state.showAudit
-        ? 'px-2.5 py-1.5 rounded-lg border border-[#8B2635] bg-[#6E1E2A] text-[#FAF8F5] text-xs font-medium transition-all'
-        : 'px-2.5 py-1.5 rounded-lg border border-[#4A474C] bg-[#323033] text-[#D8D0C5] hover:text-white text-xs font-medium transition-all';
+        ? 'px-2.5 py-1.5 rounded-lg border border-[#7D343E] bg-[#7D343E] text-[#FAF8F5] text-xs font-medium transition-all shadow-sm'
+        : 'px-2.5 py-1.5 rounded-lg border border-[#D1C8BA] bg-[#F5F1EB] text-[#68625C] hover:text-[#3E3A37] text-xs font-medium transition-all';
       renderAll();
     }
 
     function setDeviceMode(mode) {
       state.deviceMode = mode;
       document.getElementById('btn-view-desktop').className = mode === 'desktop'
-        ? 'px-2.5 py-1 rounded-md font-medium transition-all bg-[#EFE9E0] text-[#262527]'
-        : 'px-2.5 py-1 rounded-md font-medium transition-all text-[#B8B0A6] hover:text-white';
+        ? 'px-2.5 py-1 rounded-md font-medium transition-all bg-[#FAF8F5] text-[#4A4643] shadow-sm'
+        : 'px-2.5 py-1 rounded-md font-medium transition-all text-[#68625C] hover:text-[#3E3A37]';
       document.getElementById('btn-view-mobile').className = mode === 'mobile'
-        ? 'px-2.5 py-1 rounded-md font-medium transition-all bg-[#EFE9E0] text-[#262527]'
-        : 'px-2.5 py-1 rounded-md font-medium transition-all text-[#B8B0A6] hover:text-white';
+        ? 'px-2.5 py-1 rounded-md font-medium transition-all bg-[#FAF8F5] text-[#4A4643] shadow-sm'
+        : 'px-2.5 py-1 rounded-md font-medium transition-all text-[#68625C] hover:text-[#3E3A37]';
       renderAll();
     }
 
@@ -377,14 +377,14 @@
       const filtersEl = document.getElementById('dept-filters');
       const allActive = state.activeDept === 'ALL';
       let html = `
-        <button onclick="setDeptFilter('ALL')" class="px-2.5 py-1 rounded-md font-medium transition-all shrink-0 ${allActive ? 'bg-[#262527] text-[#FAF8F5]' : 'text-[#5C595E] hover:bg-[#E2D9CC]'}">
+        <button onclick="setDeptFilter('ALL')" class="px-2.5 py-1 rounded-md font-medium transition-all shrink-0 ${allActive ? 'bg-[#736E6A] text-[#FAF8F5]' : 'text-[#68625C] hover:bg-[#E6DFD5]'}">
           Todas las áreas (5)
         </button>
       `;
       DEPARTMENTS.forEach(d => {
         const active = state.activeDept === d.id;
         html += `
-          <button onclick="setDeptFilter('${d.id}')" class="px-2.5 py-1 rounded-md font-medium transition-all flex items-center gap-1.5 shrink-0 ${active ? 'bg-[#FAF8F5] text-[#262527] shadow-sm border border-[#CFC6B8]' : 'text-[#5C595E] hover:bg-[#E2D9CC]'}">
+          <button onclick="setDeptFilter('${d.id}')" class="px-2.5 py-1 rounded-md font-medium transition-all flex items-center gap-1.5 shrink-0 ${active ? 'bg-[#FCFBF9] text-[#3E3A37] shadow-sm border border-[#D4CCC0]' : 'text-[#68625C] hover:bg-[#E6DFD5]'}">
             <span class="w-2 h-2 rounded-full" style="background:${d.color}"></span>
             <span>${d.id} · ${d.name}</span>
           </button>
@@ -398,9 +398,9 @@
         if (counts[s] !== undefined) counts[s]++;
       });
       document.getElementById('load-summary').innerHTML = `
-        <span><strong class="text-[#262527]">Nivel 0:</strong> Gerencia General</span>
+        <span><strong class="text-[#4A4643]">Nivel 0:</strong> Gerencia General</span>
         <span><strong>Internos:</strong> ${counts['Interno']}</span>
-        ${counts['Vacante'] > 0 ? `<span><strong class="text-[#6E1E2A]">Por contratar:</strong> ${counts['Vacante']}</span>` : ''}
+        ${counts['Vacante'] > 0 ? `<span><strong class="text-[#7D343E]">Por contratar:</strong> ${counts['Vacante']}</span>` : ''}
         <span><strong>Externos:</strong> ${counts['Externo']}</span>
       `;
     }
@@ -409,31 +409,32 @@
       return `
         <div class="mb-6">
           <div onclick="openRoleModal('gerencia-general')" 
-               class="role-card cursor-pointer max-w-2xl mx-auto bg-[#262527] text-[#FAF8F5] rounded-xl border-2 border-[#6E1E2A] p-4 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+               class="role-card cursor-pointer max-w-2xl mx-auto bg-[#EFE9E0] text-[#3E3A37] rounded-xl border border-[#C9B3B6] p-4 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+               style="border-top: 4px solid #7D343E;">
             <div>
               <div class="flex items-center gap-2 mb-1">
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#6E1E2A] text-[#FAF8F5]">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#7D343E] text-[#FAF8F5]">
                   Nivel 0 · Cúspide Ejecutiva
                 </span>
               </div>
-              <h2 class="font-serif-title text-lg md:text-xl font-bold text-[#FAF8F5]">
+              <h2 class="font-serif-title text-lg md:text-xl font-bold text-[#3E3A37]">
                 Gerencia General · Socias Fundadoras
               </h2>
-              <p class="text-xs text-[#C8BFB3] mt-0.5">
+              <p class="text-xs text-[#6E6862] mt-0.5">
                 Dirección Ejecutiva, Estrategia y Gobernanza Transversal
               </p>
             </div>
             <div class="shrink-0">
-              <span class="inline-block px-3 py-1.5 rounded-lg bg-[#363437] text-[#FAF8F5] text-xs font-medium">
+              <span class="inline-block px-3 py-1.5 rounded-lg bg-[#FCFBF9] border border-[#D8D0C4] text-[#5C5752] text-xs font-medium">
                 Ver ficha →
               </span>
             </div>
           </div>
 
-          <!-- Conector visual hacia los 5 departamentos -->
+          <!-- Conector visual suave hacia los 5 departamentos -->
           <div class="flex flex-col items-center">
-            <div class="w-0.5 h-4 bg-[#B8AFA3]"></div>
-            <div class="w-3/4 max-w-4xl h-0.5 bg-[#B8AFA3] hidden md:block"></div>
+            <div class="w-0.5 h-4 bg-[#CFC7BC]"></div>
+            <div class="w-3/4 max-w-4xl h-0.5 bg-[#CFC7BC] hidden md:block"></div>
           </div>
         </div>
       `;
@@ -445,19 +446,19 @@
 
       return `
         <div onclick="openRoleModal('${role.id}')" 
-             class="role-card cursor-pointer bg-[#FAF8F5] rounded-lg border border-[#DCD4C8] p-3.5 flex flex-col justify-between gap-2.5"
+             class="role-card cursor-pointer bg-[#FCFBF9] rounded-lg border border-[#E2DBD0] p-3.5 flex flex-col justify-between gap-2.5"
              style="border-left: 3.5px solid ${dept.color};">
-          <div class="text-[13.5px] font-semibold text-[#262527] leading-snug">
+          <div class="text-[13.5px] font-semibold text-[#3E3A37] leading-snug">
             ${role.title}
           </div>
           <div class="flex items-center justify-between gap-2">
             <span class="inline-block px-2 py-0.5 rounded text-[11px] font-medium ${sStyle.bg} ${sStyle.text}">
               ${sStyle.label}
             </span>
-            <span class="text-[11px] text-[#8A837A]">Ver ficha →</span>
+            <span class="text-[11px] text-[#948E87]">Ver ficha →</span>
           </div>
           ${state.showAudit ? `
-            <div class="pt-2 border-t border-[#EAE3D8] text-[11px] text-[#6E1E2A] leading-snug">
+            <div class="pt-2 border-t border-[#ECE5DA] text-[11px] text-[#7D343E] leading-snug">
               ${role.audit}
             </div>
           ` : ''}
@@ -478,15 +479,15 @@
         visibleDepts.forEach(dept => {
           const deptRoles = rolesData.filter(r => r.dept === dept.id);
           html += `
-            <section class="bg-[#EFE9E0]/60 rounded-xl border border-[#DCD4C8] p-3.5">
-              <div class="flex items-center gap-2 mb-3 pb-2 border-b border-[#DCD4C8]">
+            <section class="bg-[#EFEAE2]/70 rounded-xl border border-[#E0D9CE] p-3.5">
+              <div class="flex items-center gap-2 mb-3 pb-2 border-b border-[#E0D9CE]">
                 <span class="w-2.5 h-2.5 rounded-full" style="background:${dept.color}"></span>
-                <h2 class="text-xs font-bold uppercase tracking-wider text-[#262527]">${dept.id} · ${dept.name}</h2>
+                <h2 class="text-xs font-bold uppercase tracking-wider text-[#4A4643]">${dept.id} · ${dept.name}</h2>
               </div>
               <div class="space-y-2.5">
                 ${deptRoles.map(r => `
                   <div>
-                    <div class="text-[10px] font-medium text-[#7A746C] mb-1">Nivel ${r.level}</div>
+                    <div class="text-[10px] font-medium text-[#8A837C] mb-1">Nivel ${r.level}</div>
                     ${renderRoleCard(r, dept)}
                   </div>
                 `).join('')}
@@ -506,9 +507,9 @@
       html += `<div class="grid ${gridCols} gap-3.5 mb-3">`;
       visibleDepts.forEach(dept => {
         html += `
-          <div class="bg-[#FAF8F5] rounded-lg border border-[#DCD4C8] px-3.5 py-2.5 flex items-center gap-2" style="border-top: 3px solid ${dept.color};">
+          <div class="bg-[#FCFBF9] rounded-lg border border-[#E2DBD0] px-3.5 py-2.5 flex items-center gap-2" style="border-top: 3px solid ${dept.color};">
             <span class="text-[11px] font-bold px-1.5 py-0.5 rounded text-white" style="background:${dept.color}">${dept.id}</span>
-            <span class="text-xs font-bold text-[#262527] truncate">${dept.name}</span>
+            <span class="text-xs font-bold text-[#4A4643] truncate">${dept.name}</span>
           </div>
         `;
       });
@@ -518,15 +519,15 @@
       html += `<div class="space-y-4">`;
       LEVELS.forEach(lvl => {
         html += `
-          <div class="bg-[#EFE9E0]/55 rounded-xl border border-[#E0D8CC] p-3.5">
-            <div class="text-[11px] font-semibold uppercase tracking-wider text-[#6E6860] mb-2.5 px-1">
+          <div class="bg-[#EFEAE2]/65 rounded-xl border border-[#E2DBD0] p-3.5">
+            <div class="text-[11px] font-semibold uppercase tracking-wider text-[#7A746E] mb-2.5 px-1">
               ${lvl.title}
             </div>
             <div class="grid ${gridCols} gap-3.5">
               ${visibleDepts.map(dept => {
                 const cellRoles = rolesData.filter(r => r.dept === dept.id && r.level === lvl.id);
                 if (cellRoles.length === 0) {
-                  return `<div class="rounded-lg border border-dashed border-[#D8CFC2] min-h-[76px] flex items-center justify-center text-[11px] text-[#A8A096]">—</div>`;
+                  return `<div class="rounded-lg border border-dashed border-[#D8D0C4] min-h-[76px] flex items-center justify-center text-[11px] text-[#ADA69E]">—</div>`;
                 }
                 return `<div class="space-y-2.5">${cellRoles.map(r => renderRoleCard(r, dept)).join('')}</div>`;
               }).join('')}
@@ -552,46 +553,46 @@
         const exec = EXECUTIVE_ROLE;
         modal.classList.remove('hidden');
         content.innerHTML = `
-          <div class="flex items-start justify-between gap-3 pb-3.5 border-b border-[#E5DDD0]">
+          <div class="flex items-start justify-between gap-3 pb-3.5 border-b border-[#EAE3D8]">
             <div>
-              <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded text-white mb-1.5 bg-[#6E1E2A]">
+              <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded text-white mb-1.5 bg-[#7D343E]">
                 Nivel 0 · Gobierno Corporativo
               </span>
-              <h3 class="font-serif-title text-xl font-bold text-[#262527] leading-snug">${exec.title}</h3>
+              <h3 class="font-serif-title text-xl font-bold text-[#3E3A37] leading-snug">${exec.title}</h3>
             </div>
-            <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-[#EFE9E0] hover:bg-[#E2D9CC] text-[#262527] flex items-center justify-center text-sm font-bold transition-colors shrink-0">
+            <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-[#EFEAE2] hover:bg-[#E4DDD2] text-[#5C5752] flex items-center justify-center text-sm font-bold transition-colors shrink-0">
               ✕
             </button>
           </div>
 
           <div class="mt-4 space-y-4 text-xs">
             <div>
-              <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1">Responsabilidad Ejecutiva</div>
-              <p class="text-[#363437] text-[13px] leading-relaxed">${exec.mission}</p>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#8A837C] mb-1">Responsabilidad Ejecutiva</div>
+              <p class="text-[#4A4643] text-[13px] leading-relaxed">${exec.mission}</p>
             </div>
 
-            <div class="bg-[#F3ECE2] border border-[#E0D5C5] rounded-xl p-3.5">
-              <div class="text-[10px] font-bold uppercase tracking-wider text-[#6E1E2A] mb-1">Criterio Ultra-Lean</div>
-              <p class="text-[#4A3B3D] leading-relaxed">${exec.audit}</p>
+            <div class="bg-[#F5EFE6] border border-[#E4DACB] rounded-xl p-3.5">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#7D343E] mb-1">Criterio Ultra-Lean</div>
+              <p class="text-[#5C4B4D] leading-relaxed">${exec.audit}</p>
             </div>
 
             <div>
-              <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1.5">SOPs Clave Supervisados</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#8A837C] mb-1.5">SOPs Clave Supervisados</div>
               <div class="space-y-2">
                 ${exec.sops.map(code => `
-                  <div class="bg-white border border-[#E2DAD0] rounded-lg p-3">
-                    <div class="font-bold text-[#6E1E2A] mb-0.5">${code}</div>
-                    <div class="text-[#524F54] leading-snug">${SOP_DETAILS[code] || ''}</div>
+                  <div class="bg-white border border-[#E6DFD5] rounded-lg p-3">
+                    <div class="font-bold text-[#7D343E] mb-0.5">${code}</div>
+                    <div class="text-[#635E59] leading-snug">${SOP_DETAILS[code] || ''}</div>
                   </div>
                 `).join('')}
               </div>
             </div>
 
             <div>
-              <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1.5">Indicadores Globales (KPIs)</div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#8A837C] mb-1.5">Indicadores Globales (KPIs)</div>
               <div class="flex flex-wrap gap-1.5">
                 ${exec.kpis.map(k => `
-                  <span class="px-2.5 py-1 rounded-md bg-[#EFE9E0] text-[#2B2B2D] font-medium">${k}</span>
+                  <span class="px-2.5 py-1 rounded-md bg-[#EFEAE2] text-[#4A4643] font-medium">${k}</span>
                 `).join('')}
               </div>
             </div>
@@ -608,14 +609,14 @@
       modal.classList.remove('hidden');
 
       content.innerHTML = `
-        <div class="flex items-start justify-between gap-3 pb-3.5 border-b border-[#E5DDD0]">
+        <div class="flex items-start justify-between gap-3 pb-3.5 border-b border-[#EAE3D8]">
           <div>
             <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded text-white mb-1.5" style="background:${dept.color}">
               ${dept.id} · ${dept.name} · Nivel ${role.level}
             </span>
-            <h3 class="font-serif-title text-xl font-bold text-[#262527] leading-snug">${role.title}</h3>
+            <h3 class="font-serif-title text-xl font-bold text-[#3E3A37] leading-snug">${role.title}</h3>
           </div>
-          <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-[#EFE9E0] hover:bg-[#E2D9CC] text-[#262527] flex items-center justify-center text-sm font-bold transition-colors shrink-0">
+          <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-[#EFEAE2] hover:bg-[#E4DDD2] text-[#5C5752] flex items-center justify-center text-sm font-bold transition-colors shrink-0">
             ✕
           </button>
         </div>
@@ -623,23 +624,23 @@
         <div class="mt-4 space-y-4 text-xs">
           <!-- Misión -->
           <div>
-            <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1">Responsabilidad Principal</div>
-            <p class="text-[#363437] text-[13px] leading-relaxed">${role.mission}</p>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-[#8A837C] mb-1">Responsabilidad Principal</div>
+            <p class="text-[#4A4643] text-[13px] leading-relaxed">${role.mission}</p>
           </div>
 
           <!-- Criterio Lean / Auditoría -->
-          <div class="bg-[#F3ECE2] border border-[#E0D5C5] rounded-xl p-3.5">
-            <div class="text-[10px] font-bold uppercase tracking-wider text-[#6E1E2A] mb-1">Criterio Ultra-Lean</div>
-            <p class="text-[#4A3B3D] leading-relaxed">${role.audit}</p>
+          <div class="bg-[#F5EFE6] border border-[#E4DACB] rounded-xl p-3.5">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-[#7D343E] mb-1">Criterio Ultra-Lean</div>
+            <p class="text-[#5C4B4D] leading-relaxed">${role.audit}</p>
           </div>
 
           <!-- Modalidad del rol -->
           <div>
-            <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1.5">Modalidad en etapa (${state.stage === 'hoy' ? 'Hoy' : 'Escala'})</div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-[#8A837C] mb-1.5">Modalidad en etapa (${state.stage === 'hoy' ? 'Hoy' : 'Escala'})</div>
             <div class="grid grid-cols-3 gap-2">
               ${['Interno', 'Vacante', 'Externo'].map(opt => `
                 <button onclick="changeRoleStatus('${role.id}', '${opt}')"
-                  class="py-2 px-2.5 rounded-lg border text-center font-medium transition-all ${currentStatus === opt ? 'bg-[#6E1E2A] text-white border-[#6E1E2A]' : 'bg-white text-[#363437] border-[#DCD4C8] hover:border-[#6E1E2A]'}">
+                  class="py-2 px-2.5 rounded-lg border text-center font-medium transition-all ${currentStatus === opt ? 'bg-[#7D343E] text-white border-[#7D343E]' : 'bg-white text-[#4A4643] border-[#E2DBD0] hover:border-[#7D343E]'}">
                   ${opt === 'Interno' ? 'Equipo Interno' : opt === 'Vacante' ? 'Por contratar' : 'Externo'}
                 </button>
               `).join('')}
@@ -648,12 +649,12 @@
 
           <!-- SOPs Asociados -->
           <div>
-            <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1.5">SOPs Vinculados</div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-[#8A837C] mb-1.5">SOPs Vinculados</div>
             <div class="space-y-2">
               ${role.sops.map(code => `
-                <div class="bg-white border border-[#E2DAD0] rounded-lg p-3">
-                  <div class="font-bold text-[#6E1E2A] mb-0.5">${code}</div>
-                  <div class="text-[#524F54] leading-snug">${SOP_DETAILS[code] || ''}</div>
+                <div class="bg-white border border-[#E6DFD5] rounded-lg p-3">
+                  <div class="font-bold text-[#7D343E] mb-0.5">${code}</div>
+                  <div class="text-[#635E59] leading-snug">${SOP_DETAILS[code] || ''}</div>
                 </div>
               `).join('')}
             </div>
@@ -661,10 +662,10 @@
 
           <!-- KPIs -->
           <div>
-            <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1.5">Indicadores Clave (KPIs)</div>
+            <div class="text-[10px] font-bold uppercase tracking-wider text-[#8A837C] mb-1.5">Indicadores Clave (KPIs)</div>
             <div class="flex flex-wrap gap-1.5">
               ${role.kpis.map(k => `
-                <span class="px-2.5 py-1 rounded-md bg-[#EFE9E0] text-[#2B2B2D] font-medium">${k}</span>
+                <span class="px-2.5 py-1 rounded-md bg-[#EFEAE2] text-[#4A4643] font-medium">${k}</span>
               `).join('')}
             </div>
           </div>
