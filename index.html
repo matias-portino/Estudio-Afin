@@ -16,16 +16,19 @@
       font-family: 'Playfair Display', serif;
     }
     .role-card {
-      transition: all 0.2s ease;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
     }
     .role-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 18px -6px rgba(43, 43, 45, 0.14);
+      box-shadow: 0 10px 22px -6px rgba(43, 43, 45, 0.14);
+      border-color: #6E1E2A;
     }
-    .role-card.selected {
-      ring: 2px solid #6E1E2A;
-      border-color: #6E1E2A !important;
-      background-color: #FFFDFB !important;
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-animate {
+      animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: #EFE9E0; }
@@ -36,7 +39,7 @@
 
   <!-- HEADER MINIMALISTA -->
   <header class="bg-[#262527] text-[#F5F1EB] border-b border-[#3A383B] sticky top-0 z-30">
-    <div class="max-w-[1560px] mx-auto px-4 md:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+    <div class="max-w-[1440px] mx-auto px-4 md:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
       
       <!-- Título Oficial -->
       <div>
@@ -47,15 +50,12 @@
 
       <!-- Controles Limpios -->
       <div class="flex flex-wrap items-center gap-2">
-        <!-- Selector de Etapa -->
+        <!-- Selector de Etapa (Hoy vs Escala) -->
         <div class="bg-[#1C1B1D] p-1 rounded-lg border border-[#3E3C40] flex items-center text-xs">
-          <button onclick="setStage('hoy')" id="btn-stage-hoy" class="px-2.5 py-1 rounded-md font-medium transition-all bg-[#6E1E2A] text-[#FAF8F5]">
-            Hoy (2 Socias)
+          <button onclick="setStage('hoy')" id="btn-stage-hoy" class="px-3 py-1 rounded-md font-medium transition-all bg-[#6E1E2A] text-[#FAF8F5]">
+            Hoy
           </button>
-          <button onclick="setStage('7proy')" id="btn-stage-7proy" class="px-2.5 py-1 rounded-md font-medium transition-all text-[#B8B0A6] hover:text-white">
-            7–12 Proyectos
-          </button>
-          <button onclick="setStage('escala')" id="btn-stage-escala" class="px-2.5 py-1 rounded-md font-medium transition-all text-[#B8B0A6] hover:text-white">
+          <button onclick="setStage('escala')" id="btn-stage-escala" class="px-3 py-1 rounded-md font-medium transition-all text-[#B8B0A6] hover:text-white">
             Escala
           </button>
         </div>
@@ -77,9 +77,9 @@
       </div>
     </div>
 
-    <!-- Barra secundaria ultra-compacta: Filtros de área + Resumen de carga -->
+    <!-- Barra secundaria compacta -->
     <div class="bg-[#EFE9E0] text-[#2B2B2D] border-b border-[#DCD4C8] px-4 md:px-6 py-2">
-      <div class="max-w-[1560px] mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
+      <div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
         <div id="dept-filters" class="flex items-center gap-1.5 overflow-x-auto pb-0.5 md:pb-0">
           <!-- Render dinámico -->
         </div>
@@ -90,23 +90,19 @@
     </div>
   </header>
 
-  <!-- CONTENIDO PRINCIPAL -->
-  <main class="flex-1 max-w-[1560px] w-full mx-auto px-4 md:px-6 py-5 flex gap-6 items-start">
-    
-    <!-- ÁREA DE ORGANIGRAMA -->
-    <div id="org-canvas" class="flex-1 min-w-0">
+  <!-- CONTENIDO PRINCIPAL A PANTALLA COMPLETA -->
+  <main class="flex-1 max-w-[1440px] w-full mx-auto px-4 md:px-6 py-6">
+    <div id="org-canvas" class="w-full">
       <!-- Renderizado dinámico PC o Móvil -->
     </div>
-
-    <!-- PANEL INSPECTOR (Detalle completo al hacer clic) -->
-    <aside id="inspector-panel" class="hidden fixed inset-0 z-50 md:static md:inset-auto md:z-10 md:w-[390px] shrink-0 bg-black/40 md:bg-transparent flex items-end md:block">
-      <div class="w-full max-h-[85vh] md:max-h-[calc(100vh-135px)] overflow-y-auto bg-[#FAF8F5] rounded-t-2xl md:rounded-xl border border-[#DCD4C8] shadow-xl p-5 md:sticky md:top-32">
-        <div class="w-10 h-1 bg-[#D5CEC2] rounded-full mx-auto mb-3 md:hidden"></div>
-        <div id="inspector-content"></div>
-      </div>
-    </aside>
-
   </main>
+
+  <!-- TARJETA FLOTANTE (MODAL) AL PINCHAR UN ROL -->
+  <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#1C1B1D]/55 backdrop-blur-[2px] flex items-center justify-center p-4">
+    <div class="modal-animate w-full max-w-lg max-h-[88vh] overflow-y-auto bg-[#FAF8F5] rounded-2xl border border-[#DCD4C8] shadow-2xl p-5 md:p-6">
+      <div id="modal-content"></div>
+    </div>
+  </div>
 
   <script>
     const DEPARTMENTS = [
@@ -118,10 +114,10 @@
     ];
 
     const LEVELS = [
-      { id: 1, title: 'Nivel 1 · Dirección' },
-      { id: 2, title: 'Nivel 2 · Liderazgo' },
-      { id: 3, title: 'Nivel 3 · Ejecución' },
-      { id: 4, title: 'Nivel 4 · Externos' }
+      { id: 1, title: 'Nivel 1 · Dirección de Área' },
+      { id: 2, title: 'Nivel 2 · Liderazgo Operativo' },
+      { id: 3, title: 'Nivel 3 · Ejecución y Apoyo' },
+      { id: 4, title: 'Nivel 4 · Aliados Externos' }
     ];
 
     const SOP_DETAILS = {
@@ -136,12 +132,27 @@
       'FIN-01': 'Calendario inamovible 50%-30%-20%, regla de cero financiamiento propio y rendición Open Book.'
     };
 
+    // NIVEL 0: GERENCIA GENERAL (SOCIAS FUNDADORAS)
+    const EXECUTIVE_ROLE = {
+      id: 'gerencia-general',
+      dept: 'DIR',
+      deptName: 'Gobierno Corporativo',
+      color: '#6E1E2A',
+      level: 0,
+      title: 'Gerencia General · Socias Fundadoras',
+      subtitle: 'Dirección Ejecutiva, Visión Estratégica y Toma de Decisiones Finales',
+      mission: 'Liderar la estrategia global de Estudio Afín, aprobar alianzas clave, custodiar la cultura corporativa y dirigir las 5 áreas operativas de la empresa.',
+      audit: 'Estructura bicéfala ejecutiva en la cúspide (Nivel 0). En etapa inicial, la Gerencia General absorbe la dirección de las áreas clave antes de delegar mandos medios.',
+      sops: ['COM-01', 'DIS-01', 'FIN-01'],
+      kpis: ['7 proyectos/año', 'CSAT > 85%', 'NPS 9–10']
+    };
+
     let rolesData = [
       // NIVEL 1
       {
         id: 'com-dir', dept: 'COM', level: 1,
         title: 'Dirección Comercial & Cuentas',
-        owners: { hoy: 'Socia A', '7proy': 'Socia A', escala: 'Socia A' },
+        status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Liderar alianzas B2B con Property Managers, filtrar inversionistas y cerrar contratos.',
         audit: 'Fusión total de prospección, cuentas y cierre comercial en un solo liderazgo.',
         sops: ['COM-01', 'COM-02'],
@@ -150,7 +161,7 @@
       {
         id: 'dis-dir', dept: 'DIS', level: 1,
         title: 'Dirección Creativa & FF&E',
-        owners: { hoy: 'Socia A', '7proy': 'Socia A', escala: 'Socia A' },
+        status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Definir el concepto visual adaptado al entorno y aprobar el presupuesto FF&E.',
         audit: 'Elimina renders 3D lentos; prioriza Moodboards ágiles orientados a conversión.',
         sops: ['DIS-01'],
@@ -159,7 +170,7 @@
       {
         id: 'log-dir', dept: 'LOG', level: 1,
         title: 'Dirección de Operaciones',
-        owners: { hoy: 'Socia B', '7proy': 'Socia B', escala: 'Socia B' },
+        status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Controlar cadena de abastecimiento, negociar con proveedores y velar por plazos.',
         audit: 'Absorbe dirección de compras y control de proveedores bajo una sola cabeza.',
         sops: ['LOG-01', 'LOG-02'],
@@ -168,16 +179,16 @@
       {
         id: 'ter-dir', dept: 'TER', level: 1,
         title: 'Dirección de Montaje',
-        owners: { hoy: 'Socia B', '7proy': 'Socia B', escala: 'Socia B' },
+        status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Asegurar ejecución llave en mano sin fricciones en edificios y entrega conforme.',
-        audit: 'Se unifica bajo Socia B junto a Operaciones para evitar brechas entre compra y obra.',
+        audit: 'Unificada junto a Operaciones para evitar brechas entre compra y obra.',
         sops: ['TER-01', 'COM-03'],
         kpis: ['CSAT > 85%', 'Entrega en fecha']
       },
       {
         id: 'fin-dir', dept: 'FIN', level: 1,
         title: 'Dirección Financiera & Control',
-        owners: { hoy: 'Socia B', '7proy': 'Socia B', escala: 'Socia B' },
+        status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Custodiar flujo de caja por hitos (50-30-20), aprobar pagos y validar rentabilidad.',
         audit: 'Regla estricta de cero financiamiento propio del mobiliario.',
         sops: ['FIN-01'],
@@ -188,7 +199,7 @@
       {
         id: 'com-lead', dept: 'COM', level: 2,
         title: 'Ejecutivo Comercial & Handover',
-        owners: { hoy: 'Socia A', '7proy': 'Socia A', escala: 'Vacante' },
+        status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Gestionar comunicaciones oficiales, órdenes de cambio y entrega de llaves.',
         audit: 'Fusiona Onboarding + Gestión de Cambios + Handover en una sola persona.',
         sops: ['COM-01', 'COM-02', 'COM-03'],
@@ -197,7 +208,7 @@
       {
         id: 'dis-lead', dept: 'DIS', level: 2,
         title: 'Diseñador/a FF&E Senior',
-        owners: { hoy: 'Socia A', '7proy': 'Socia A', escala: 'Vacante' },
+        status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Ejecutar levantamiento en terreno, armar Moodboards y cerrar matriz de compra.',
         audit: 'Absorbe interiorismo + especificación técnica en un perfil integral.',
         sops: ['DIS-01'],
@@ -206,16 +217,16 @@
       {
         id: 'log-lead', dept: 'LOG', level: 2,
         title: 'Líder de Procura & Acopio',
-        owners: { hoy: 'Socia B', '7proy': 'Vacante', escala: 'Vacante' },
+        status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Emitir órdenes de compra, recibir despachos con checklist y coordinar bodega.',
-        audit: 'Contratación prioritaria #1 al llegar a 7 proyectos para liberar a Socia B.',
+        audit: 'Contratación prioritaria #1 en crecimiento para liberar carga operativa.',
         sops: ['LOG-01', 'LOG-02'],
         kpis: ['Rechazo en 24h', '0 mermas en bodega']
       },
       {
         id: 'ter-lead', dept: 'TER', level: 2,
         title: 'Supervisor/a de Obra & Styling',
-        owners: { hoy: 'Socia B', '7proy': 'Socia B', escala: 'Vacante' },
+        status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Coordinar permisos en conserjería, supervisar maestros y dirigir styling final.',
         audit: 'Fusiona supervisión técnica en obra + dirección de arte fotográfica.',
         sops: ['TER-01', 'TER-02'],
@@ -224,7 +235,7 @@
       {
         id: 'fin-lead', dept: 'FIN', level: 2,
         title: 'Control de Gestión & Open Book',
-        owners: { hoy: 'Socia B', '7proy': 'Socia B', escala: 'Vacante' },
+        status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Emitir facturas por hitos, rendir boletas Open Book y controlar márgenes.',
         audit: 'Se mantiene interno hasta escala; contabilidad tributaria va 100% externa.',
         sops: ['FIN-01'],
@@ -235,16 +246,16 @@
       {
         id: 'dis-exec', dept: 'DIS', level: 3,
         title: 'Asistente Diseño & Cotizaciones',
-        owners: { hoy: 'Socia A', '7proy': 'Vacante', escala: 'Vacante' },
+        status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Armar láminas de Moodboard, verificar stock en tiendas y actualizar planillas.',
-        audit: 'Contratación #2 en crecimiento para liberar horas operativas de Socia A.',
+        audit: 'Contratación de apoyo en crecimiento para liberar horas operativas de diseño.',
         sops: ['DIS-01'],
         kpis: ['Stock validado 100%', 'Cotización < 48h']
       },
       {
         id: 'ter-exec', dept: 'TER', level: 3,
         title: 'Coordinador Logística & Montaje',
-        owners: { hoy: 'Socia B', '7proy': 'Vacante', escala: 'Vacante' },
+        status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Ejecutar recepciones físicas, proteger ascensores y asistir armado en terreno.',
         audit: 'Rol puente compartido entre Logística y Terreno para evitar tiempos muertos.',
         sops: ['LOG-01', 'TER-01'],
@@ -255,7 +266,7 @@
       {
         id: 'log-ext', dept: 'LOG', level: 4,
         title: 'Talleres Externos & Bodega',
-        owners: { hoy: 'Externo', '7proy': 'Externo', escala: 'Externo' },
+        status: { hoy: 'Externo', escala: 'Externo' },
         mission: 'Fabricar piezas especiales bajo plano y proveer acopio temporal por proyecto.',
         audit: 'Cero taller carpintero propio (costo fijo eliminado). Pago 100% variable.',
         sops: ['LOG-01', 'LOG-02'],
@@ -264,7 +275,7 @@
       {
         id: 'ter-ext', dept: 'TER', level: 4,
         title: 'Cuadrillas, Aseo & Fotografía',
-        owners: { hoy: 'Externo', '7proy': 'Externo', escala: 'Externo' },
+        status: { hoy: 'Externo', escala: 'Externo' },
         mission: 'Ejecutar pintura, instalaciones, aseo profundo y fotografía comercial Airbnb.',
         audit: 'Equipos variables contratados por obra bajo protocolo de Obra Limpia.',
         sops: ['TER-01', 'TER-02'],
@@ -273,7 +284,7 @@
       {
         id: 'fin-ext', dept: 'FIN', level: 4,
         title: 'Contador & Asesor Tributario',
-        owners: { hoy: 'Externo', '7proy': 'Externo', escala: 'Externo' },
+        status: { hoy: 'Externo', escala: 'Externo' },
         mission: 'Llevar contabilidad mensual, declaraciones F29/Renta y cumplimiento SII.',
         audit: 'Externalizado desde el día 1 mediante fee mensual fijo.',
         sops: ['FIN-01'],
@@ -289,20 +300,19 @@
       deviceMode: window.innerWidth < 860 ? 'mobile' : 'desktop'
     };
 
-    function getOwnerStyle(owner) {
-      if (owner === 'Socia A') return { bg: 'bg-[#6E1E2A]', text: 'text-[#FAF8F5]', label: 'Socia A' };
-      if (owner === 'Socia B') return { bg: 'bg-[#3A383C]', text: 'text-[#FAF8F5]', label: 'Socia B' };
-      if (owner === 'Externo') return { bg: 'bg-[#E6DDD0]', text: 'text-[#4A4238]', label: 'Externo variable' };
-      return { bg: 'bg-transparent border border-dashed border-[#A68E74]', text: 'text-[#7C6852]', label: 'Por contratar' };
+    function getStatusStyle(status) {
+      if (status === 'Interno') return { bg: 'bg-[#262527]', text: 'text-[#FAF8F5]', label: 'Equipo Interno' };
+      if (status === 'Externo') return { bg: 'bg-[#E6DDD0]', text: 'text-[#4A4238]', label: 'Externo variable' };
+      return { bg: 'bg-transparent border border-dashed border-[#6E1E2A]', text: 'text-[#6E1E2A]', label: 'Por contratar' };
     }
 
     function setStage(stage) {
       state.stage = stage;
-      ['hoy', '7proy', 'escala'].forEach(s => {
+      ['hoy', 'escala'].forEach(s => {
         const btn = document.getElementById(`btn-stage-${s}`);
         btn.className = s === stage
-          ? 'px-2.5 py-1 rounded-md font-medium transition-all bg-[#6E1E2A] text-[#FAF8F5]'
-          : 'px-2.5 py-1 rounded-md font-medium transition-all text-[#B8B0A6] hover:text-white';
+          ? 'px-3 py-1 rounded-md font-medium transition-all bg-[#6E1E2A] text-[#FAF8F5]'
+          : 'px-3 py-1 rounded-md font-medium transition-all text-[#B8B0A6] hover:text-white';
       });
       renderAll();
     }
@@ -333,21 +343,32 @@
       renderAll();
     }
 
-    function selectRole(roleId) {
+    function openRoleModal(roleId) {
       state.selectedRoleId = roleId;
-      renderAll();
+      renderModal();
     }
 
-    function closeInspector() {
+    function closeModal() {
       state.selectedRoleId = null;
-      document.getElementById('inspector-panel').classList.add('hidden');
-      renderCanvas();
+      document.getElementById('floating-modal').classList.add('hidden');
     }
 
-    function reassignOwner(roleId, newOwner) {
+    function handleBackdropClick(e) {
+      if (e.target.id === 'floating-modal') {
+        closeModal();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && state.selectedRoleId) {
+        closeModal();
+      }
+    });
+
+    function changeRoleStatus(roleId, newStatus) {
       const role = rolesData.find(r => r.id === roleId);
       if (role) {
-        role.owners[state.stage] = newOwner;
+        role.status[state.stage] = newStatus;
         renderAll();
       }
     }
@@ -357,7 +378,7 @@
       const allActive = state.activeDept === 'ALL';
       let html = `
         <button onclick="setDeptFilter('ALL')" class="px-2.5 py-1 rounded-md font-medium transition-all shrink-0 ${allActive ? 'bg-[#262527] text-[#FAF8F5]' : 'text-[#5C595E] hover:bg-[#E2D9CC]'}">
-          Todos (5)
+          Todas las áreas (5)
         </button>
       `;
       DEPARTMENTS.forEach(d => {
@@ -371,37 +392,69 @@
       });
       filtersEl.innerHTML = html;
 
-      // Conteo limpio
-      let counts = { 'Socia A': 0, 'Socia B': 0, 'Externo': 0, 'Vacante': 0 };
+      let counts = { 'Interno': 0, 'Vacante': 0, 'Externo': 0 };
       rolesData.forEach(r => {
-        const o = r.owners[state.stage];
-        if (counts[o] !== undefined) counts[o]++;
+        const s = r.status[state.stage];
+        if (counts[s] !== undefined) counts[s]++;
       });
       document.getElementById('load-summary').innerHTML = `
-        <span><strong class="text-[#6E1E2A]">Socia A:</strong> ${counts['Socia A']}</span>
-        <span><strong class="text-[#262527]">Socia B:</strong> ${counts['Socia B']}</span>
+        <span><strong class="text-[#262527]">Nivel 0:</strong> Gerencia General</span>
+        <span><strong>Internos:</strong> ${counts['Interno']}</span>
+        ${counts['Vacante'] > 0 ? `<span><strong class="text-[#6E1E2A]">Por contratar:</strong> ${counts['Vacante']}</span>` : ''}
         <span><strong>Externos:</strong> ${counts['Externo']}</span>
-        ${counts['Vacante'] > 0 ? `<span><strong class="text-[#8C6D46]">Por contratar:</strong> ${counts['Vacante']}</span>` : ''}
+      `;
+    }
+
+    function renderLevelZeroBlock() {
+      return `
+        <div class="mb-6">
+          <div onclick="openRoleModal('gerencia-general')" 
+               class="role-card cursor-pointer max-w-2xl mx-auto bg-[#262527] text-[#FAF8F5] rounded-xl border-2 border-[#6E1E2A] p-4 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#6E1E2A] text-[#FAF8F5]">
+                  Nivel 0 · Cúspide Ejecutiva
+                </span>
+              </div>
+              <h2 class="font-serif-title text-lg md:text-xl font-bold text-[#FAF8F5]">
+                Gerencia General · Socias Fundadoras
+              </h2>
+              <p class="text-xs text-[#C8BFB3] mt-0.5">
+                Dirección Ejecutiva, Estrategia y Gobernanza Transversal
+              </p>
+            </div>
+            <div class="shrink-0">
+              <span class="inline-block px-3 py-1.5 rounded-lg bg-[#363437] text-[#FAF8F5] text-xs font-medium">
+                Ver ficha →
+              </span>
+            </div>
+          </div>
+
+          <!-- Conector visual hacia los 5 departamentos -->
+          <div class="flex flex-col items-center">
+            <div class="w-0.5 h-4 bg-[#B8AFA3]"></div>
+            <div class="w-3/4 max-w-4xl h-0.5 bg-[#B8AFA3] hidden md:block"></div>
+          </div>
+        </div>
       `;
     }
 
     function renderRoleCard(role, dept) {
-      const owner = role.owners[state.stage];
-      const oStyle = getOwnerStyle(owner);
-      const isSelected = state.selectedRoleId === role.id;
+      const currentStatus = role.status[state.stage];
+      const sStyle = getStatusStyle(currentStatus);
 
       return `
-        <div onclick="selectRole('${role.id}')" 
-             class="role-card cursor-pointer bg-[#FAF8F5] rounded-lg border ${isSelected ? 'selected' : 'border-[#DCD4C8]'} p-3.5 flex flex-col justify-between gap-2.5"
+        <div onclick="openRoleModal('${role.id}')" 
+             class="role-card cursor-pointer bg-[#FAF8F5] rounded-lg border border-[#DCD4C8] p-3.5 flex flex-col justify-between gap-2.5"
              style="border-left: 3.5px solid ${dept.color};">
           <div class="text-[13.5px] font-semibold text-[#262527] leading-snug">
             ${role.title}
           </div>
           <div class="flex items-center justify-between gap-2">
-            <span class="inline-block px-2 py-0.5 rounded text-[11px] font-medium ${oStyle.bg} ${oStyle.text}">
-              ${oStyle.label}
+            <span class="inline-block px-2 py-0.5 rounded text-[11px] font-medium ${sStyle.bg} ${sStyle.text}">
+              ${sStyle.label}
             </span>
-            <span class="text-[11px] text-[#8A837A]">Detalle →</span>
+            <span class="text-[11px] text-[#8A837A]">Ver ficha →</span>
           </div>
           ${state.showAudit ? `
             <div class="pt-2 border-t border-[#EAE3D8] text-[11px] text-[#6E1E2A] leading-snug">
@@ -418,9 +471,10 @@
         ? DEPARTMENTS
         : DEPARTMENTS.filter(d => d.id === state.activeDept);
 
+      const levelZeroHtml = renderLevelZeroBlock();
+
       if (state.deviceMode === 'mobile') {
-        // VISTA MÓVIL VERTICAL MINIMALISTA
-        let html = `<div class="max-w-md mx-auto space-y-5">`;
+        let html = `<div class="max-w-md mx-auto">${levelZeroHtml}<div class="space-y-5">`;
         visibleDepts.forEach(dept => {
           const deptRoles = rolesData.filter(r => r.dept === dept.id);
           html += `
@@ -440,14 +494,13 @@
             </section>
           `;
         });
-        html += `</div>`;
+        html += `</div></div>`;
         canvas.innerHTML = html;
         return;
       }
 
-      // VISTA ESCRITORIO: MATRIZ PARALELA LIMPIA
-      const gridCols = visibleDepts.length === 1 ? 'grid-cols-1 max-w-md' : 'grid-cols-5';
-      let html = `<div class="overflow-x-auto pb-4"><div class="min-w-[1020px]">`;
+      const gridCols = visibleDepts.length === 1 ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-5';
+      let html = `${levelZeroHtml}<div class="overflow-x-auto pb-4"><div class="min-w-[980px]">`;
 
       // Encabezados de departamento
       html += `<div class="grid ${gridCols} gap-3.5 mb-3">`;
@@ -461,11 +514,11 @@
       });
       html += `</div>`;
 
-      // Filas jerárquicas paralelas
+      // Filas jerárquicas paralelas (Niveles 1 al 4)
       html += `<div class="space-y-4">`;
       LEVELS.forEach(lvl => {
         html += `
-          <div class="bg-[#EFE9E0]/55 rounded-xl border border-[#E0D8CC] p-3">
+          <div class="bg-[#EFE9E0]/55 rounded-xl border border-[#E0D8CC] p-3.5">
             <div class="text-[11px] font-semibold uppercase tracking-wider text-[#6E6860] mb-2.5 px-1">
               ${lvl.title}
             </div>
@@ -485,12 +538,65 @@
       canvas.innerHTML = html;
     }
 
-    function renderInspector() {
-      const panel = document.getElementById('inspector-panel');
-      const content = document.getElementById('inspector-content');
+    function renderModal() {
+      const modal = document.getElementById('floating-modal');
+      const content = document.getElementById('modal-content');
 
       if (!state.selectedRoleId) {
-        panel.classList.add('hidden');
+        modal.classList.add('hidden');
+        return;
+      }
+
+      // Caso Nivel 0: Gerencia General
+      if (state.selectedRoleId === 'gerencia-general') {
+        const exec = EXECUTIVE_ROLE;
+        modal.classList.remove('hidden');
+        content.innerHTML = `
+          <div class="flex items-start justify-between gap-3 pb-3.5 border-b border-[#E5DDD0]">
+            <div>
+              <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded text-white mb-1.5 bg-[#6E1E2A]">
+                Nivel 0 · Gobierno Corporativo
+              </span>
+              <h3 class="font-serif-title text-xl font-bold text-[#262527] leading-snug">${exec.title}</h3>
+            </div>
+            <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-[#EFE9E0] hover:bg-[#E2D9CC] text-[#262527] flex items-center justify-center text-sm font-bold transition-colors shrink-0">
+              ✕
+            </button>
+          </div>
+
+          <div class="mt-4 space-y-4 text-xs">
+            <div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1">Responsabilidad Ejecutiva</div>
+              <p class="text-[#363437] text-[13px] leading-relaxed">${exec.mission}</p>
+            </div>
+
+            <div class="bg-[#F3ECE2] border border-[#E0D5C5] rounded-xl p-3.5">
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#6E1E2A] mb-1">Criterio Ultra-Lean</div>
+              <p class="text-[#4A3B3D] leading-relaxed">${exec.audit}</p>
+            </div>
+
+            <div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1.5">SOPs Clave Supervisados</div>
+              <div class="space-y-2">
+                ${exec.sops.map(code => `
+                  <div class="bg-white border border-[#E2DAD0] rounded-lg p-3">
+                    <div class="font-bold text-[#6E1E2A] mb-0.5">${code}</div>
+                    <div class="text-[#524F54] leading-snug">${SOP_DETAILS[code] || ''}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1.5">Indicadores Globales (KPIs)</div>
+              <div class="flex flex-wrap gap-1.5">
+                ${exec.kpis.map(k => `
+                  <span class="px-2.5 py-1 rounded-md bg-[#EFE9E0] text-[#2B2B2D] font-medium">${k}</span>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
         return;
       }
 
@@ -498,41 +604,43 @@
       if (!role) return;
 
       const dept = DEPARTMENTS.find(d => d.id === role.dept);
-      const currentOwner = role.owners[state.stage];
-      panel.classList.remove('hidden');
+      const currentStatus = role.status[state.stage];
+      modal.classList.remove('hidden');
 
       content.innerHTML = `
-        <div class="flex items-start justify-between gap-2 pb-3 border-b border-[#E5DDD0]">
+        <div class="flex items-start justify-between gap-3 pb-3.5 border-b border-[#E5DDD0]">
           <div>
             <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded text-white mb-1.5" style="background:${dept.color}">
               ${dept.id} · ${dept.name} · Nivel ${role.level}
             </span>
-            <h3 class="font-serif-title text-lg font-bold text-[#262527] leading-snug">${role.title}</h3>
+            <h3 class="font-serif-title text-xl font-bold text-[#262527] leading-snug">${role.title}</h3>
           </div>
-          <button onclick="closeInspector()" class="text-[#7A746C] hover:text-[#262527] text-lg font-bold px-2">✕</button>
+          <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-[#EFE9E0] hover:bg-[#E2D9CC] text-[#262527] flex items-center justify-center text-sm font-bold transition-colors shrink-0">
+            ✕
+          </button>
         </div>
 
         <div class="mt-4 space-y-4 text-xs">
           <!-- Misión -->
           <div>
             <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1">Responsabilidad Principal</div>
-            <p class="text-[#363437] leading-relaxed">${role.mission}</p>
+            <p class="text-[#363437] text-[13px] leading-relaxed">${role.mission}</p>
           </div>
 
           <!-- Criterio Lean / Auditoría -->
-          <div class="bg-[#F3ECE2] border border-[#E0D5C5] rounded-lg p-3">
+          <div class="bg-[#F3ECE2] border border-[#E0D5C5] rounded-xl p-3.5">
             <div class="text-[10px] font-bold uppercase tracking-wider text-[#6E1E2A] mb-1">Criterio Ultra-Lean</div>
             <p class="text-[#4A3B3D] leading-relaxed">${role.audit}</p>
           </div>
 
-          <!-- Reasignación rápida -->
+          <!-- Modalidad del rol -->
           <div>
-            <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1.5">Asignado en etapa actual</div>
-            <div class="grid grid-cols-2 gap-1.5">
-              ${['Socia A', 'Socia B', 'Externo', 'Vacante'].map(opt => `
-                <button onclick="reassignOwner('${role.id}', '${opt}')"
-                  class="py-1.5 px-2.5 rounded-md border text-left font-medium transition-all ${currentOwner === opt ? 'bg-[#6E1E2A] text-white border-[#6E1E2A]' : 'bg-white text-[#363437] border-[#DCD4C8] hover:border-[#6E1E2A]'}">
-                  ${opt === 'Vacante' ? 'Por contratar' : opt}
+            <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1.5">Modalidad en etapa (${state.stage === 'hoy' ? 'Hoy' : 'Escala'})</div>
+            <div class="grid grid-cols-3 gap-2">
+              ${['Interno', 'Vacante', 'Externo'].map(opt => `
+                <button onclick="changeRoleStatus('${role.id}', '${opt}')"
+                  class="py-2 px-2.5 rounded-lg border text-center font-medium transition-all ${currentStatus === opt ? 'bg-[#6E1E2A] text-white border-[#6E1E2A]' : 'bg-white text-[#363437] border-[#DCD4C8] hover:border-[#6E1E2A]'}">
+                  ${opt === 'Interno' ? 'Equipo Interno' : opt === 'Vacante' ? 'Por contratar' : 'Externo'}
                 </button>
               `).join('')}
             </div>
@@ -541,9 +649,9 @@
           <!-- SOPs Asociados -->
           <div>
             <div class="text-[10px] font-bold uppercase tracking-wider text-[#7A746C] mb-1.5">SOPs Vinculados</div>
-            <div class="space-y-1.5">
+            <div class="space-y-2">
               ${role.sops.map(code => `
-                <div class="bg-white border border-[#E2DAD0] rounded-lg p-2.5">
+                <div class="bg-white border border-[#E2DAD0] rounded-lg p-3">
                   <div class="font-bold text-[#6E1E2A] mb-0.5">${code}</div>
                   <div class="text-[#524F54] leading-snug">${SOP_DETAILS[code] || ''}</div>
                 </div>
@@ -567,7 +675,7 @@
     function renderAll() {
       renderFiltersAndSummary();
       renderCanvas();
-      renderInspector();
+      renderModal();
     }
 
     renderAll();
