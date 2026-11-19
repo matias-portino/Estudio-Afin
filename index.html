@@ -16,12 +16,25 @@
     .role-card {
       position: relative;
       z-index: 10;
-      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, border-color 0.22s ease, opacity 0.22s ease;
     }
     .role-card:hover {
       transform: translateY(-2px);
       box-shadow: 0 12px 26px -10px rgba(74, 69, 65, 0.14);
       border-color: #B89B9E;
+    }
+    .role-card.is-highlighted {
+      border-color: #7A353E !important;
+      box-shadow: 0 10px 24px -8px rgba(122, 53, 62, 0.22);
+      background-color: #FFFDFB;
+    }
+    .role-card.is-dimmed {
+      opacity: 0.36;
+      filter: grayscale(25%);
+    }
+    .role-card.is-dimmed:hover {
+      opacity: 0.85;
+      filter: none;
     }
     @keyframes modalFade {
       from { opacity: 0; transform: translateY(10px) scale(0.98); }
@@ -39,7 +52,7 @@
 
   <!-- CABECERA MINIMALISTA -->
   <header class="bg-[#F8F5F0]/95 backdrop-blur-md border-b border-[#E5DDD2] sticky top-0 z-30">
-    <div class="max-w-[1400px] mx-auto px-5 md:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
+    <div class="max-w-[1400px] mx-auto px-5 md:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
       
       <!-- Identidad y Título -->
       <div class="flex items-baseline gap-2.5">
@@ -52,14 +65,35 @@
         </span>
       </div>
 
-      <!-- Controles Refinados -->
-      <div class="flex flex-wrap items-center gap-2.5">
+      <!-- Controles Refinados + Buscador Rápido -->
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- Buscador Rápido de Roles o SOPs -->
+        <div class="relative">
+          <input
+            type="text"
+            id="quick-search"
+            oninput="handleSearch(this.value)"
+            placeholder="Buscar cargo o SOP (ej. COM-04)..."
+            class="w-48 sm:w-60 pl-7 pr-7 py-1.5 rounded-full border border-[#DED5C8] bg-[#FDFBF7] text-[11.5px] text-[#3A3532] placeholder-[#A39A90] focus:outline-none focus:border-[#7A353E] transition-all"
+          />
+          <svg class="w-3.5 h-3.5 text-[#999188] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <button
+            id="btn-clear-search"
+            onclick="clearFilters()"
+            title="Limpiar filtro"
+            class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-[#857E77] hover:text-[#7A353E] font-semibold px-1"
+          >✕</button>
+        </div>
+
         <!-- Etapa: Hoy vs Escala -->
         <div class="bg-[#EFE9E0] p-0.5 rounded-full border border-[#E2D9CC] flex items-center text-[11px] tracking-wide">
-          <button onclick="setStage('hoy')" id="btn-stage-hoy" class="px-3.5 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FDFBF7] shadow-2xs">
+          <button onclick="setStage('hoy')" id="btn-stage-hoy" class="px-3 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FDFBF7] shadow-2xs">
             Hoy
           </button>
-          <button onclick="setStage('escala')" id="btn-stage-escala" class="px-3.5 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]">
+          <button onclick="setStage('escala')" id="btn-stage-escala" class="px-3 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]">
             Escala
           </button>
         </div>
@@ -71,10 +105,10 @@
 
         <!-- Vista PC / Móvil -->
         <div class="bg-[#EFE9E0] p-0.5 rounded-full border border-[#E2D9CC] flex items-center text-[11px] tracking-wide">
-          <button onclick="setDeviceMode('desktop')" id="btn-view-desktop" class="px-3 py-1 rounded-full font-medium transition-all bg-[#FDFBF7] text-[#3A3532] shadow-2xs">
+          <button onclick="setDeviceMode('desktop')" id="btn-view-desktop" class="px-2.5 py-1 rounded-full font-medium transition-all bg-[#FDFBF7] text-[#3A3532] shadow-2xs">
             PC
           </button>
-          <button onclick="setDeviceMode('mobile')" id="btn-view-mobile" class="px-3 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]">
+          <button onclick="setDeviceMode('mobile')" id="btn-view-mobile" class="px-2.5 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]">
             Móvil
           </button>
         </div>
@@ -82,7 +116,7 @@
     </div>
 
     <!-- Sub-barra de navegación por áreas -->
-    <div class="bg-[#F3EFE8]/80 border-t border-[#EAE2D6] px-5 md:px-8 py-2.5">
+    <div class="bg-[#F3EFE8]/80 border-t border-[#EAE2D6] px-5 md:px-8 py-2">
       <div class="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-3 text-[11.5px]">
         <div id="dept-filters" class="flex items-center gap-1.5 overflow-x-auto pb-0.5 md:pb-0">
           <!-- Render dinámico -->
@@ -92,10 +126,15 @@
         </div>
       </div>
     </div>
+
+    <!-- Banner dinámico cuando hay un SOP o búsqueda activa -->
+    <div id="active-sop-banner" class="hidden bg-[#FDFBF7] border-t border-[#DFD2C3] px-5 md:px-8 py-2.5">
+      <!-- Render dinámico -->
+    </div>
   </header>
 
   <!-- LIENZO PRINCIPAL -->
-  <main class="flex-1 max-w-[1400px] w-full mx-auto px-5 md:px-8 py-8">
+  <main class="flex-1 max-w-[1400px] w-full mx-auto px-5 md:px-8 py-7">
     <div id="org-canvas" class="w-full">
       <!-- Renderizado dinámico -->
     </div>
@@ -110,11 +149,11 @@
 
   <script>
     const DEPARTMENTS = [
-      { id: 'COM', name: 'Comercial & Cliente', color: '#7A353E' },
-      { id: 'DIS', name: 'Diseño Estratégico', color: '#A35E66' },
-      { id: 'LOG', name: 'Operaciones & Logística', color: '#78736E' },
-      { id: 'TER', name: 'Montaje & Terreno', color: '#968C82' },
-      { id: 'FIN', name: 'Admin & Finanzas', color: '#B59E84' }
+      { id: 'COM', name: 'Comercial & Cliente', color: '#7A353E', sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04'] },
+      { id: 'DIS', name: 'Diseño Estratégico', color: '#A35E66', sops: ['DIS-01'] },
+      { id: 'LOG', name: 'Operaciones & Logística', color: '#78736E', sops: ['LOG-01', 'LOG-02'] },
+      { id: 'TER', name: 'Montaje & Terreno', color: '#968C82', sops: ['TER-01', 'TER-02'] },
+      { id: 'FIN', name: 'Admin & Finanzas', color: '#B59E84', sops: ['FIN-01'] }
     ];
 
     const LEVELS = [
@@ -124,16 +163,68 @@
       { id: 4, num: '4', title: 'Aliados Externos' }
     ];
 
+    // Inventario completo de los 10 SOPs cerrados de Estudio Afín
     const SOP_DETAILS = {
-      'COM-01': 'Filtro de calificación (CAPEX, plazos y exclusión de anti-clientes) y firma de contrato.',
-      'COM-02': 'Correo como único canal vinculante, SLAs de respuesta y órdenes de cambio pagadas por adelantado.',
-      'COM-03': 'Inspección final, entrega de dossier a Property Manager, Welcome Book y cobro del 20% final.',
-      'DIS-01': 'Levantamiento, Moodboard de conversión (máx. 2 revisiones) y matriz de compras FF&E Open Book.',
-      'LOG-01': 'Órdenes de compra tras Hito 2 (30%), acopio transitorio y control de calidad antes de firmar guía.',
-      'LOG-02': 'Control excepcional de mueblistas externos homologados: muestras físicas y tolerancia +/- 2 mm.',
-      'TER-01': 'Permisos en conserjería 48h antes, protección de ascensores y retiro total de embalajes el mismo día.',
-      'TER-02': 'Aseo profundo, montaje escénico (Styling) y pauta fotográfica estándar para Airbnb/Booking.',
-      'FIN-01': 'Calendario inamovible 50%-30%-20%, regla de cero financiamiento propio y rendición Open Book.'
+      'COM-01': {
+        dept: 'COM',
+        version: 'V. 1.0',
+        title: 'Prospección, Calificación y Onboarding',
+        desc: 'Filtro de calificación (CAPEX, plazos y exclusión de anti-clientes), firma de contrato y activación condicionada al Hito 1 (50%).'
+      },
+      'COM-02': {
+        dept: 'COM',
+        version: 'V. 2.1',
+        title: 'Comunicación Oficial y Gestión de Cambios',
+        desc: 'Correo como único canal vinculante, SLAs de respuesta y órdenes de cambio pagadas por adelantado antes de ejecutar.'
+      },
+      'COM-03': {
+        dept: 'COM',
+        version: 'V. 2.1',
+        title: 'Handover, Entrega Final y Cierre de Proyecto',
+        desc: 'Inspección final, entrega de Manual para Property Manager, Welcome Book del huésped, encuesta CSAT/NPS y cobro del 20% final.'
+      },
+      'COM-04': {
+        dept: 'COM',
+        version: 'V. 1.1',
+        title: 'Post-Venta, Garantías y Reposición Rápida',
+        desc: 'Garantía acotada de montaje (30 días), exclusión de daños por huéspedes y flujo Fast-Track prepagado con respaldo fotográfico.'
+      },
+      'DIS-01': {
+        dept: 'DIS',
+        version: 'V. 2.1',
+        title: 'Conceptualización Espacial y FF&E',
+        desc: 'Levantamiento, Moodboard de conversión (máx. 2 revisiones, sin renders 3D lentos) y matriz de compras FF&E Open Book.'
+      },
+      'LOG-01': {
+        dept: 'LOG',
+        version: 'V. 2.1',
+        title: 'Procura, Recepción y Acopio',
+        desc: 'Órdenes de compra tras Hito 2 (30%), acopio transitorio y control de calidad binario antes de firmar guía de despacho.'
+      },
+      'LOG-02': {
+        dept: 'LOG',
+        version: 'V. 2.1',
+        title: 'Supervisión de Fabricación Externa a Medida',
+        desc: 'Control por excepción de mueblistas externos homologados: aprobación de muestras físicas y tolerancia máxima de ±2 mm.'
+      },
+      'TER-01': {
+        dept: 'TER',
+        version: 'V. 2.1',
+        title: 'Traslado a Obra, Instalación y Reglas de Terreno',
+        desc: 'Protocolo Obra Limpia: permisos en conserjería 48h antes, protección de ascensores y retiro total de embalajes el mismo día.'
+      },
+      'TER-02': {
+        dept: 'TER',
+        version: 'V. 1.0',
+        title: 'Aseo Profundo, Styling y Dirección Fotográfica',
+        desc: 'Limpieza fina post-obra, montaje escénico hotelero y pauta fotográfica estándar para plataformas (Airbnb/Booking).'
+      },
+      'FIN-01': {
+        dept: 'FIN',
+        version: 'V. 1.0',
+        title: 'Flujos de Caja, Hitos y Liquidación Open Book',
+        desc: 'Calendario inamovible 50%-30%-20%, regla de cero financiamiento propio del mobiliario y rendición transparente Open Book.'
+      }
     };
 
     const EXECUTIVE_ROLE = {
@@ -157,7 +248,7 @@
         status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Liderar alianzas B2B con Property Managers, filtrar inversionistas y cerrar contratos.',
         audit: 'Fusión total de prospección, cuentas y cierre comercial en un solo liderazgo.',
-        sops: ['COM-01', 'COM-02'],
+        sops: ['COM-01', 'COM-02', 'COM-04'],
         kpis: ['7 proyectos/año', 'NPS 9–10']
       },
       {
@@ -184,7 +275,7 @@
         status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Asegurar ejecución llave en mano sin fricciones en edificios y entrega conforme.',
         audit: 'Unificada junto a Operaciones para evitar brechas entre compra y obra.',
-        sops: ['TER-01', 'COM-03'],
+        sops: ['TER-01', 'TER-02', 'COM-03'],
         kpis: ['CSAT > 85%', 'Entrega en fecha']
       },
       {
@@ -202,9 +293,9 @@
         id: 'com-lead', dept: 'COM', level: 2,
         title: 'Ejecutivo Comercial & Handover',
         status: { hoy: 'Interno', escala: 'Vacante' },
-        mission: 'Gestionar comunicaciones oficiales, órdenes de cambio y entrega de llaves.',
-        audit: 'Fusiona Onboarding + Gestión de Cambios + Handover en una sola persona.',
-        sops: ['COM-01', 'COM-02', 'COM-03'],
+        mission: 'Gestionar comunicaciones oficiales, órdenes de cambio, entrega de llaves y garantías post-venta.',
+        audit: 'Fusiona Onboarding + Gestión de Cambios + Handover + Post-Venta en una sola persona.',
+        sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04'],
         kpis: ['SLA respuesta < 8h', 'CSAT Handover']
       },
       {
@@ -251,7 +342,7 @@
         status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Armar láminas de Moodboard, verificar stock en tiendas y actualizar planillas.',
         audit: 'Contratación de apoyo en crecimiento para liberar horas operativas de diseño.',
-        sops: ['DIS-01'],
+        sops: ['DIS-01', 'COM-04'],
         kpis: ['Stock validado 100%', 'Cotización < 48h']
       },
       {
@@ -280,7 +371,7 @@
         status: { hoy: 'Externo', escala: 'Externo' },
         mission: 'Ejecutar pintura, instalaciones, aseo profundo y fotografía comercial Airbnb.',
         audit: 'Equipos variables contratados por obra bajo protocolo de Obra Limpia.',
-        sops: ['TER-01', 'TER-02'],
+        sops: ['TER-01', 'TER-02', 'COM-04'],
         kpis: ['0 daños áreas comunes', 'Fotos listas en 48h']
       },
       {
@@ -298,6 +389,8 @@
       stage: 'hoy',
       showAudit: false,
       activeDept: 'ALL',
+      activeSop: null,
+      searchQuery: '',
       selectedRoleId: null,
       deviceMode: window.innerWidth < 860 ? 'mobile' : 'desktop'
     };
@@ -317,8 +410,8 @@
       ['hoy', 'escala'].forEach(s => {
         const btn = document.getElementById(`btn-stage-${s}`);
         btn.className = s === stage
-          ? 'px-3.5 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FDFBF7] shadow-2xs'
-          : 'px-3.5 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]';
+          ? 'px-3 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FDFBF7] shadow-2xs'
+          : 'px-3 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]';
       });
       renderAll();
     }
@@ -336,16 +429,58 @@
     function setDeviceMode(mode) {
       state.deviceMode = mode;
       document.getElementById('btn-view-desktop').className = mode === 'desktop'
-        ? 'px-3 py-1 rounded-full font-medium transition-all bg-[#FDFBF7] text-[#3A3532] shadow-2xs'
-        : 'px-3 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]';
+        ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FDFBF7] text-[#3A3532] shadow-2xs'
+        : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]';
       document.getElementById('btn-view-mobile').className = mode === 'mobile'
-        ? 'px-3 py-1 rounded-full font-medium transition-all bg-[#FDFBF7] text-[#3A3532] shadow-2xs'
-        : 'px-3 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]';
+        ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FDFBF7] text-[#3A3532] shadow-2xs'
+        : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]';
       renderAll();
     }
 
     function setDeptFilter(deptId) {
       state.activeDept = deptId;
+      renderAll();
+    }
+
+    function toggleSopFilter(sopCode, event) {
+      if (event) event.stopPropagation();
+      if (state.activeSop === sopCode) {
+        state.activeSop = null;
+      } else {
+        state.activeSop = sopCode;
+        // Si estaba filtrada otra área que no tiene ese SOP, volver a mostrar todas para ver la transversalidad
+        if (state.activeDept !== 'ALL') {
+          const deptHasRoles = rolesData.some(r => r.dept === state.activeDept && r.sops.includes(sopCode));
+          if (!deptHasRoles) state.activeDept = 'ALL';
+        }
+      }
+      renderAll();
+    }
+
+    function handleSearch(val) {
+      state.searchQuery = val.trim();
+      const clearBtn = document.getElementById('btn-clear-search');
+      if (state.searchQuery.length > 0 || state.activeSop) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+      // Si escribe exactamente un código SOP válido (ej. com-04), sincronizamos visualmente
+      const upper = state.searchQuery.toUpperCase();
+      if (SOP_DETAILS[upper]) {
+        state.activeSop = upper;
+      } else if (state.searchQuery.length > 0) {
+        state.activeSop = null;
+      }
+      renderAll();
+    }
+
+    function clearFilters() {
+      state.activeSop = null;
+      state.searchQuery = '';
+      const input = document.getElementById('quick-search');
+      if (input) input.value = '';
+      document.getElementById('btn-clear-search').classList.add('hidden');
       renderAll();
     }
 
@@ -379,6 +514,27 @@
       }
     }
 
+    function isRoleMatch(role) {
+      if (state.activeSop) {
+        return role.sops.includes(state.activeSop);
+      }
+      if (state.searchQuery) {
+        const q = state.searchQuery.toLowerCase();
+        const inTitle = role.title.toLowerCase().includes(q);
+        const inMission = role.mission.toLowerCase().includes(q);
+        const inSops = role.sops.some(code => {
+          const sopObj = SOP_DETAILS[code];
+          return code.toLowerCase().includes(q) || (sopObj && sopObj.title.toLowerCase().includes(q));
+        });
+        return inTitle || inMission || inSops;
+      }
+      return true;
+    }
+
+    function hasActiveFilter() {
+      return Boolean(state.activeSop || state.searchQuery);
+    }
+
     function renderFiltersAndSummary() {
       const filtersEl = document.getElementById('dept-filters');
       const allActive = state.activeDept === 'ALL';
@@ -404,16 +560,65 @@
         if (counts[s] !== undefined) counts[s]++;
       });
       document.getElementById('load-summary').innerHTML = `
+        <span>SOPs · <strong class="font-semibold text-[#3A3532]">10</strong></span>
         <span>Internos · <strong class="font-semibold text-[#3A3532]">${counts['Interno']}</strong></span>
         ${counts['Vacante'] > 0 ? `<span>Por incorporar · <strong class="font-semibold text-[#7A353E]">${counts['Vacante']}</strong></span>` : ''}
         <span>Externos · <strong class="font-semibold text-[#3A3532]">${counts['Externo']}</strong></span>
       `;
+
+      // Banner contextual cuando hay un SOP seleccionado
+      const bannerEl = document.getElementById('active-sop-banner');
+      const clearBtn = document.getElementById('btn-clear-search');
+      if (state.activeSop && SOP_DETAILS[state.activeSop]) {
+        const sop = SOP_DETAILS[state.activeSop];
+        const matchingCount = rolesData.filter(r => r.sops.includes(state.activeSop)).length;
+        bannerEl.classList.remove('hidden');
+        clearBtn.classList.remove('hidden');
+        bannerEl.innerHTML = `
+          <div class="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="px-2 py-0.5 rounded bg-[#7A353E] text-[#FDFBF7] text-[10.5px] font-semibold tracking-wider">
+                ${state.activeSop} · ${sop.version}
+              </span>
+              <span class="font-semibold text-[#3A3532]">${sop.title}:</span>
+              <span class="text-[#6E6862]">${sop.desc}</span>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+              <span class="text-[11px] text-[#7A353E] font-medium">${matchingCount} cargos vinculados</span>
+              <button onclick="clearFilters()" class="px-2.5 py-1 rounded-full border border-[#D8CFC2] bg-[#F8F5F0] hover:bg-[#EFE9E0] text-[#4A4541] text-[11px] font-medium transition-colors">
+                Ver todos ✕
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (state.searchQuery) {
+        const matchingCount = rolesData.filter(r => isRoleMatch(r)).length;
+        bannerEl.classList.remove('hidden');
+        clearBtn.classList.remove('hidden');
+        bannerEl.innerHTML = `
+          <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-3 text-xs">
+            <span class="text-[#6E6862]">
+              Filtrando por <strong class="text-[#3A3532]">"${state.searchQuery}"</strong> · <strong class="text-[#7A353E]">${matchingCount}</strong> coincidencias
+            </span>
+            <button onclick="clearFilters()" class="px-2.5 py-1 rounded-full border border-[#D8CFC2] bg-[#F8F5F0] hover:bg-[#EFE9E0] text-[#4A4541] text-[11px] font-medium transition-colors">
+              Limpiar ✕
+            </button>
+          </div>
+        `;
+      } else {
+        bannerEl.classList.add('hidden');
+        clearBtn.classList.add('hidden');
+      }
     }
 
     function renderLevelZeroCard() {
+      const filtering = hasActiveFilter();
+      const matches = isRoleMatch(EXECUTIVE_ROLE);
+      const stateClass = filtering ? (matches ? 'is-highlighted' : 'is-dimmed') : '';
+
       return `
         <div onclick="openRoleModal('gerencia-general')" 
-             class="role-card cursor-pointer max-w-xl mx-auto bg-[#FDFBF7] rounded-2xl border border-[#DFD5C7] px-6 py-5 shadow-[0_6px_24px_-8px_rgba(74,69,65,0.08)] text-center relative overflow-hidden">
+             class="role-card ${stateClass} cursor-pointer max-w-xl mx-auto bg-[#FDFBF7] rounded-2xl border border-[#DFD5C7] px-6 py-5 shadow-[0_6px_24px_-8px_rgba(74,69,65,0.08)] text-center relative overflow-hidden">
           <div class="absolute top-0 inset-x-0 h-[3px] bg-[#7A353E]"></div>
           <div class="text-[10px] uppercase tracking-[0.2em] text-[#7A353E] font-semibold mb-1.5">
             Nivel 0 · Gobierno Corporativo
@@ -428,19 +633,54 @@
       `;
     }
 
+    function renderDeptSopNav(dept) {
+      return `
+        <div class="mt-2.5 pt-2.5 border-t border-[#EFE9E0] flex flex-wrap items-center justify-center gap-1">
+          ${dept.sops.map(code => {
+            const isSelected = state.activeSop === code;
+            const sopInfo = SOP_DETAILS[code];
+            return `
+              <button
+                onclick="toggleSopFilter('${code}', event)"
+                title="${sopInfo ? sopInfo.title : code}"
+                class="px-2 py-0.5 rounded-md text-[10px] font-medium tracking-wide transition-all ${
+                  isSelected
+                    ? 'bg-[#7A353E] text-[#FDFBF7] shadow-2xs'
+                    : 'bg-[#F3EFE8] text-[#6E6862] hover:bg-[#E6DFD5] hover:text-[#3A3532]'
+                }"
+              >
+                ${code}
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
     function renderRoleCard(role, dept) {
       const currentStatus = role.status[state.stage];
       const ind = getStatusIndicator(currentStatus);
+      const filtering = hasActiveFilter();
+      const matches = isRoleMatch(role);
+      const stateClass = filtering ? (matches ? 'is-highlighted' : 'is-dimmed') : '';
 
       return `
         <div onclick="openRoleModal('${role.id}')" 
-             class="role-card group cursor-pointer bg-[#FDFBF7] rounded-xl border border-[#E6DFD5] p-4 flex flex-col justify-between gap-3">
+             class="role-card ${stateClass} group cursor-pointer bg-[#FDFBF7] rounded-xl border border-[#E6DFD5] p-4 flex flex-col justify-between gap-3">
           <div class="flex items-start justify-between gap-2">
             <div class="text-[13px] font-medium text-[#3A3532] leading-snug group-hover:text-[#7A353E] transition-colors">
               ${role.title}
             </div>
             <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5 opacity-75" style="background:${dept.color}"></span>
           </div>
+
+          ${state.activeSop && matches ? `
+            <div class="flex items-center gap-1.5">
+              <span class="px-1.5 py-0.5 rounded bg-[#7A353E]/10 text-[#7A353E] text-[10px] font-semibold">
+                Ejecuta ${state.activeSop}
+              </span>
+            </div>
+          ` : ''}
           
           <div class="flex items-center justify-between gap-2 pt-1">
             <div class="flex items-center gap-1.5 text-[11px] ${ind.text}">
@@ -480,15 +720,29 @@
           const deptRoles = rolesData.filter(r => r.dept === dept.id);
           html += `
             <section class="bg-[#F3EFE8]/70 rounded-2xl border border-[#E5DDD2] p-4 relative">
-              <div class="flex items-center justify-between mb-3.5 pb-2.5 border-b border-[#E5DDD2]">
-                <div class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full" style="background:${dept.color}"></span>
-                  <h2 class="text-sm font-semibold text-[#3A3532]">${dept.name}</h2>
+              <div class="pb-3 mb-3.5 border-b border-[#E5DDD2]">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full" style="background:${dept.color}"></span>
+                    <h2 class="text-sm font-semibold text-[#3A3532]">${dept.name}</h2>
+                  </div>
+                  <span class="text-[10px] tracking-widest uppercase text-[#999188]">${dept.id}</span>
                 </div>
-                <span class="text-[10px] tracking-widest uppercase text-[#999188]">${dept.id}</span>
+                <div class="flex flex-wrap gap-1.5 mt-2.5">
+                  ${dept.sops.map(code => {
+                    const isSelected = state.activeSop === code;
+                    return `
+                      <button onclick="toggleSopFilter('${code}', event)"
+                        class="px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
+                          isSelected ? 'bg-[#7A353E] text-[#FDFBF7]' : 'bg-[#FDFBF7] border border-[#E2D9CC] text-[#6E6862]'
+                        }">
+                        ${code}
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
               </div>
               <div class="relative pl-4 space-y-3">
-                <!-- Eje vertical de reporte en móvil -->
                 <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#D4CBC0]"></div>
                 ${deptRoles.map(r => `
                   <div class="relative">
@@ -506,20 +760,16 @@
         return;
       }
 
-      // VISTA ESCRITORIO CON TRAZADO JERÁRQUICO REAL
+      // VISTA ESCRITORIO CON TRAZADO JERÁRQUICO Y NAVEGACIÓN DE SOPs POR DEPARTAMENTO
       const isSingle = visibleDepts.length === 1;
       const gridCols = isSingle ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-5';
 
-      // Conector superior ortogonal exacto desde Nivel 0 hacia las columnas
       const topBranchHtml = isSingle
         ? `<div class="flex justify-center"><div class="w-px h-8 bg-[#CFC6BA]"></div></div>`
         : `
           <div class="relative h-9">
-            <!-- Bajada central desde Gerencia General -->
             <div class="absolute left-1/2 top-0 w-px h-4 -translate-x-1/2 bg-[#CFC6BA]"></div>
-            <!-- Bus horizontal alineado exactamente al centro de las 5 columnas (10% a 90%) -->
             <div class="absolute top-4 left-[10%] right-[10%] h-px bg-[#CFC6BA]"></div>
-            <!-- 5 bajadas verticales hacia cada encabezado de departamento -->
             <div class="grid grid-cols-5 gap-4 h-full">
               ${visibleDepts.map(() => `
                 <div class="relative h-full">
@@ -537,25 +787,25 @@
             
             ${topBranchHtml}
 
-            <!-- Encabezados de Departamento -->
+            <!-- Encabezados de Departamento con Navegador de SOPs integrado -->
             <div class="grid ${gridCols} gap-4 relative z-10">
               ${visibleDepts.map(dept => `
-                <div class="bg-[#FDFBF7] rounded-xl border border-[#DFD6C9] px-4 py-3.5 text-center relative overflow-hidden shadow-[0_2px_10px_-4px_rgba(74,69,65,0.06)]">
+                <div class="bg-[#FDFBF7] rounded-xl border border-[#DFD6C9] px-3.5 py-3 text-center relative overflow-hidden shadow-[0_2px_10px_-4px_rgba(74,69,65,0.06)] flex flex-col justify-between">
                   <div class="absolute top-0 inset-x-0 h-[2.5px]" style="background:${dept.color}"></div>
-                  <div class="text-[9.5px] uppercase tracking-[0.2em] text-[#999188] mb-1">${dept.id}</div>
-                  <div class="text-[13px] font-semibold tracking-tight text-[#3A3532] leading-tight">${dept.name}</div>
+                  <div>
+                    <div class="text-[9.5px] uppercase tracking-[0.2em] text-[#999188] mb-1">${dept.id}</div>
+                    <div class="text-[13px] font-semibold tracking-tight text-[#3A3532] leading-tight">${dept.name}</div>
+                  </div>
+                  ${renderDeptSopNav(dept)}
                 </div>
               `).join('')}
             </div>
 
             <!-- Contenedor de Bandas con Líneas Verticales Continuas de Reporte -->
             <div class="relative pt-4">
-              
-              <!-- Ejes verticales de mando que atraviesan del Nivel 1 al 4 -->
               <div class="grid ${gridCols} gap-4 absolute inset-0 pointer-events-none z-0">
                 ${visibleDepts.map(dept => {
                   const maxLvl = Math.max(...rolesData.filter(r => r.dept === dept.id).map(r => r.level));
-                  // Si el departamento llega hasta Nivel 3 (ej. DIS), la línea termina a ~74% para no colgar en el vacío
                   const lineHeightClass = maxLvl === 4 ? 'bottom-8' : 'bottom-[24%]';
                   return `
                     <div class="relative h-full">
@@ -584,7 +834,6 @@
                           <div class="space-y-3 relative">
                             ${cellRoles.map(r => `
                               <div class="relative">
-                                <!-- Nodo de conexión sutil en borde superior de tarjeta -->
                                 <div class="w-1.5 h-1.5 rounded-full bg-[#CFC6BA] mx-auto -mb-[3px] relative z-20 ring-2 ring-[#F8F5F0]"></div>
                                 ${renderRoleCard(r, dept)}
                               </div>
@@ -604,6 +853,27 @@
       canvas.innerHTML = html;
     }
 
+    function renderSopListInModal(sops) {
+      return sops.map(code => {
+        const sop = SOP_DETAILS[code];
+        if (!sop) return '';
+        return `
+          <div onclick="closeModal(); toggleSopFilter('${code}');" 
+               class="cursor-pointer group bg-white border border-[#EAE2D6] hover:border-[#7A353E]/50 rounded-xl p-3 transition-all">
+            <div class="flex items-center justify-between gap-2 mb-1">
+              <div class="font-semibold text-[#7A353E] group-hover:underline">
+                ${code} · ${sop.title}
+              </div>
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#F3EFE8] text-[#78726C] font-medium shrink-0">
+                ${sop.version}
+              </span>
+            </div>
+            <div class="text-[#6E6862] leading-relaxed">${sop.desc}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
     function renderModal() {
       const modal = document.getElementById('floating-modal');
       const content = document.getElementById('modal-content');
@@ -613,7 +883,6 @@
         return;
       }
 
-      // Caso Nivel 0
       if (state.selectedRoleId === 'gerencia-general') {
         const exec = EXECUTIVE_ROLE;
         modal.classList.remove('hidden');
@@ -642,14 +911,12 @@
             </div>
 
             <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">SOPs Clave Supervisados</div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188]">SOPs Clave Supervisados</span>
+                <span class="text-[10px] text-[#A39A90]">Clic para resaltar en el mapa</span>
+              </div>
               <div class="space-y-2">
-                ${exec.sops.map(code => `
-                  <div class="bg-white border border-[#EAE2D6] rounded-xl p-3">
-                    <div class="font-semibold text-[#7A353E] mb-0.5">${code}</div>
-                    <div class="text-[#6E6862] leading-relaxed">${SOP_DETAILS[code] || ''}</div>
-                  </div>
-                `).join('')}
+                ${renderSopListInModal(exec.sops)}
               </div>
             </div>
 
@@ -689,19 +956,16 @@
         </div>
 
         <div class="mt-5 space-y-5 text-xs">
-          <!-- Misión -->
           <div>
             <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-1.5">Responsabilidad Principal</div>
             <p class="text-[#4A4541] text-[13px] leading-relaxed">${role.mission}</p>
           </div>
 
-          <!-- Criterio Lean -->
           <div class="bg-[#F6F1E9] border border-[#E8DEC9] rounded-xl p-4">
             <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Criterio Ultra-Lean</div>
             <p class="text-[#5C4E50] leading-relaxed">${role.audit}</p>
           </div>
 
-          <!-- Modalidad -->
           <div>
             <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">Modalidad en etapa (${state.stage === 'hoy' ? 'Hoy' : 'Escala'})</div>
             <div class="grid grid-cols-3 gap-2">
@@ -714,20 +978,16 @@
             </div>
           </div>
 
-          <!-- SOPs Asociados -->
           <div>
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">SOPs Vinculados</div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188]">SOPs Vinculados (${role.sops.length})</span>
+              <span class="text-[10px] text-[#A39A90]">Clic para resaltar en el mapa</span>
+            </div>
             <div class="space-y-2">
-              ${role.sops.map(code => `
-                <div class="bg-white border border-[#EAE2D6] rounded-xl p-3">
-                  <div class="font-semibold text-[#7A353E] mb-0.5">${code}</div>
-                  <div class="text-[#6E6862] leading-relaxed">${SOP_DETAILS[code] || ''}</div>
-                </div>
-              `).join('')}
+              ${renderSopListInModal(role.sops)}
             </div>
           </div>
 
-          <!-- KPIs -->
           <div>
             <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">Indicadores Clave</div>
             <div class="flex flex-wrap gap-2">
