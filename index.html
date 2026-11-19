@@ -14,11 +14,13 @@
       -webkit-font-smoothing: antialiased;
     }
     .role-card {
+      position: relative;
+      z-index: 10;
       transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, border-color 0.22s ease;
     }
     .role-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 26px -10px rgba(74, 69, 65, 0.12);
+      box-shadow: 0 12px 26px -10px rgba(74, 69, 65, 0.14);
       border-color: #B89B9E;
     }
     @keyframes modalFade {
@@ -408,28 +410,20 @@
       `;
     }
 
-    function renderLevelZeroBlock() {
+    function renderLevelZeroCard() {
       return `
-        <div class="mb-7">
-          <div onclick="openRoleModal('gerencia-general')" 
-               class="role-card cursor-pointer max-w-xl mx-auto bg-[#FDFBF7] rounded-2xl border border-[#DFD5C7] px-6 py-5 shadow-[0_6px_24px_-8px_rgba(74,69,65,0.08)] text-center relative overflow-hidden">
-            <div class="absolute top-0 inset-x-0 h-[3px] bg-[#7A353E]"></div>
-            <div class="text-[10px] uppercase tracking-[0.2em] text-[#7A353E] font-semibold mb-1.5">
-              Nivel 0 · Gobierno Corporativo
-            </div>
-            <h2 class="text-lg md:text-xl font-semibold tracking-tight text-[#3A3532] leading-snug">
-              Gerencia General · Socias Fundadoras
-            </h2>
-            <p class="text-xs text-[#857E77] mt-1">
-              Dirección Ejecutiva, Estrategia y Gobernanza Transversal
-            </p>
+        <div onclick="openRoleModal('gerencia-general')" 
+             class="role-card cursor-pointer max-w-xl mx-auto bg-[#FDFBF7] rounded-2xl border border-[#DFD5C7] px-6 py-5 shadow-[0_6px_24px_-8px_rgba(74,69,65,0.08)] text-center relative overflow-hidden">
+          <div class="absolute top-0 inset-x-0 h-[3px] bg-[#7A353E]"></div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-[#7A353E] font-semibold mb-1.5">
+            Nivel 0 · Gobierno Corporativo
           </div>
-
-          <!-- Líneas conectoras arquitectónicas -->
-          <div class="flex flex-col items-center">
-            <div class="w-px h-5 bg-[#D4CBC0]"></div>
-            <div class="w-4/5 max-w-4xl h-px bg-[#D4CBC0] hidden md:block"></div>
-          </div>
+          <h2 class="text-lg md:text-xl font-semibold tracking-tight text-[#3A3532] leading-snug">
+            Gerencia General · Socias Fundadoras
+          </h2>
+          <p class="text-xs text-[#857E77] mt-1">
+            Dirección Ejecutiva, Estrategia y Gobernanza Transversal
+          </p>
         </div>
       `;
     }
@@ -471,14 +465,21 @@
         ? DEPARTMENTS
         : DEPARTMENTS.filter(d => d.id === state.activeDept);
 
-      const levelZeroHtml = renderLevelZeroBlock();
+      const levelZeroCard = renderLevelZeroCard();
 
       if (state.deviceMode === 'mobile') {
-        let html = `<div class="max-w-md mx-auto">${levelZeroHtml}<div class="space-y-6">`;
+        let html = `
+          <div class="max-w-md mx-auto">
+            ${levelZeroCard}
+            <div class="flex justify-center">
+              <div class="w-px h-6 bg-[#CFC6BA]"></div>
+            </div>
+            <div class="space-y-6">
+        `;
         visibleDepts.forEach(dept => {
           const deptRoles = rolesData.filter(r => r.dept === dept.id);
           html += `
-            <section class="bg-[#F3EFE8]/70 rounded-2xl border border-[#E5DDD2] p-4">
+            <section class="bg-[#F3EFE8]/70 rounded-2xl border border-[#E5DDD2] p-4 relative">
               <div class="flex items-center justify-between mb-3.5 pb-2.5 border-b border-[#E5DDD2]">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full" style="background:${dept.color}"></span>
@@ -486,9 +487,12 @@
                 </div>
                 <span class="text-[10px] tracking-widest uppercase text-[#999188]">${dept.id}</span>
               </div>
-              <div class="space-y-3">
+              <div class="relative pl-4 space-y-3">
+                <!-- Eje vertical de reporte en móvil -->
+                <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#D4CBC0]"></div>
                 ${deptRoles.map(r => `
-                  <div>
+                  <div class="relative">
+                    <div class="absolute -left-2.5 top-5 w-2.5 h-px bg-[#D4CBC0]"></div>
                     <div class="text-[10px] uppercase tracking-widest text-[#999188] mb-1">Nivel ${r.level}</div>
                     ${renderRoleCard(r, dept)}
                   </div>
@@ -502,45 +506,101 @@
         return;
       }
 
-      const gridCols = visibleDepts.length === 1 ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-5';
-      let html = `${levelZeroHtml}<div class="overflow-x-auto pb-6"><div class="min-w-[980px]">`;
+      // VISTA ESCRITORIO CON TRAZADO JERÁRQUICO REAL
+      const isSingle = visibleDepts.length === 1;
+      const gridCols = isSingle ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-5';
 
-      // Encabezados de departamento
-      html += `<div class="grid ${gridCols} gap-4 mb-4">`;
-      visibleDepts.forEach(dept => {
-        html += `
-          <div class="bg-[#FDFBF7] rounded-xl border border-[#E6DFD5] px-4 py-3 text-center relative overflow-hidden">
-            <div class="absolute top-0 inset-x-0 h-[2.5px]" style="background:${dept.color}"></div>
-            <div class="text-[9.5px] uppercase tracking-[0.2em] text-[#999188] mb-1">${dept.id}</div>
-            <div class="text-[13px] font-semibold tracking-tight text-[#3A3532] leading-tight">${dept.name}</div>
-          </div>
-        `;
-      });
-      html += `</div>`;
-
-      // Bandas horizontales suaves por nivel
-      html += `<div class="space-y-4">`;
-      LEVELS.forEach(lvl => {
-        html += `
-          <div class="bg-[#F3EFE8]/60 rounded-2xl border border-[#EAE2D6] p-4">
-            <div class="flex items-center gap-2 mb-3 px-1">
-              <span class="text-[11px] font-semibold text-[#7A353E]">Nivel ${lvl.num}</span>
-              <span class="text-[#C7BEB2]">·</span>
-              <span class="text-[11px] uppercase tracking-[0.14em] text-[#857E77] font-medium">${lvl.title}</span>
-            </div>
-            <div class="grid ${gridCols} gap-4">
-              ${visibleDepts.map(dept => {
-                const cellRoles = rolesData.filter(r => r.dept === dept.id && r.level === lvl.id);
-                if (cellRoles.length === 0) {
-                  return `<div class="rounded-xl border border-dashed border-[#E2D9CC] min-h-[82px] flex items-center justify-center text-xs text-[#C4BBB0]">—</div>`;
-                }
-                return `<div class="space-y-3">${cellRoles.map(r => renderRoleCard(r, dept)).join('')}</div>`;
-              }).join('')}
+      // Conector superior ortogonal exacto desde Nivel 0 hacia las columnas
+      const topBranchHtml = isSingle
+        ? `<div class="flex justify-center"><div class="w-px h-8 bg-[#CFC6BA]"></div></div>`
+        : `
+          <div class="relative h-9">
+            <!-- Bajada central desde Gerencia General -->
+            <div class="absolute left-1/2 top-0 w-px h-4 -translate-x-1/2 bg-[#CFC6BA]"></div>
+            <!-- Bus horizontal alineado exactamente al centro de las 5 columnas (10% a 90%) -->
+            <div class="absolute top-4 left-[10%] right-[10%] h-px bg-[#CFC6BA]"></div>
+            <!-- 5 bajadas verticales hacia cada encabezado de departamento -->
+            <div class="grid grid-cols-5 gap-4 h-full">
+              ${visibleDepts.map(() => `
+                <div class="relative h-full">
+                  <div class="absolute left-1/2 top-4 bottom-0 w-px -translate-x-1/2 bg-[#CFC6BA]"></div>
+                </div>
+              `).join('')}
             </div>
           </div>
         `;
-      });
-      html += `</div></div></div>`;
+
+      let html = `
+        ${levelZeroCard}
+        <div class="overflow-x-auto pb-6">
+          <div class="${isSingle ? 'max-w-md mx-auto' : 'min-w-[1000px]'}">
+            
+            ${topBranchHtml}
+
+            <!-- Encabezados de Departamento -->
+            <div class="grid ${gridCols} gap-4 relative z-10">
+              ${visibleDepts.map(dept => `
+                <div class="bg-[#FDFBF7] rounded-xl border border-[#DFD6C9] px-4 py-3.5 text-center relative overflow-hidden shadow-[0_2px_10px_-4px_rgba(74,69,65,0.06)]">
+                  <div class="absolute top-0 inset-x-0 h-[2.5px]" style="background:${dept.color}"></div>
+                  <div class="text-[9.5px] uppercase tracking-[0.2em] text-[#999188] mb-1">${dept.id}</div>
+                  <div class="text-[13px] font-semibold tracking-tight text-[#3A3532] leading-tight">${dept.name}</div>
+                </div>
+              `).join('')}
+            </div>
+
+            <!-- Contenedor de Bandas con Líneas Verticales Continuas de Reporte -->
+            <div class="relative pt-4">
+              
+              <!-- Ejes verticales de mando que atraviesan del Nivel 1 al 4 -->
+              <div class="grid ${gridCols} gap-4 absolute inset-0 pointer-events-none z-0">
+                ${visibleDepts.map(dept => {
+                  const maxLvl = Math.max(...rolesData.filter(r => r.dept === dept.id).map(r => r.level));
+                  // Si el departamento llega hasta Nivel 3 (ej. DIS), la línea termina a ~74% para no colgar en el vacío
+                  const lineHeightClass = maxLvl === 4 ? 'bottom-8' : 'bottom-[24%]';
+                  return `
+                    <div class="relative h-full">
+                      <div class="absolute left-1/2 top-0 ${lineHeightClass} w-px -translate-x-1/2 bg-[#D6CEC2]"></div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+
+              <!-- Bandas por Nivel Jerárquico -->
+              <div class="space-y-4 relative z-10">
+                ${LEVELS.map(lvl => `
+                  <div class="bg-[#F3EFE8]/55 rounded-2xl border border-[#EAE2D6] p-4">
+                    <div class="flex items-center gap-2 mb-3 px-1">
+                      <span class="text-[11px] font-semibold text-[#7A353E]">Nivel ${lvl.num}</span>
+                      <span class="text-[#C7BEB2]">·</span>
+                      <span class="text-[11px] uppercase tracking-[0.14em] text-[#857E77] font-medium">${lvl.title}</span>
+                    </div>
+                    <div class="grid ${gridCols} gap-4">
+                      ${visibleDepts.map(dept => {
+                        const cellRoles = rolesData.filter(r => r.dept === dept.id && r.level === lvl.id);
+                        if (cellRoles.length === 0) {
+                          return `<div class="min-h-[82px] flex items-center justify-center"></div>`;
+                        }
+                        return `
+                          <div class="space-y-3 relative">
+                            ${cellRoles.map(r => `
+                              <div class="relative">
+                                <!-- Nodo de conexión sutil en borde superior de tarjeta -->
+                                <div class="w-1.5 h-1.5 rounded-full bg-[#CFC6BA] mx-auto -mb-[3px] relative z-20 ring-2 ring-[#F8F5F0]"></div>
+                                ${renderRoleCard(r, dept)}
+                              </div>
+                            `).join('')}
+                          </div>
+                        `;
+                      }).join('')}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      `;
       canvas.innerHTML = html;
     }
 
