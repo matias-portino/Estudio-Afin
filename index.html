@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Organigrama Estudio Afín SpA | Roles y Estructura</title>
+  <title>Organigrama Estudio Afín SpA | Roles, Dotación y Estructura</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -16,7 +16,7 @@
     .role-card {
       position: relative;
       z-index: 10;
-      box-shadow: 0 2px 8px -2px rgba(46, 41, 38, 0.07), 0 1px 2px 0 rgba(46, 41, 38, 0.04);
+      box-shadow: 0 2px 8px -2px rgba(46, 41, 38, 0.08), 0 1px 2px 0 rgba(46, 41, 38, 0.04);
       transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, border-color 0.22s ease, opacity 0.22s ease;
     }
     .role-card:hover {
@@ -75,7 +75,7 @@
         background-color: #F4EFE7 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        zoom: 0.85;
+        zoom: 0.84;
       }
       #app-header,
       #presentation-toolbar,
@@ -124,10 +124,10 @@
   <div id="presentation-header" class="hidden max-w-[1400px] w-full mx-auto px-5 md:px-8 pt-5 pb-3 border-b border-[#CFC3B2] items-end justify-between">
     <div>
       <div class="text-[10px] uppercase tracking-[0.22em] text-[#7A353E] font-semibold mb-0.5">
-        ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional
+        ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional y Dotación
       </div>
       <h1 class="text-xl font-semibold tracking-tight text-[#26221F]">
-        Organigrama Corporativo, Roles y Gobernanza de Procesos
+        Organigrama Corporativo, Células de Especialistas y Gobernanza
       </h1>
     </div>
     <div id="presentation-meta" class="text-right text-[11px] text-[#5E5751]"></div>
@@ -144,7 +144,7 @@
         </h1>
         <span class="hidden sm:inline-block text-[#BFB3A3] font-light">|</span>
         <span class="text-sm md:text-[15px] font-medium text-[#7A353E]">
-          Roles y Estructura
+          Roles, Dotación y Estructura
         </span>
       </div>
 
@@ -156,7 +156,7 @@
             type="text"
             id="quick-search"
             oninput="handleSearch(this.value)"
-            placeholder="Buscar cargo, SOP o entregable..."
+            placeholder="Buscar cargo, SOP o especialidad..."
             class="w-44 sm:w-56 pl-7 pr-7 py-1.5 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] text-[11.5px] text-[#26221F] placeholder-[#8C837A] focus:outline-none focus:border-[#7A353E] transition-all"
           />
           <svg class="w-3.5 h-3.5 text-[#7A726A] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -171,7 +171,7 @@
           >✕</button>
         </div>
 
-        <!-- Filtro Macro de Vínculo: Todos vs Núcleo Interno vs Aliados Externos -->
+        <!-- Filtro Macro de Vínculo -->
         <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D4C7B5] flex items-center text-[11px] tracking-wide">
           <button onclick="setLinkFilter('ALL')" id="btn-link-ALL" class="px-2.5 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FFFFFF] shadow-2xs">
             Todos
@@ -205,19 +205,18 @@
       </div>
     </div>
 
-    <!-- Sub-barra de navegación por áreas + Accesos Maestros -->
+    <!-- Sub-barra de navegación por áreas + Dotación Global + Accesos Maestros -->
     <div class="bg-[#EAE2D6] border-t border-[#D8CCB9] px-5 md:px-8 py-2">
       <div class="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-3 text-[11.5px]">
         <div id="dept-filters" class="flex items-center gap-1.5 overflow-x-auto pb-0.5 md:pb-0"></div>
         <div class="flex items-center gap-3">
           <div id="load-summary" class="hidden xl:flex items-center gap-3.5 text-[11px] text-[#635C56] tracking-wide"></div>
           <span class="hidden xl:inline text-[#BFB3A3]">|</span>
-          <!-- Accesos directos al Documento Maestro V. 2.5 -->
           <button onclick="openSpecialModal('kpis')" class="px-2.5 py-1 rounded-full border border-[#C9BBA8] bg-[#FFFFFF] hover:border-[#7A353E] text-[#2E2926] hover:text-[#7A353E] text-[11px] font-medium transition-all shadow-2xs">
             KPIs Maestros
           </button>
           <button onclick="openSpecialModal('versions')" class="px-2.5 py-1 rounded-full border border-[#C9BBA8] bg-[#FFFFFF] hover:border-[#7A353E] text-[#59524C] hover:text-[#7A353E] text-[11px] font-medium transition-all shadow-2xs">
-            ORG-EA V. 2.5
+            ORG-EA V. 2.7
           </button>
         </div>
       </div>
@@ -234,8 +233,8 @@
 
   <!-- PIE DE PÁGINA FORMAL (VISIBLE EN PRESENTACIÓN E IMPRESIÓN PDF) -->
   <footer id="presentation-footer" class="hidden max-w-[1400px] w-full mx-auto px-5 md:px-8 py-3 border-t border-[#CFC3B2] items-center justify-between text-[10.5px] text-[#635C56]">
-    <span>ESTUDIO AFÍN SpA (RUT 78.560.882-8) · Documento de Estructura Organizacional y Gobernanza (Sincronizado DOC-MAESTRO V. 2.5)</span>
-    <span id="presentation-legend">● Núcleo interno &nbsp;·&nbsp; ● Aliado externo</span>
+    <span>ESTUDIO AFÍN SpA (RUT 78.560.882-8) · Estructura de Especialistas, Staff Asesor y Gobernanza (ORG-EA V. 2.7)</span>
+    <span id="presentation-legend">● Especialista interno &nbsp;·&nbsp; ● Staff / Célula externa</span>
   </footer>
 
   <!-- MODAL FLOTANTE -->
@@ -247,25 +246,60 @@
 
   <script>
     const DEPARTMENTS = [
-      { id: 'COM', name: 'Comercial & Cliente', color: '#7A353E', sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04'] },
-      { id: 'DIS', name: 'Diseño Estratégico', color: '#9E4C56', sops: ['DIS-01'] },
-      { id: 'LOG', name: 'Operaciones & Logística', color: '#5E5954', sops: ['LOG-01', 'LOG-02'] },
-      { id: 'TER', name: 'Montaje & Terreno', color: '#7D7267', sops: ['TER-01', 'TER-02'] },
-      { id: 'FIN', name: 'Admin & Finanzas', color: '#9E8263', sops: ['FIN-01'] }
+      {
+        id: 'COM',
+        name: 'Comercial & Cliente',
+        color: '#7A353E',
+        tintBg: '#F4EAEB',
+        tintBorder: '#DFC5C8',
+        sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04']
+      },
+      {
+        id: 'DIS',
+        name: 'Diseño Estratégico',
+        color: '#B85A43',
+        tintBg: '#F6EDE9',
+        tintBorder: '#E3C9BF',
+        sops: ['DIS-01']
+      },
+      {
+        id: 'LOG',
+        name: 'Operaciones & Logística',
+        color: '#465765',
+        tintBg: '#EBF0F4',
+        tintBorder: '#C7D3DC',
+        sops: ['LOG-01', 'LOG-02']
+      },
+      {
+        id: 'TER',
+        name: 'Montaje & Terreno',
+        color: '#526A56',
+        tintBg: '#ECF2ED',
+        tintBorder: '#C7D7C9',
+        sops: ['TER-01', 'TER-02']
+      },
+      {
+        id: 'FIN',
+        name: 'Admin & Finanzas',
+        color: '#9A7440',
+        tintBg: '#F5EFE6',
+        tintBorder: '#E0D0B8',
+        sops: ['FIN-01']
+      }
     ];
 
     const LEVELS = [
       { id: 1, num: '1', title: 'Dirección de Área' },
       { id: 2, num: '2', title: 'Liderazgo Operativo' },
-      { id: 3, num: '3', title: 'Ejecución y Apoyo' },
-      { id: 4, num: '4', title: 'Aliados Externos' }
+      { id: 3, num: '3', title: 'Ejecución y Apoyo Técnico' },
+      { id: 4, num: '4', title: 'Células de Aliados Externos' }
     ];
 
     const SOP_DETAILS = {
       'COM-01': {
         dept: 'COM',
         version: 'V. 1.0',
-        title: 'Prospección, Calificación y Onboarding',
+        title: 'Prospección, Calificación y Bienvenida',
         desc: 'Filtro de calificación (presupuesto, plazos y exclusión de anti-clientes), firma de contrato marco y activación condicionada al Hito 1 (50%).'
       },
       'COM-02': {
@@ -277,7 +311,7 @@
       'COM-03': {
         dept: 'COM',
         version: 'V. 2.1',
-        title: 'Entrega Formal (Handover) y Cierre de Proyecto',
+        title: 'Entrega Formal y Cierre de Proyecto',
         desc: 'Inspección final, entrega de Manual para Administrador, guía de bienvenida del huésped, encuesta de satisfacción y cobro del 20% final.'
       },
       'COM-04': {
@@ -326,9 +360,9 @@
 
     const MASTER_KPIS = {
       external: [
-        { name: 'Índice de Satisfacción (CSAT)', target: '> 85% (≥ 4,25/5)', desc: 'Valida eficiencia del modelo llave en mano y cumplimiento de plazos.' },
-        { name: 'Índice de Recomendación (NPS)', target: '9 a 10 puntos', desc: 'Convierte a inversionistas en canal de adquisición orgánica.' },
-        { name: 'Facilidad de Servicio (CES)', target: 'Baja fricción', desc: 'Confirma el alivio operativo y de carga mental del propietario.' },
+        { name: 'Índice de Satisfacción', target: '> 85% (≥ 4,25/5)', desc: 'Valida eficiencia del modelo llave en mano y cumplimiento de plazos.' },
+        { name: 'Índice de Recomendación', target: '9 a 10 puntos', desc: 'Convierte a inversionistas en canal de adquisición orgánica.' },
+        { name: 'Facilidad de Servicio', target: 'Baja fricción', desc: 'Confirma el alivio operativo y de carga mental del propietario.' },
         { name: 'Retención y Recompra', target: '> 50% a 12 meses', desc: 'Asegura recurrencia de cartera para cumplir los 7 proyectos/año.' },
         { name: 'Capacidad de Ajuste de Tarifas', target: '> 4,5 / 5', desc: 'Luz verde para ajustar al alza honorarios de diseño o margen logístico.' }
       ],
@@ -337,7 +371,7 @@
         { name: 'Tasa de Retrabajo', target: '≤ 2 rondas', desc: 'Evita iteraciones infinitas; mide precisión del levantamiento inicial.' },
         { name: 'Desviación Presupuestaria', target: '~ 0% desviación', desc: 'Diferencia entre presupuesto aprobado y gasto real ejecutado.' },
         { name: 'Eficiencia Logística', target: '> 95% a tiempo', desc: 'Despachos recibidos sin defectos ni mermas en ventana de 24h.' },
-        { name: 'Estabilidad de Cuadrillas', target: 'Rotación mínima', desc: 'Continuidad de instaladores y cumplimiento del protocolo Obra Limpia.' }
+        { name: 'Estabilidad de Cuadrillas', target: 'Rotación mínima', desc: 'Continuidad de instaladores y cumplimiento del cumplimiento Obra Limpia.' }
       ]
     };
 
@@ -346,7 +380,9 @@
       { ver: '2.0', date: 'Nov 2026', desc: 'Alineación al modelo Ultra-Lean (5 áreas) para renta corta y segundas viviendas.' },
       { ver: '2.2', date: '19 Nov 2026', desc: 'Integración completa de los 10 SOPs cerrados (incluyendo COM-04 Post-Venta).' },
       { ver: '2.3', date: '19 Nov 2026', desc: 'Incorporación de razón social ESTUDIO AFÍN SpA (RUT 78.560.882-8) en Nivel 0.' },
-      { ver: '2.5', date: '20 Nov 2026', desc: 'Sincronización con DOC-MAESTRO V. 2.5, filtro por vínculo y criterio desplegable por ficha.' }
+      { ver: '2.5', date: '20 Nov 2026', desc: 'Sincronización con DOC-MAESTRO V. 2.5, filtro por vínculo y criterio desplegable por ficha.' },
+      { ver: '2.6', date: '20 Nov 2026', desc: 'Pilares cromáticos por área, dotación de especialistas y escalabilidad por célula.' },
+      { ver: '2.7', date: '20 Nov 2026', desc: 'Incorporación de nodo Staff lateral: Consultor Estratégico & Control de Gestión.' }
     ];
 
     const EXECUTIVE_ROLE = {
@@ -356,11 +392,15 @@
       color: '#7A353E',
       level: 0,
       linkType: 'Interno',
+      minHeadcount: 2,
+      maxHeadcount: 2,
+      headcountBadge: '2 Socias · Gobierno Corporativo',
+      teamStructure: 'Dirección ejecutiva bicéfala ejercida por las dos socias fundadoras de Estudio Afín SpA. Ambas comparten la visión estratégica y se dividen el liderazgo directo de las áreas clave según su especialidad.',
       title: 'Gerencia General · Socias Fundadoras',
       legalEntity: 'ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Constituida el 18/11/2026 (Ley N° 20.659)',
       fireLine: 'El núcleo de Estudio Afín SpA es estrictamente el diseño y la implementación física llave en mano. La empresa se desmarca de la administración comercial, fijación de tarifas o gestión de reservas de la propiedad (responsabilidad exclusiva del cliente o administrador externo).',
       mission: 'Liderar la estrategia global de Estudio Afín SpA, aprobar alianzas comerciales clave, custodiar la cultura corporativa y dirigir transversalmente las 5 áreas de la firma.',
-      audit: 'Estructura ejecutiva compartida en la cúspide (Nivel 0). Las fundadoras dirigen las áreas clave y deciden con autonomía cuándo incorporar nuevos integrantes según la demanda de proyectos.',
+      audit: 'Estructura ejecutiva compartida en la cúspide (Nivel 0). Las fundadoras dirigen las áreas clave y deciden con autonomía cuándo incorporar nuevos especialistas según la demanda de proyectos.',
       deliverables: [
         'Aprobación de alianzas con administradores de propiedades y corredoras boutique.',
         'Firma de Contratos Marco de Prestación de Servicios y validación de excepciones.',
@@ -374,10 +414,40 @@
       kpis: ['7 proyectos/año', 'Satisfacción > 85%', 'Recomendación 9–10']
     };
 
+    const STAFF_CONSULTANT_ROLE = {
+      id: 'staff-consultor',
+      dept: 'STAFF',
+      deptName: 'Asesoría Estratégica Externa',
+      color: '#6E5A4F',
+      level: 0,
+      linkType: 'Externo',
+      minHeadcount: 1,
+      maxHeadcount: 1,
+      headcountBadge: '1 especialista externo · Soporte transversal',
+      teamStructure: 'Rol de staff externo (consultoría especializada independiente, sin subordinación de línea ni costo fijo interino). Reporta y asesora directamente a la Gerencia General en arquitectura organizacional, mejora de procesos y control de gestión.',
+      title: 'Consultor Estratégico & Control de Gestión',
+      mission: 'Diseñar la arquitectura organizacional, estandarizar procedimientos operativos (SOPs), estructurar tableros de KPIs y brindar soporte analítico transversal a la Gerencia General.',
+      audit: 'Ubicado como nodo Staff de línea punteada junto a Gerencia General: aporta metodología corporativa, control de gestión y auditoría de procesos sin inflar la planilla fija ni interferir en la dirección creativa de las socias.',
+      deliverables: [
+        'Diseño y actualización del Documento Maestro Corporativo y arquitectura de 10 SOPs.',
+        'Construcción y análisis de tableros de KPIs Externos (experiencia) e Internos (eficiencia).',
+        'Modelamiento de estructura de rentabilidad por proyecto, flujos de caja y escalabilidad.'
+      ],
+      risksMitigated: [
+        'Crecimiento desordenado sin procesos escritos ni indicadores de alerta temprana.',
+        'Sobrecarga administrativa de las socias fundadoras al intentar estructurar y operar simultáneamente.'
+      ],
+      sops: ['COM-01', 'COM-03', 'DIS-01', 'LOG-01', 'FIN-01'],
+      kpis: ['10 SOPs estandarizados', 'Tableros KPI activos', 'Control desviación ~0%']
+    };
+
     const rolesData = [
       // NIVEL 1
       {
         id: 'com-dir', dept: 'COM', level: 1, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        headcountBadge: '1 especialista · Dirección',
+        teamStructure: 'Rol de conducción comercial asumido a nivel directivo (1 especialista con dedicación compartida junto a gestión de cuentas).',
         title: 'Dirección Comercial & Cuentas',
         mission: 'Liderar alianzas con administradores de propiedades, filtrar inversionistas y cerrar contratos.',
         audit: 'Fusión total de prospección, cuentas y cierre comercial en un solo liderazgo para evitar dispersión.',
@@ -395,6 +465,9 @@
       },
       {
         id: 'dis-dir', dept: 'DIS', level: 1, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        headcountBadge: '1 especialista · Dirección',
+        teamStructure: 'Liderazgo creativo y curatorial ejercido por 1 especialista con formación en arquitectura o diseño interior.',
         title: 'Dirección Creativa & Mobiliario',
         mission: 'Definir el concepto visual adaptado al entorno y aprobar el presupuesto de equipamiento.',
         audit: 'Elimina modelados 3D lentos; prioriza tableros conceptuales ágiles orientados a conversión y confort.',
@@ -412,6 +485,9 @@
       },
       {
         id: 'log-dir', dept: 'LOG', level: 1, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        headcountBadge: '1 especialista · Dirección',
+        teamStructure: 'Conducción estratégica de abastecimiento y cadena de suministro ejercida por 1 especialista.',
         title: 'Dirección de Operaciones',
         mission: 'Controlar cadena de abastecimiento, negociar con proveedores y velar por plazos.',
         audit: 'Absorbe dirección de compras y control de proveedores bajo una sola cabeza operativa.',
@@ -429,6 +505,9 @@
       },
       {
         id: 'ter-dir', dept: 'TER', level: 1, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        headcountBadge: '1 especialista · Dirección',
+        teamStructure: 'Dirección técnica de obra y puesta en escena liderada por 1 especialista.',
         title: 'Dirección de Montaje',
         mission: 'Asegurar ejecución llave en mano sin fricciones en edificios y entrega conforme.',
         audit: 'Unificada junto a Operaciones para evitar brechas entre la compra y la instalación en obra.',
@@ -446,6 +525,9 @@
       },
       {
         id: 'fin-dir', dept: 'FIN', level: 1, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        headcountBadge: '1 especialista · Dirección',
+        teamStructure: 'Gobernanza financiera y resguardo de caja ejercida por 1 especialista a nivel directivo.',
         title: 'Dirección Financiera & Control',
         mission: 'Custodiar flujo de caja por hitos (50-30-20), aprobar pagos y validar rentabilidad.',
         audit: 'Regla estricta de cero financiamiento propio del mobiliario con capital de la sociedad.',
@@ -465,7 +547,10 @@
       // NIVEL 2
       {
         id: 'com-lead', dept: 'COM', level: 2, linkType: 'Interno',
-        title: 'Ejecutivo Comercial & Entrega',
+        minHeadcount: 1, maxHeadcount: 1,
+        headcountBadge: '1 especialista · Rol dedicado',
+        teamStructure: '1 especialista dedicado a gestionar de punta a punta la relación con clientes activos (hasta 7 proyectos anuales sin perder calidad de atención).',
+        title: 'Especialista Comercial & Entrega',
         mission: 'Gestionar comunicaciones oficiales, órdenes de cambio, entrega de llaves y garantías post-venta.',
         audit: 'Fusiona bienvenida, gestión de cambios, entrega final y post-venta en un solo flujo continuo.',
         deliverables: [
@@ -482,7 +567,10 @@
       },
       {
         id: 'dis-lead', dept: 'DIS', level: 2, linkType: 'Interno',
-        title: 'Diseñador/a de Mobiliario Senior',
+        minHeadcount: 1, maxHeadcount: 2,
+        headcountBadge: '1–2 especialistas · Escalable',
+        teamStructure: '1 especialista titular por cada 3–4 proyectos activos; escala a 2 especialistas cuando coinciden habilitaciones simultáneas o segundas viviendas fuera de Santiago.',
+        title: 'Especialista en Diseño de Mobiliario',
         mission: 'Ejecutar levantamiento en terreno, armar tableros conceptuales y cerrar matriz de compra.',
         audit: 'Absorbe interiorismo y especificación técnica en un perfil integral orientado a agilidad.',
         deliverables: [
@@ -498,7 +586,10 @@
       },
       {
         id: 'log-lead', dept: 'LOG', level: 2, linkType: 'Interno',
-        title: 'Líder de Procura & Acopio',
+        minHeadcount: 1, maxHeadcount: 1,
+        headcountBadge: '1 especialista · Rol dedicado',
+        teamStructure: '1 especialista dedicado al control centralizado de compras, recepción física en ventana de 24h y trazabilidad de bodega.',
+        title: 'Especialista de Procura & Acopio',
         mission: 'Emitir órdenes de compra, recibir despachos con lista de chequeo y coordinar bodega.',
         audit: 'Centraliza el seguimiento de compras y el filtro de recepción física antes de llevar todo a obra.',
         deliverables: [
@@ -514,7 +605,10 @@
       },
       {
         id: 'ter-lead', dept: 'TER', level: 2, linkType: 'Interno',
-        title: 'Supervisor/a de Obra & Ambientación',
+        minHeadcount: 1, maxHeadcount: 2,
+        headcountBadge: '1–2 especialistas · Escalable',
+        teamStructure: '1 especialista en terreno por obra activa; escala a 2 especialistas cuando hay montajes paralelos en distintas comunas o regiones.',
+        title: 'Especialista de Obra & Ambientación',
         mission: 'Coordinar permisos en conserjería, supervisar maestros y dirigir ambientación final.',
         audit: 'Fusiona supervisión técnica en obra y dirección de arte fotográfica en terreno.',
         deliverables: [
@@ -530,7 +624,10 @@
       },
       {
         id: 'fin-lead', dept: 'FIN', level: 2, linkType: 'Interno',
-        title: 'Control de Gestión & Libro Abierto',
+        minHeadcount: 1, maxHeadcount: 1,
+        headcountBadge: '1 especialista · Rol dedicado',
+        teamStructure: '1 especialista dedicado a conciliación a Libro Abierto, facturación por hitos y control presupuestario.',
+        title: 'Especialista Control & Libro Abierto',
         mission: 'Emitir facturas por hitos, rendir boletas a Libro Abierto y controlar márgenes.',
         audit: 'Mantiene el control administrativo interno mientras la contabilidad tributaria opera 100% externa.',
         deliverables: [
@@ -548,9 +645,12 @@
       // NIVEL 3
       {
         id: 'dis-exec', dept: 'DIS', level: 3, linkType: 'Interno',
-        title: 'Asistente Diseño & Cotizaciones',
+        minHeadcount: 1, maxHeadcount: 2,
+        headcountBadge: '1–2 especialistas · Célula apoyo',
+        teamStructure: '1 especialista técnico en especificación y cotizaciones; amplía a 2 integrantes en temporadas peak para validar stock sin frenar entregas.',
+        title: 'Especialista Técnico & Cotizaciones',
         mission: 'Armar láminas conceptuales, verificar disponibilidad en tiendas y actualizar planillas.',
-        audit: 'Rol de apoyo táctico para verificar stock en tiempo real y acelerar cotizaciones de reposición.',
+        audit: 'Célula de apoyo técnico para verificar stock en tiempo real y acelerar cotizaciones de reposición.',
         deliverables: [
           'Validación de disponibilidad de stock en tiempo real previo a aprobar matriz de compras.',
           'Cotizaciones rápidas para reposiciones post-venta (COM-04).'
@@ -560,7 +660,10 @@
       },
       {
         id: 'ter-exec', dept: 'TER', level: 3, linkType: 'Interno',
-        title: 'Coordinador Logística & Montaje',
+        minHeadcount: 1, maxHeadcount: 2,
+        headcountBadge: '1–2 especialistas · Célula puente',
+        teamStructure: 'Célula operativa de 1 a 2 especialistas compartidos entre bodega y obra para cubrir recepciones y montajes simultáneos.',
+        title: 'Especialista Logística & Montaje',
         mission: 'Ejecutar recepciones físicas, proteger ascensores y asistir armado en terreno.',
         audit: 'Rol puente compartido entre Logística y Terreno para eliminar tiempos muertos en días de montaje.',
         deliverables: [
@@ -574,6 +677,9 @@
       // NIVEL 4
       {
         id: 'log-ext', dept: 'LOG', level: 4, linkType: 'Externo',
+        minHeadcount: 0, maxHeadcount: 0,
+        headcountBadge: 'Célula externa · Por proyecto',
+        teamStructure: 'Red homologada de talleres mueblistas y operadores de bodega activados bajo orden de trabajo según requerimientos a medida.',
         title: 'Talleres Externos & Bodega',
         mission: 'Fabricar piezas especiales bajo plano y proveer acopio temporal por proyecto.',
         audit: 'Cero taller de carpintería propio (costo fijo eliminado). Contratación 100% variable bajo demanda.',
@@ -586,6 +692,9 @@
       },
       {
         id: 'ter-ext', dept: 'TER', level: 4, linkType: 'Externo',
+        minHeadcount: 0, maxHeadcount: 0,
+        headcountBadge: 'Célula externa · 2–4 técnicos/obra',
+        teamStructure: 'Célula variable de 2 a 4 técnicos especialistas (instaladores, aseo fino y fotógrafo comercial) dimensionada según metraje del inmueble.',
         title: 'Cuadrillas, Aseo & Fotografía',
         mission: 'Ejecutar pintura, instalaciones, aseo profundo y fotografía comercial para plataformas.',
         audit: 'Equipos externos variables contratados por obra bajo estricto cumplimiento del protocolo Obra Limpia.',
@@ -598,6 +707,9 @@
       },
       {
         id: 'fin-ext', dept: 'FIN', level: 4, linkType: 'Externo',
+        minHeadcount: 0, maxHeadcount: 0,
+        headcountBadge: 'Estudio externo · Mensual',
+        teamStructure: 'Equipo externo de contabilidad y asesoría tributaria con dedicación mensual permanente para cumplimiento ante el SII.',
         title: 'Contador & Asesor Tributario',
         mission: 'Llevar contabilidad mensual, declaraciones F29/Renta y cumplimiento ante el SII.',
         audit: 'Externalizado desde el día 1 mediante honorario mensual fijo para mantener estructura liviana.',
@@ -611,7 +723,7 @@
     ];
 
     let state = {
-      linkFilter: 'ALL', // 'ALL' | 'Interno' | 'Externo'
+      linkFilter: 'ALL',
       activeDept: 'ALL',
       activeSop: null,
       searchQuery: '',
@@ -622,9 +734,24 @@
       deviceMode: window.innerWidth < 860 ? 'mobile' : 'desktop'
     };
 
+    function getDeptCapacitySummary(deptId) {
+      const deptRoles = rolesData.filter(r => r.dept === deptId);
+      const internalRoles = deptRoles.filter(r => r.linkType === 'Interno');
+      const externalRoles = deptRoles.filter(r => r.linkType === 'Externo');
+
+      const minInt = internalRoles.reduce((acc, r) => acc + (r.minHeadcount || 0), 0);
+      const maxInt = internalRoles.reduce((acc, r) => acc + (r.maxHeadcount || 0), 0);
+      const intLabel = minInt === maxInt ? `${minInt} esp.` : `${minInt}–${maxInt} esp.`;
+
+      if (externalRoles.length > 0) {
+        return `${intLabel} + célula ext.`;
+      }
+      return `${intLabel} internos`;
+    }
+
     function getLinkBadge(linkType) {
       if (linkType === 'Externo') {
-        return { dot: 'bg-[#9E8263]', text: 'text-[#7A6248]', label: 'Aliado externo' };
+        return { dot: 'bg-[#9E8263]', text: 'text-[#7A6248]', label: 'Célula / Asesoría externa' };
       }
       return { dot: 'bg-[#453E39]', text: 'text-[#4F4842]', label: 'Núcleo interno' };
     }
@@ -663,14 +790,14 @@
       const metaEl = document.getElementById('presentation-meta');
       if (!metaEl) return;
       const filterLabel = state.linkFilter === 'ALL'
-        ? 'Estructura Integral (Núcleo Interno + Aliados Externos)'
+        ? 'Estructura Integral · 12–16 Especialistas + Staff Asesor + 3 Células Externas'
         : state.linkFilter === 'Interno'
           ? 'Vista: Núcleo Interno Estudio Afín SpA'
-          : 'Vista: Red de Aliados Externos';
+          : 'Vista: Staff Asesor y Células Externas';
       const today = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' });
       metaEl.innerHTML = `
         <div class="font-semibold text-[#26221F]">${filterLabel}</div>
-        <div>Emitido: ${today} · ORG-EA V. 2.5 (Sincronizado DOC-MAESTRO V. 2.5)</div>
+        <div>Emitido: ${today} · ORG-EA V. 2.7 (Sincronizado DOC-MAESTRO V. 2.6)</div>
       `;
     }
 
@@ -744,7 +871,7 @@
     function openRoleModal(roleId) {
       state.specialModal = null;
       state.selectedRoleId = roleId;
-      state.modalAuditExpanded = false; // Inicia colapsado para incentivar interacción
+      state.modalAuditExpanded = false;
       renderModal();
     }
 
@@ -788,12 +915,13 @@
         const q = state.searchQuery.toLowerCase();
         const inTitle = role.title.toLowerCase().includes(q);
         const inMission = role.mission.toLowerCase().includes(q);
+        const inBadge = (role.headcountBadge || '').toLowerCase().includes(q);
         const inDeliverables = (role.deliverables || []).some(d => d.toLowerCase().includes(q));
         const inSops = role.sops.some(code => {
           const sopObj = SOP_DETAILS[code];
           return code.toLowerCase().includes(q) || (sopObj && sopObj.title.toLowerCase().includes(q));
         });
-        return inTitle || inMission || inDeliverables || inSops;
+        return inTitle || inMission || inBadge || inDeliverables || inSops;
       }
       return true;
     }
@@ -815,21 +943,24 @@
         const active = state.activeDept === d.id;
         html += `
           <button onclick="setDeptFilter('${d.id}')" class="px-3 py-1 rounded-full font-medium transition-all flex items-center gap-1.5 shrink-0 ${active ? 'bg-[#FFFFFF] text-[#26221F] border border-[#C9BBA8] shadow-2xs' : 'text-[#59524C] hover:bg-[#DFD5C7]'}">
-            <span class="w-2 h-2 rounded-full" style="background:${d.color}"></span>
+            <span class="w-2.5 h-2.5 rounded-full" style="background:${d.color}"></span>
             <span>${d.name}</span>
           </button>
         `;
       });
       filtersEl.innerHTML = html;
 
-      const internalCount = rolesData.filter(r => r.linkType === 'Interno').length;
-      const externalCount = rolesData.filter(r => r.linkType === 'Externo').length;
+      const internalRoles = rolesData.filter(r => r.linkType === 'Interno');
+      const minSpec = internalRoles.reduce((acc, r) => acc + r.minHeadcount, 0);
+      const maxSpec = internalRoles.reduce((acc, r) => acc + r.maxHeadcount, 0);
+      const externalCells = rolesData.filter(r => r.linkType === 'Externo').length;
+
       const summaryEl = document.getElementById('load-summary');
       if (summaryEl) {
         summaryEl.innerHTML = `
           <span>SOPs · <strong class="font-semibold text-[#26221F]">10</strong></span>
-          <span>Núcleo interno · <strong class="font-semibold text-[#26221F]">${internalCount}</strong></span>
-          <span>Aliados externos · <strong class="font-semibold text-[#7A6248]">${externalCount}</strong></span>
+          <span>Dotación · <strong class="font-semibold text-[#26221F]">${minSpec}–${maxSpec} esp.</strong></span>
+          <span>Staff + Externos · <strong class="font-semibold text-[#7A6248]">1 staff + ${externalCells} células</strong></span>
         `;
       }
 
@@ -852,7 +983,7 @@
               <span class="text-[#59524C]">${sop.desc}</span>
             </div>
             <div class="flex items-center gap-3 shrink-0">
-              <span class="text-[11px] text-[#7A353E] font-semibold">${matchingCount} cargos vinculados</span>
+              <span class="text-[11px] text-[#7A353E] font-semibold">${matchingCount} roles vinculados</span>
               <button onclick="clearFilters()" class="px-2.5 py-1 rounded-full border border-[#CFC3B2] bg-[#F4EFE7] hover:bg-[#E6DDD0] text-[#26221F] text-[11px] font-medium transition-colors">
                 Ver todos ✕
               </button>
@@ -860,7 +991,7 @@
           </div>
         `;
       } else if (state.searchQuery) {
-        const matchingCount = rolesData.filter(r => isRoleMatch(r)).length;
+        const matchingCount = rolesData.filter(r => isRoleMatch(r)).length + (isRoleMatch(STAFF_CONSULTANT_ROLE) ? 1 : 0);
         bannerEl.classList.remove('hidden');
         if (clearBtn) clearBtn.classList.remove('hidden');
         bannerEl.innerHTML = `
@@ -879,48 +1010,109 @@
       }
     }
 
-    function renderLevelZeroCard() {
+    function renderLevelZeroHeader() {
       const filtering = hasActiveFilter();
-      const matches = isRoleMatch(EXECUTIVE_ROLE);
-      const stateClass = filtering ? (matches ? 'is-highlighted' : 'is-dimmed') : '';
+      const execMatches = isRoleMatch(EXECUTIVE_ROLE);
+      const staffMatches = isRoleMatch(STAFF_CONSULTANT_ROLE);
+
+      const execStateClass = filtering ? (execMatches ? 'is-highlighted' : 'is-dimmed') : '';
+      const staffStateClass = filtering ? (staffMatches ? 'is-highlighted' : 'is-dimmed') : '';
 
       return `
-        <div onclick="openRoleModal('gerencia-general')" 
-             class="role-card ${stateClass} cursor-pointer max-w-xl mx-auto bg-[#FFFFFF] rounded-2xl border border-[#CFC3B2] px-6 py-4 text-center relative overflow-hidden">
-          <div class="absolute top-0 inset-x-0 h-[3.5px] bg-[#7A353E]"></div>
-          <div class="text-[10px] uppercase tracking-[0.2em] text-[#7A353E] font-semibold mb-1">
-            Nivel 0 · Gobierno Corporativo · RUT 78.560.882-8
+        <div class="max-w-5xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-3 lg:gap-0 relative">
+          <!-- Espaciador izquierdo en desktop para mantener centrado perfecto del tronco principal -->
+          <div class="hidden lg:block lg:w-[270px] shrink-0"></div>
+
+          <!-- Nodo Central: Gerencia General -->
+          <div onclick="openRoleModal('gerencia-general')" 
+               class="role-card ${execStateClass} cursor-pointer w-full max-w-lg bg-[#FFFFFF] rounded-2xl border border-[#CFC3B2] px-6 py-4 text-center relative overflow-hidden shrink-0">
+            <div class="absolute top-0 inset-x-0 h-[4px] bg-[#7A353E]"></div>
+            <div class="flex items-center justify-center gap-2 mb-1">
+              <span class="text-[10px] uppercase tracking-[0.2em] text-[#7A353E] font-semibold">
+                Nivel 0 · Gobierno Corporativo
+              </span>
+              <span class="px-2 py-0.5 rounded-full bg-[#F4EAEB] text-[#7A353E] text-[10px] font-semibold">
+                2 Socias Fundadoras
+              </span>
+            </div>
+            <h2 class="text-lg md:text-xl font-semibold tracking-tight text-[#26221F] leading-snug">
+              Gerencia General · Socias Fundadoras
+            </h2>
+            <p class="text-xs text-[#635C56] mt-0.5">
+              ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Dirección Ejecutiva Transversal
+            </p>
           </div>
-          <h2 class="text-lg md:text-xl font-semibold tracking-tight text-[#26221F] leading-snug">
-            Gerencia General · Socias Fundadoras
-          </h2>
-          <p class="text-xs text-[#635C56] mt-0.5">
-            ESTUDIO AFÍN SpA · Dirección Ejecutiva, Estrategia y Gobernanza Transversal
-          </p>
+
+          <!-- Conector punteado horizontal (Desktop) / vertical (Móvil) hacia Staff Asesor -->
+          <div class="flex lg:hidden flex-col items-center">
+            <div class="w-px h-4 border-l-2 border-dashed border-[#9E8263]"></div>
+          </div>
+          <div class="hidden lg:flex items-center w-8 shrink-0">
+            <div class="w-full border-t-2 border-dashed border-[#9E8263]"></div>
+          </div>
+
+          <!-- Nodo Lateral Staff: Consultor Estratégico & Control de Gestión -->
+          <div onclick="openRoleModal('staff-consultor')"
+               class="role-card ${staffStateClass} group cursor-pointer w-full max-w-lg lg:w-[260px] bg-[#FAF7F2] rounded-2xl border-2 border-dashed border-[#B59D84] hover:border-[#7A353E] px-4 py-3 text-left relative shrink-0">
+            <div class="flex items-center justify-between gap-1.5 mb-1">
+              <span class="text-[9.5px] uppercase tracking-[0.18em] text-[#7A6248] font-bold">
+                Staff · Asesoría Externa
+              </span>
+              <span class="w-1.5 h-1.5 rounded-full bg-[#9E8263]"></span>
+            </div>
+            <div class="text-[12.5px] font-semibold text-[#26221F] leading-snug group-hover:text-[#7A353E] transition-colors">
+              Consultor Estratégico & Control de Gestión
+            </div>
+            <div class="mt-2 flex items-center justify-between gap-1.5 pt-1.5 border-t border-[#E6DDD0]">
+              <span class="text-[10px] font-medium text-[#6E5A4F]">
+                Soporte transversal · SOPs & KPIs
+              </span>
+              <span class="interactive-arrow text-[11px] text-[#8C837A] group-hover:text-[#7A353E] transition-all">→</span>
+            </div>
+          </div>
         </div>
       `;
     }
 
-    function renderDeptSopNav(dept) {
+    function renderDeptPillarHeader(dept) {
+      const capacityLabel = getDeptCapacitySummary(dept.id);
       return `
-        <div class="mt-2.5 pt-2 border-t border-[#EAE2D6] flex flex-wrap items-center justify-center gap-1">
-          ${dept.sops.map(code => {
-            const isSelected = state.activeSop === code;
-            const sopInfo = SOP_DETAILS[code];
-            return `
-              <button
-                onclick="toggleSopFilter('${code}', event)"
-                title="${sopInfo ? sopInfo.title : code}"
-                class="px-2 py-0.5 rounded-md text-[10px] font-medium tracking-wide transition-all ${
-                  isSelected
-                    ? 'bg-[#7A353E] text-[#FFFFFF] shadow-2xs'
-                    : 'bg-[#EFE9E0] text-[#4F4842] border border-[#DDD3C5] hover:bg-[#DFD5C7] hover:text-[#26221F]'
-                }"
-              >
-                ${code}
-              </button>
-            `;
-          }).join('')}
+        <div class="relative pt-3 pb-3 px-3 rounded-t-xl border-b-2 flex flex-col justify-between transition-all"
+             style="background-color:${dept.tintBg}; border-top: 4px solid ${dept.color}; border-bottom-color:${dept.color}; border-left: 1px solid ${dept.tintBorder}; border-right: 1px solid ${dept.tintBorder};">
+          <div>
+            <div class="flex items-center justify-between gap-1 mb-1">
+              <span class="text-[9.5px] uppercase tracking-[0.22em] font-bold" style="color:${dept.color}">
+                ÁREA ${dept.id}
+              </span>
+              <span class="px-2 py-0.5 rounded-full text-[9.5px] font-semibold bg-[#FFFFFF]/90 border" style="color:${dept.color}; border-color:${dept.tintBorder}">
+                ${capacityLabel}
+              </span>
+            </div>
+            <h3 class="text-[13.5px] font-bold tracking-tight text-[#26221F] leading-tight text-left">
+              ${dept.name}
+            </h3>
+          </div>
+
+          <div class="mt-2.5 pt-2 border-t flex flex-wrap items-center gap-1" style="border-color:${dept.tintBorder}">
+            ${dept.sops.map(code => {
+              const isSelected = state.activeSop === code;
+              const sopInfo = SOP_DETAILS[code];
+              return `
+                <button
+                  onclick="toggleSopFilter('${code}', event)"
+                  title="${sopInfo ? sopInfo.title : code}"
+                  style="${isSelected ? `background-color:${dept.color}; color:#FFFFFF;` : `border-color:${dept.tintBorder};`}"
+                  class="px-1.5 py-0.5 rounded text-[9.5px] font-semibold tracking-wide transition-all ${
+                    isSelected
+                      ? 'shadow-2xs'
+                      : 'bg-[#FFFFFF]/85 text-[#3A3430] border hover:bg-[#FFFFFF]'
+                  }"
+                >
+                  ${code}
+                </button>
+              `;
+            }).join('')}
+          </div>
         </div>
       `;
     }
@@ -933,12 +1125,24 @@
 
       return `
         <div onclick="openRoleModal('${role.id}')" 
-             class="role-card ${stateClass} group cursor-pointer bg-[#FFFFFF] rounded-xl border border-[#D8CCB9] p-3.5 flex flex-col justify-between gap-2.5">
+             style="border-left: 3px solid ${dept.color};"
+             class="role-card ${stateClass} group cursor-pointer bg-[#FFFFFF] rounded-xl border border-[#D8CCB9] p-3.5 flex flex-col justify-between gap-2">
           <div class="flex items-start justify-between gap-2">
-            <div class="text-[13px] font-semibold text-[#26221F] leading-snug group-hover:text-[#7A353E] transition-colors">
+            <div class="text-[12.5px] font-semibold text-[#26221F] leading-snug group-hover:text-[#7A353E] transition-colors">
               ${role.title}
             </div>
-            <span class="w-2 h-2 rounded-full shrink-0 mt-1.5" style="background:${dept.color}"></span>
+          </div>
+
+          <div>
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-medium border"
+                  style="background-color:${dept.tintBg}; color:#2E2926; border-color:${dept.tintBorder};">
+              <svg class="w-2.5 h-2.5 shrink-0" style="color:${dept.color}" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              <span>${role.headcountBadge}</span>
+            </span>
           </div>
 
           ${state.activeSop && matches ? `
@@ -949,8 +1153,8 @@
             </div>
           ` : ''}
           
-          <div class="flex items-center justify-between gap-2 pt-0.5">
-            <div class="flex items-center gap-1.5 text-[11px] ${ind.text}">
+          <div class="flex items-center justify-between gap-2 pt-1 border-t border-[#F0EAE1]">
+            <div class="flex items-center gap-1.5 text-[10.5px] ${ind.text}">
               <span class="w-1.5 h-1.5 rounded-full ${ind.dot}"></span>
               <span>${ind.label}</span>
             </div>
@@ -967,12 +1171,12 @@
         ? DEPARTMENTS
         : DEPARTMENTS.filter(d => d.id === state.activeDept);
 
-      const levelZeroCard = renderLevelZeroCard();
+      const levelZeroBlock = renderLevelZeroHeader();
 
       if (state.deviceMode === 'mobile') {
         let html = `
           <div class="max-w-md mx-auto">
-            ${levelZeroCard}
+            ${levelZeroBlock}
             <div class="flex justify-center">
               <div class="w-px h-6 bg-[#B5A99A]"></div>
             </div>
@@ -981,28 +1185,9 @@
         visibleDepts.forEach(dept => {
           const deptRoles = rolesData.filter(r => r.dept === dept.id);
           html += `
-            <section class="bg-[#E6DDD0] rounded-2xl border border-[#D4C7B5] p-4 relative">
-              <div class="pb-3 mb-3.5 border-b border-[#D4C7B5]">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full" style="background:${dept.color}"></span>
-                    <h2 class="text-sm font-semibold text-[#26221F]">${dept.name}</h2>
-                  </div>
-                  <span class="text-[10px] tracking-widest uppercase text-[#635C56] font-semibold">${dept.id}</span>
-                </div>
-                <div class="flex flex-wrap gap-1.5 mt-2.5">
-                  ${dept.sops.map(code => {
-                    const isSelected = state.activeSop === code;
-                    return `
-                      <button onclick="toggleSopFilter('${code}', event)"
-                        class="px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
-                          isSelected ? 'bg-[#7A353E] text-[#FFFFFF]' : 'bg-[#FFFFFF] border border-[#CFC3B2] text-[#4F4842]'
-                        }">
-                        ${code}
-                      </button>
-                    `;
-                  }).join('')}
-                </div>
+            <section class="bg-[#E6DDD0] rounded-2xl border border-[#D4C7B5] p-3.5 relative">
+              <div class="mb-3.5">
+                ${renderDeptPillarHeader(dept)}
               </div>
               <div class="relative pl-4 space-y-3">
                 <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#B5A99A]"></div>
@@ -1042,24 +1227,15 @@
         `;
 
       let html = `
-        ${levelZeroCard}
+        ${levelZeroBlock}
         <div class="overflow-x-auto pb-4">
-          <div class="${isSingle ? 'max-w-md mx-auto' : 'min-w-[1000px]'}">
+          <div class="${isSingle ? 'max-w-md mx-auto' : 'min-w-[1040px]'}">
             
             ${topBranchHtml}
 
-            <!-- Encabezados de Departamento con Navegador de SOPs -->
+            <!-- Pilares Arquitectónicos de Departamento -->
             <div class="grid ${gridCols} gap-4 relative z-10">
-              ${visibleDepts.map(dept => `
-                <div class="bg-[#FFFFFF] rounded-xl border border-[#CFC3B2] px-3.5 py-3 text-center relative overflow-hidden shadow-[0_2px_8px_-3px_rgba(46,41,38,0.08)] flex flex-col justify-between">
-                  <div class="absolute top-0 inset-x-0 h-[3px]" style="background:${dept.color}"></div>
-                  <div>
-                    <div class="text-[9.5px] uppercase tracking-[0.2em] text-[#7A726A] font-semibold mb-1">${dept.id}</div>
-                    <div class="text-[13px] font-semibold tracking-tight text-[#26221F] leading-tight">${dept.name}</div>
-                  </div>
-                  ${renderDeptSopNav(dept)}
-                </div>
-              `).join('')}
+              ${visibleDepts.map(dept => renderDeptPillarHeader(dept)).join('')}
             </div>
 
             <!-- Ejes verticales de reporte y Bandas de Nivel -->
@@ -1088,13 +1264,13 @@
                       ${visibleDepts.map(dept => {
                         const cellRoles = rolesData.filter(r => r.dept === dept.id && r.level === lvl.id);
                         if (cellRoles.length === 0) {
-                          return `<div class="min-h-[76px] flex items-center justify-center"></div>`;
+                          return `<div class="min-h-[82px] flex items-center justify-center"></div>`;
                         }
                         return `
                           <div class="space-y-2.5 relative">
                             ${cellRoles.map(r => `
                               <div class="relative">
-                                <div class="w-1.5 h-1.5 rounded-full bg-[#9E9283] mx-auto -mb-[3px] relative z-20 ring-2 ring-[#E6DDD0]"></div>
+                                <div class="w-1.5 h-1.5 rounded-full mx-auto -mb-[3px] relative z-20 ring-2 ring-[#E6DDD0]" style="background:${dept.color}"></div>
                                 ${renderRoleCard(r, dept)}
                               </div>
                             `).join('')}
@@ -1209,7 +1385,7 @@
           <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
             <div>
               <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
-                Sección 9 · Documento Maestro V. 2.5
+                Sección 9 · Documento Maestro V. 2.6
               </div>
               <h3 class="text-lg font-semibold tracking-tight text-[#26221F]">Tablero de KPIs Estratégicos y Operativos</h3>
             </div>
@@ -1268,7 +1444,7 @@
               <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
                 Gobernanza Documental · Versionado Semántico (X.Y)
               </div>
-              <h3 class="text-lg font-semibold tracking-tight text-[#26221F]">Control de Versiones · ORG-EA V. 2.5</h3>
+              <h3 class="text-lg font-semibold tracking-tight text-[#26221F]">Control de Versiones · ORG-EA V. 2.7</h3>
             </div>
             <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
               ✕
@@ -1277,7 +1453,7 @@
 
           <div class="mt-5 space-y-4 text-xs">
             <p class="text-[#59524C] leading-relaxed">
-              Sincronizado con <strong class="text-[#26221F]">Propuesta de Estructuración y Negocio - ESTUDIO AFÍN SpA (DOC-MAESTRO V. 2.5)</strong>. El primer dígito (X) registra cambios estructurales mayores y el segundo (Y) iteraciones de precisión operativa.
+              Sincronizado con <strong class="text-[#26221F]">Propuesta de Estructuración y Negocio - ESTUDIO AFÍN SpA (DOC-MAESTRO V. 2.6)</strong>. El primer dígito (X) registra cambios estructurales mayores y el segundo (Y) iteraciones de precisión operativa.
             </p>
             <div class="border border-[#D8CCB9] rounded-xl overflow-hidden bg-[#FFFFFF]">
               <table class="w-full text-left border-collapse">
@@ -1290,7 +1466,7 @@
                 </thead>
                 <tbody class="divide-y divide-[#EAE2D6]">
                   ${VERSION_HISTORY.map(v => `
-                    <tr class="${v.ver === '2.5' ? 'bg-[#FAF3F1]' : ''}">
+                    <tr class="${v.ver === '2.7' ? 'bg-[#FAF3F1]' : ''}">
                       <td class="py-2.5 px-3 font-semibold text-[#7A353E] whitespace-nowrap">V. ${v.ver}</td>
                       <td class="py-2.5 px-3 text-[#635C56] whitespace-nowrap">${v.date}</td>
                       <td class="py-2.5 px-3 text-[#2E2926] leading-relaxed">${v.desc}</td>
@@ -1326,7 +1502,7 @@
           <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
             <div>
               <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
-                Nivel 0 · Gobierno Corporativo · Núcleo Interno
+                Nivel 0 · Gobierno Corporativo · ${exec.headcountBadge}
               </div>
               <h3 class="text-lg font-semibold tracking-tight text-[#26221F] leading-snug">${exec.title}</h3>
             </div>
@@ -1339,6 +1515,11 @@
             <div class="bg-[#FFFFFF] border border-[#CFC3B2] rounded-xl p-3.5">
               <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Identidad Jurídica Vigente</div>
               <div class="font-semibold text-[#26221F]">${exec.legalEntity}</div>
+            </div>
+
+            <div class="bg-[#FFFFFF] border border-[#D8CCB9] rounded-xl p-3.5">
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-1">Conformación y Dotación</div>
+              <p class="text-[#2E2926] leading-relaxed">${exec.teamStructure}</p>
             </div>
 
             <div class="bg-[#EFE9E0] border border-[#D4C7B5] rounded-xl p-4">
@@ -1378,6 +1559,71 @@
         return;
       }
 
+      if (state.selectedRoleId === 'staff-consultor') {
+        const staff = STAFF_CONSULTANT_ROLE;
+        modal.classList.remove('hidden');
+        content.innerHTML = `
+          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A6248] mb-1">
+                Staff Nivel 0 · Asesoría Estratégica Externa
+              </div>
+              <h3 class="text-lg font-semibold tracking-tight text-[#26221F] leading-snug">${staff.title}</h3>
+              <div class="flex flex-wrap items-center gap-2 mt-2">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#F5EFE6] text-[#6E5A4F] border border-[#DFD1BE]">
+                  ${staff.headcountBadge}
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-dashed border-[#B59D84] text-[10.5px] text-[#7A6248]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#9E8263]"></span>
+                  <span>Relación Staff · Línea punteada</span>
+                </span>
+              </div>
+            </div>
+            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
+              ✕
+            </button>
+          </div>
+
+          <div class="mt-5 space-y-5 text-xs">
+            <div class="bg-[#FFFFFF] border border-[#D8CCB9] rounded-xl p-3.5">
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A6248] mb-1">
+                Naturaleza del Vínculo y Alcance Staff
+              </div>
+              <p class="text-[#2E2926] leading-relaxed">${staff.teamStructure}</p>
+            </div>
+
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-1.5">Responsabilidad Principal</div>
+              <p class="text-[#2E2926] text-[13px] leading-relaxed">${staff.mission}</p>
+            </div>
+
+            ${renderAuditAccordion(staff.audit)}
+
+            ${renderDeliverablesAndRisks(staff.deliverables, staff.risksMitigated)}
+
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A]">SOPs Diseñados y Auditados</span>
+                <span class="text-[10px] text-[#7A726A]">Clic para resaltar en el mapa</span>
+              </div>
+              <div class="space-y-2">
+                ${renderSopListInModal(staff.sops)}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-2">Indicadores de Gestión</div>
+              <div class="flex flex-wrap gap-2">
+                ${staff.kpis.map(k => `
+                  <span class="px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#CFC3B2] text-[#26221F] font-medium">${k}</span>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
       const role = rolesData.find(r => r.id === state.selectedRoleId);
       if (!role) return;
 
@@ -1394,9 +1640,15 @@
               <span>Nivel ${role.level}</span>
             </div>
             <h3 class="text-lg font-semibold tracking-tight text-[#26221F] leading-snug">${role.title}</h3>
-            <div class="inline-flex items-center gap-1.5 mt-1.5 px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-[#D8CCB9] text-[10.5px] ${linkBadge.text}">
-              <span class="w-1.5 h-1.5 rounded-full ${linkBadge.dot}"></span>
-              <span>${linkBadge.label}</span>
+            <div class="flex flex-wrap items-center gap-2 mt-2">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold border"
+                    style="background-color:${dept.tintBg}; color:${dept.color}; border-color:${dept.tintBorder};">
+                ${role.headcountBadge}
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-[#D8CCB9] text-[10.5px] ${linkBadge.text}">
+                <span class="w-1.5 h-1.5 rounded-full ${linkBadge.dot}"></span>
+                <span>${linkBadge.label}</span>
+              </span>
             </div>
           </div>
           <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
@@ -1405,6 +1657,13 @@
         </div>
 
         <div class="mt-5 space-y-5 text-xs">
+          <div class="bg-[#FFFFFF] border border-[#D8CCB9] rounded-xl p-3.5">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] mb-1" style="color:${dept.color}">
+              Conformación de Equipo y Escalabilidad
+            </div>
+            <p class="text-[#2E2926] leading-relaxed">${role.teamStructure}</p>
+          </div>
+
           <div>
             <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-1.5">Responsabilidad Principal</div>
             <p class="text-[#2E2926] text-[13px] leading-relaxed">${role.mission}</p>
