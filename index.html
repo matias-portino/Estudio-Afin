@@ -9,28 +9,29 @@
   <style>
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #F8F5F0;
-      color: #4A4541;
+      background-color: #EFE9E0;
+      color: #2E2926;
       -webkit-font-smoothing: antialiased;
     }
     .role-card {
       position: relative;
       z-index: 10;
+      box-shadow: 0 2px 8px -2px rgba(46, 41, 38, 0.07), 0 1px 2px 0 rgba(46, 41, 38, 0.04);
       transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, border-color 0.22s ease, opacity 0.22s ease;
     }
     .role-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 26px -10px rgba(74, 69, 65, 0.14);
-      border-color: #B89B9E;
+      box-shadow: 0 12px 24px -8px rgba(46, 41, 38, 0.16);
+      border-color: #9E6B71;
     }
     .role-card.is-highlighted {
       border-color: #7A353E !important;
-      box-shadow: 0 10px 24px -8px rgba(122, 53, 62, 0.22);
-      background-color: #FFFDFB;
+      box-shadow: 0 10px 24px -6px rgba(122, 53, 62, 0.26);
+      background-color: #FFFFFF;
     }
     .role-card.is-dimmed {
-      opacity: 0.36;
-      filter: grayscale(25%);
+      opacity: 0.34;
+      filter: grayscale(30%);
     }
     .role-card.is-dimmed:hover {
       opacity: 0.85;
@@ -43,13 +44,13 @@
     .modal-animate {
       animation: modalFade 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
-    ::-webkit-scrollbar { width: 4px; height: 4px; }
-    ::-webkit-scrollbar-track { background: #F2EDE4; }
-    ::-webkit-scrollbar-thumb { background: #D4CBC0; border-radius: 2px; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #E6DDD0; }
+    ::-webkit-scrollbar-thumb { background: #BFB3A3; border-radius: 3px; }
 
     /* MODO PRESENTACIÓN */
     body.presentation-mode {
-      background-color: #FAF8F4;
+      background-color: #F4EFE7;
     }
     body.presentation-mode #app-header,
     body.presentation-mode .interactive-arrow {
@@ -62,7 +63,6 @@
     }
     body.presentation-mode .role-card:hover {
       transform: none;
-      box-shadow: none;
     }
 
     /* ESTILOS DE IMPRESIÓN / EXPORTACIÓN PDF */
@@ -72,7 +72,7 @@
         margin: 10mm 12mm;
       }
       body {
-        background-color: #FAF8F4 !important;
+        background-color: #F4EFE7 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         zoom: 0.85;
@@ -106,46 +106,46 @@
 <body class="min-h-screen flex flex-col selection:bg-[#7A353E]/15 selection:text-[#7A353E]">
 
   <!-- BARRA FLOTANTE DE MODO PRESENTACIÓN -->
-  <div id="presentation-toolbar" class="hidden fixed bottom-5 right-6 z-40 items-center gap-2 bg-[#3A3532] text-[#FDFBF7] px-3.5 py-2 rounded-full shadow-lg border border-[#524C47] text-xs">
+  <div id="presentation-toolbar" class="hidden fixed bottom-5 right-6 z-40 items-center gap-2 bg-[#26221F] text-[#FFFFFF] px-3.5 py-2 rounded-full shadow-lg border border-[#47403B] text-xs">
     <span class="text-[#D4CBC0] pr-1">Vista Lámina Ejecutiva</span>
-    <button onclick="window.print()" class="px-3 py-1 rounded-full bg-[#7A353E] hover:bg-[#8E404B] text-[#FDFBF7] font-medium transition-colors flex items-center gap-1.5">
+    <button onclick="window.print()" class="px-3 py-1 rounded-full bg-[#7A353E] hover:bg-[#8E404B] text-[#FFFFFF] font-medium transition-colors flex items-center gap-1.5">
       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
         <rect x="6" y="14" width="12" height="8"></rect>
       </svg>
       <span>Imprimir / Guardar PDF</span>
     </button>
-    <button onclick="togglePresentationMode()" class="px-2.5 py-1 rounded-full bg-[#4F4945] hover:bg-[#615A55] text-[#FDFBF7] font-medium transition-colors">
+    <button onclick="togglePresentationMode()" class="px-2.5 py-1 rounded-full bg-[#453E39] hover:bg-[#574F49] text-[#FFFFFF] font-medium transition-colors">
       Salir (Esc)
     </button>
   </div>
 
   <!-- CABECERA FORMAL DE LÁMINA (PRESENTACIÓN E IMPRESIÓN PDF) -->
-  <div id="presentation-header" class="hidden max-w-[1400px] w-full mx-auto px-5 md:px-8 pt-5 pb-3 border-b border-[#DFD6C9] items-end justify-between">
+  <div id="presentation-header" class="hidden max-w-[1400px] w-full mx-auto px-5 md:px-8 pt-5 pb-3 border-b border-[#CFC3B2] items-end justify-between">
     <div>
       <div class="text-[10px] uppercase tracking-[0.22em] text-[#7A353E] font-semibold mb-0.5">
         ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional
       </div>
-      <h1 class="text-xl font-semibold tracking-tight text-[#3A3532]">
+      <h1 class="text-xl font-semibold tracking-tight text-[#26221F]">
         Organigrama Corporativo, Roles y Gobernanza de Procesos
       </h1>
     </div>
-    <div id="presentation-meta" class="text-right text-[11px] text-[#78726C]">
+    <div id="presentation-meta" class="text-right text-[11px] text-[#5E5751]">
       <!-- Render dinámico -->
     </div>
   </div>
 
   <!-- CABECERA INTERACTIVA -->
-  <header id="app-header" class="bg-[#F8F5F0]/95 backdrop-blur-md border-b border-[#E5DDD2] sticky top-0 z-30">
+  <header id="app-header" class="bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#D8CCB9] sticky top-0 z-30 shadow-[0_1px_4px_rgba(46,41,38,0.04)]">
     <div class="max-w-[1400px] mx-auto px-5 md:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
       
       <!-- Identidad y Título -->
       <div class="flex items-baseline gap-2.5">
-        <h1 class="text-lg md:text-xl font-semibold tracking-tight text-[#3A3532]">
+        <h1 class="text-lg md:text-xl font-semibold tracking-tight text-[#26221F]">
           Estudio Afín SpA
         </h1>
-        <span class="hidden sm:inline-block text-[#C4BBB0] font-light">|</span>
-        <span class="text-sm md:text-[15px] font-normal text-[#7A353E]">
+        <span class="hidden sm:inline-block text-[#BFB3A3] font-light">|</span>
+        <span class="text-sm md:text-[15px] font-medium text-[#7A353E]">
           Roles y Estructura
         </span>
       </div>
@@ -159,9 +159,9 @@
             id="quick-search"
             oninput="handleSearch(this.value)"
             placeholder="Buscar cargo, SOP o entregable..."
-            class="w-44 sm:w-56 pl-7 pr-7 py-1.5 rounded-full border border-[#DED5C8] bg-[#FDFBF7] text-[11.5px] text-[#3A3532] placeholder-[#A39A90] focus:outline-none focus:border-[#7A353E] transition-all"
+            class="w-44 sm:w-56 pl-7 pr-7 py-1.5 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] text-[11.5px] text-[#26221F] placeholder-[#8C837A] focus:outline-none focus:border-[#7A353E] transition-all"
           />
-          <svg class="w-3.5 h-3.5 text-[#999188] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <svg class="w-3.5 h-3.5 text-[#7A726A] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.3-4.3"></path>
           </svg>
@@ -169,37 +169,37 @@
             id="btn-clear-search"
             onclick="clearFilters()"
             title="Limpiar filtro"
-            class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-[#857E77] hover:text-[#7A353E] font-semibold px-1"
+            class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-[#635C56] hover:text-[#7A353E] font-semibold px-1"
           >✕</button>
         </div>
 
         <!-- Etapa: Hoy vs Escala -->
-        <div class="bg-[#EFE9E0] p-0.5 rounded-full border border-[#E2D9CC] flex items-center text-[11px] tracking-wide">
-          <button onclick="setStage('hoy')" id="btn-stage-hoy" class="px-3 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FDFBF7] shadow-2xs">
+        <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D4C7B5] flex items-center text-[11px] tracking-wide">
+          <button onclick="setStage('hoy')" id="btn-stage-hoy" class="px-3 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FFFFFF] shadow-2xs">
             Hoy
           </button>
-          <button onclick="setStage('escala')" id="btn-stage-escala" class="px-3 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]">
+          <button onclick="setStage('escala')" id="btn-stage-escala" class="px-3 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]">
             Escala
           </button>
         </div>
 
         <!-- Auditoría -->
-        <button onclick="toggleAudit()" id="btn-audit" class="px-3 py-1.5 rounded-full border border-[#DED5C8] bg-[#FDFBF7] text-[#6E6862] hover:border-[#7A353E]/40 hover:text-[#3A3532] text-[11px] tracking-wide font-medium transition-all">
+        <button onclick="toggleAudit()" id="btn-audit" class="px-3 py-1.5 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] text-[#59524C] hover:border-[#7A353E]/50 hover:text-[#26221F] text-[11px] tracking-wide font-medium transition-all">
           Auditoría: OFF
         </button>
 
         <!-- Vista PC / Móvil -->
-        <div class="bg-[#EFE9E0] p-0.5 rounded-full border border-[#E2D9CC] flex items-center text-[11px] tracking-wide">
-          <button onclick="setDeviceMode('desktop')" id="btn-view-desktop" class="px-2.5 py-1 rounded-full font-medium transition-all bg-[#FDFBF7] text-[#3A3532] shadow-2xs">
+        <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D4C7B5] flex items-center text-[11px] tracking-wide">
+          <button onclick="setDeviceMode('desktop')" id="btn-view-desktop" class="px-2.5 py-1 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#26221F] shadow-2xs">
             PC
           </button>
-          <button onclick="setDeviceMode('mobile')" id="btn-view-mobile" class="px-2.5 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]">
+          <button onclick="setDeviceMode('mobile')" id="btn-view-mobile" class="px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]">
             Móvil
           </button>
         </div>
 
         <!-- Botón Vista Presentación / PDF -->
-        <button onclick="togglePresentationMode()" title="Modo presentación limpio y exportación PDF" class="px-3 py-1.5 rounded-full border border-[#7A353E]/30 bg-[#7A353E]/8 hover:bg-[#7A353E] text-[#7A353E] hover:text-[#FDFBF7] text-[11px] tracking-wide font-medium transition-all flex items-center gap-1.5">
+        <button onclick="togglePresentationMode()" title="Modo presentación limpio y exportación PDF" class="px-3 py-1.5 rounded-full border border-[#7A353E]/40 bg-[#7A353E]/10 hover:bg-[#7A353E] text-[#7A353E] hover:text-[#FFFFFF] text-[11px] tracking-wide font-medium transition-all flex items-center gap-1.5">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <rect x="2" y="3" width="20" height="14" rx="2"></rect>
             <path d="M8 21h8M12 17v4"></path>
@@ -210,21 +210,21 @@
     </div>
 
     <!-- Sub-barra de navegación por áreas + Accesos Maestros -->
-    <div class="bg-[#F3EFE8]/80 border-t border-[#EAE2D6] px-5 md:px-8 py-2">
+    <div class="bg-[#EAE2D6] border-t border-[#D8CCB9] px-5 md:px-8 py-2">
       <div class="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-3 text-[11.5px]">
         <div id="dept-filters" class="flex items-center gap-1.5 overflow-x-auto pb-0.5 md:pb-0">
           <!-- Render dinámico -->
         </div>
         <div class="flex items-center gap-3">
-          <div id="load-summary" class="hidden xl:flex items-center gap-3.5 text-[11px] text-[#857E77] tracking-wide">
+          <div id="load-summary" class="hidden xl:flex items-center gap-3.5 text-[11px] text-[#635C56] tracking-wide">
             <!-- Render dinámico -->
           </div>
-          <span class="hidden xl:inline text-[#D4CBC0]">|</span>
+          <span class="hidden xl:inline text-[#BFB3A3]">|</span>
           <!-- Accesos directos al Documento Maestro V. 2.5 -->
-          <button onclick="openSpecialModal('kpis')" class="px-2.5 py-1 rounded-full border border-[#D8CFC2] bg-[#FDFBF7] hover:border-[#7A353E]/50 text-[#4A4541] hover:text-[#7A353E] text-[11px] font-medium transition-all">
+          <button onclick="openSpecialModal('kpis')" class="px-2.5 py-1 rounded-full border border-[#C9BBA8] bg-[#FFFFFF] hover:border-[#7A353E] text-[#2E2926] hover:text-[#7A353E] text-[11px] font-medium transition-all shadow-2xs">
             KPIs Maestros
           </button>
-          <button onclick="openSpecialModal('versions')" class="px-2.5 py-1 rounded-full border border-[#D8CFC2] bg-[#FDFBF7] hover:border-[#7A353E]/50 text-[#6E6862] hover:text-[#7A353E] text-[11px] font-medium transition-all">
+          <button onclick="openSpecialModal('versions')" class="px-2.5 py-1 rounded-full border border-[#C9BBA8] bg-[#FFFFFF] hover:border-[#7A353E] text-[#59524C] hover:text-[#7A353E] text-[11px] font-medium transition-all shadow-2xs">
             ORG-EA V. 2.5
           </button>
         </div>
@@ -232,7 +232,7 @@
     </div>
 
     <!-- Banner dinámico cuando hay un SOP o búsqueda activa -->
-    <div id="active-sop-banner" class="hidden bg-[#FDFBF7] border-t border-[#DFD2C3] px-5 md:px-8 py-2.5">
+    <div id="active-sop-banner" class="hidden bg-[#FFFFFF] border-t border-[#D4C7B5] px-5 md:px-8 py-2.5 shadow-xs">
       <!-- Render dinámico -->
     </div>
   </header>
@@ -245,14 +245,14 @@
   </main>
 
   <!-- PIE DE PÁGINA FORMAL (VISIBLE EN PRESENTACIÓN E IMPRESIÓN PDF) -->
-  <footer id="presentation-footer" class="hidden max-w-[1400px] w-full mx-auto px-5 md:px-8 py-3 border-t border-[#DFD6C9] items-center justify-between text-[10.5px] text-[#857E77]">
+  <footer id="presentation-footer" class="hidden max-w-[1400px] w-full mx-auto px-5 md:px-8 py-3 border-t border-[#CFC3B2] items-center justify-between text-[10.5px] text-[#635C56]">
     <span>ESTUDIO AFÍN SpA (RUT 78.560.882-8) · Documento de Estructura Organizacional y Gobernanza (Sincronizado DOC-MAESTRO V. 2.5)</span>
     <span id="presentation-legend">● Equipo interno &nbsp;·&nbsp; ○ Por incorporar &nbsp;·&nbsp; ● Aliado externo</span>
   </footer>
 
   <!-- MODAL FLOTANTE -->
-  <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#4A4541]/25 backdrop-blur-[3px] flex items-center justify-center p-4">
-    <div class="modal-animate w-full max-w-xl max-h-[88vh] overflow-y-auto bg-[#FDFBF7] rounded-2xl border border-[#E2D9CC] shadow-[0_24px_48px_-12px_rgba(58,53,50,0.18)] p-6 md:p-7">
+  <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#26221F]/35 backdrop-blur-[3px] flex items-center justify-center p-4">
+    <div class="modal-animate w-full max-w-xl max-h-[88vh] overflow-y-auto bg-[#FAF7F2] rounded-2xl border border-[#CFC3B2] shadow-[0_24px_48px_-12px_rgba(38,34,31,0.25)] p-6 md:p-7">
       <div id="modal-content"></div>
     </div>
   </div>
@@ -260,10 +260,10 @@
   <script>
     const DEPARTMENTS = [
       { id: 'COM', name: 'Comercial & Cliente', color: '#7A353E', sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04'] },
-      { id: 'DIS', name: 'Diseño Estratégico', color: '#A35E66', sops: ['DIS-01'] },
-      { id: 'LOG', name: 'Operaciones & Logística', color: '#78736E', sops: ['LOG-01', 'LOG-02'] },
-      { id: 'TER', name: 'Montaje & Terreno', color: '#968C82', sops: ['TER-01', 'TER-02'] },
-      { id: 'FIN', name: 'Admin & Finanzas', color: '#B59E84', sops: ['FIN-01'] }
+      { id: 'DIS', name: 'Diseño Estratégico', color: '#9E4C56', sops: ['DIS-01'] },
+      { id: 'LOG', name: 'Operaciones & Logística', color: '#5E5954', sops: ['LOG-01', 'LOG-02'] },
+      { id: 'TER', name: 'Montaje & Terreno', color: '#7D7267', sops: ['TER-01', 'TER-02'] },
+      { id: 'FIN', name: 'Admin & Finanzas', color: '#9E8263', sops: ['FIN-01'] }
     ];
 
     const LEVELS = [
@@ -336,7 +336,6 @@
       }
     };
 
-    // Elemento 4: Tablero Completo de KPIs Maestros (Sección 9 DOC-MAESTRO V. 2.5)
     const MASTER_KPIS = {
       external: [
         { name: 'CSAT Operativo', target: '> 85% (≥ 4,25/5)', desc: 'Valida eficiencia del modelo llave en mano y cumplimiento de plazos.' },
@@ -354,7 +353,6 @@
       ]
     };
 
-    // Elemento 5: Historial de Versiones Semántico (Sección 14 DOC-MAESTRO V. 2.5)
     const VERSION_HISTORY = [
       { ver: '1.0', date: 'Abr 2026', desc: 'Estructura base inicial de roles y procedimientos operativos.' },
       { ver: '2.0', date: 'Nov 2026', desc: 'Alineación al modelo Ultra-Lean (5 áreas) para renta corta y segundas viviendas.' },
@@ -363,7 +361,6 @@
       { ver: '2.5', date: '20 Nov 2026', desc: 'Sincronización integral con DOC-MAESTRO V. 2.5: entregables, riesgos, KPIs y PDF.' }
     ];
 
-    // Elemento 1: Gobernanza Societaria e Identidad Legal en Nivel 0
     const EXECUTIVE_ROLE = {
       id: 'gerencia-general',
       dept: 'DIR',
@@ -646,19 +643,19 @@
       activeSop: null,
       searchQuery: '',
       selectedRoleId: null,
-      specialModal: null, // 'kpis' | 'versions' | null
+      specialModal: null,
       presentationMode: false,
       deviceMode: window.innerWidth < 860 ? 'mobile' : 'desktop'
     };
 
     function getStatusIndicator(status) {
       if (status === 'Interno') {
-        return { dot: 'bg-[#6E6862]', text: 'text-[#6E6862]', label: 'Equipo interno' };
+        return { dot: 'bg-[#453E39]', text: 'text-[#4F4842]', label: 'Equipo interno' };
       }
       if (status === 'Externo') {
-        return { dot: 'bg-[#B59E84]', text: 'text-[#8C7760]', label: 'Aliado externo' };
+        return { dot: 'bg-[#9E8263]', text: 'text-[#7A6248]', label: 'Aliado externo' };
       }
-      return { dot: 'border border-[#7A353E] bg-transparent', text: 'text-[#7A353E]', label: 'Por incorporar' };
+      return { dot: 'border-[1.5px] border-[#7A353E] bg-transparent', text: 'text-[#7A353E] font-medium', label: 'Por incorporar' };
     }
 
     function setStage(stage) {
@@ -666,8 +663,8 @@
       ['hoy', 'escala'].forEach(s => {
         const btn = document.getElementById(`btn-stage-${s}`);
         btn.className = s === stage
-          ? 'px-3 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FDFBF7] shadow-2xs'
-          : 'px-3 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]';
+          ? 'px-3 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FFFFFF] shadow-2xs'
+          : 'px-3 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]';
       });
       renderAll();
     }
@@ -677,8 +674,8 @@
       const btn = document.getElementById('btn-audit');
       btn.textContent = state.showAudit ? 'Auditoría: ON' : 'Auditoría: OFF';
       btn.className = state.showAudit
-        ? 'px-3 py-1.5 rounded-full border border-[#7A353E] bg-[#7A353E] text-[#FDFBF7] text-[11px] tracking-wide font-medium transition-all'
-        : 'px-3 py-1.5 rounded-full border border-[#DED5C8] bg-[#FDFBF7] text-[#6E6862] hover:border-[#7A353E]/40 hover:text-[#3A3532] text-[11px] tracking-wide font-medium transition-all';
+        ? 'px-3 py-1.5 rounded-full border border-[#7A353E] bg-[#7A353E] text-[#FFFFFF] text-[11px] tracking-wide font-medium transition-all'
+        : 'px-3 py-1.5 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] text-[#59524C] hover:border-[#7A353E]/50 hover:text-[#26221F] text-[11px] tracking-wide font-medium transition-all';
       renderAll();
     }
 
@@ -701,7 +698,7 @@
       const stageLabel = state.stage === 'hoy' ? 'Etapa Actual (Hoy)' : 'Proyección de Crecimiento (Escala)';
       const today = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' });
       metaEl.innerHTML = `
-        <div class="font-semibold text-[#3A3532]">${stageLabel}</div>
+        <div class="font-semibold text-[#26221F]">${stageLabel}</div>
         <div>Emitido: ${today} · ORG-EA V. 2.5 (Sincronizado DOC-MAESTRO V. 2.5)</div>
       `;
     }
@@ -709,11 +706,11 @@
     function setDeviceMode(mode) {
       state.deviceMode = mode;
       document.getElementById('btn-view-desktop').className = mode === 'desktop'
-        ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FDFBF7] text-[#3A3532] shadow-2xs'
-        : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]';
+        ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#26221F] shadow-2xs'
+        : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]';
       document.getElementById('btn-view-mobile').className = mode === 'mobile'
-        ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FDFBF7] text-[#3A3532] shadow-2xs'
-        : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#6E6862] hover:text-[#3A3532]';
+        ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#26221F] shadow-2xs'
+        : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]';
       renderAll();
     }
 
@@ -830,15 +827,15 @@
       const filtersEl = document.getElementById('dept-filters');
       const allActive = state.activeDept === 'ALL';
       let html = `
-        <button onclick="setDeptFilter('ALL')" class="px-3 py-1 rounded-full font-medium transition-all shrink-0 ${allActive ? 'bg-[#3A3532] text-[#FDFBF7]' : 'text-[#6E6862] hover:bg-[#E8E0D4]'}">
+        <button onclick="setDeptFilter('ALL')" class="px-3 py-1 rounded-full font-medium transition-all shrink-0 ${allActive ? 'bg-[#26221F] text-[#FFFFFF] shadow-2xs' : 'text-[#59524C] hover:bg-[#DFD5C7]'}">
           Todas las áreas
         </button>
       `;
       DEPARTMENTS.forEach(d => {
         const active = state.activeDept === d.id;
         html += `
-          <button onclick="setDeptFilter('${d.id}')" class="px-3 py-1 rounded-full font-medium transition-all flex items-center gap-1.5 shrink-0 ${active ? 'bg-[#FDFBF7] text-[#3A3532] border border-[#D8CFC2] shadow-2xs' : 'text-[#6E6862] hover:bg-[#E8E0D4]'}">
-            <span class="w-1.5 h-1.5 rounded-full" style="background:${d.color}"></span>
+          <button onclick="setDeptFilter('${d.id}')" class="px-3 py-1 rounded-full font-medium transition-all flex items-center gap-1.5 shrink-0 ${active ? 'bg-[#FFFFFF] text-[#26221F] border border-[#C9BBA8] shadow-2xs' : 'text-[#59524C] hover:bg-[#DFD5C7]'}">
+            <span class="w-2 h-2 rounded-full" style="background:${d.color}"></span>
             <span>${d.name}</span>
           </button>
         `;
@@ -851,10 +848,10 @@
         if (counts[s] !== undefined) counts[s]++;
       });
       document.getElementById('load-summary').innerHTML = `
-        <span>SOPs · <strong class="font-semibold text-[#3A3532]">10</strong></span>
-        <span>Internos · <strong class="font-semibold text-[#3A3532]">${counts['Interno']}</strong></span>
+        <span>SOPs · <strong class="font-semibold text-[#26221F]">10</strong></span>
+        <span>Internos · <strong class="font-semibold text-[#26221F]">${counts['Interno']}</strong></span>
         ${counts['Vacante'] > 0 ? `<span>Por incorporar · <strong class="font-semibold text-[#7A353E]">${counts['Vacante']}</strong></span>` : ''}
-        <span>Externos · <strong class="font-semibold text-[#3A3532]">${counts['Externo']}</strong></span>
+        <span>Externos · <strong class="font-semibold text-[#26221F]">${counts['Externo']}</strong></span>
       `;
 
       const bannerEl = document.getElementById('active-sop-banner');
@@ -867,15 +864,15 @@
         bannerEl.innerHTML = `
           <div class="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
             <div class="flex flex-wrap items-center gap-2.5">
-              <span class="px-2 py-0.5 rounded bg-[#7A353E] text-[#FDFBF7] text-[10.5px] font-semibold tracking-wider">
+              <span class="px-2 py-0.5 rounded bg-[#7A353E] text-[#FFFFFF] text-[10.5px] font-semibold tracking-wider">
                 ${state.activeSop} · ${sop.version}
               </span>
-              <span class="font-semibold text-[#3A3532]">${sop.title}:</span>
-              <span class="text-[#6E6862]">${sop.desc}</span>
+              <span class="font-semibold text-[#26221F]">${sop.title}:</span>
+              <span class="text-[#59524C]">${sop.desc}</span>
             </div>
             <div class="flex items-center gap-3 shrink-0">
-              <span class="text-[11px] text-[#7A353E] font-medium">${matchingCount} cargos vinculados</span>
-              <button onclick="clearFilters()" class="px-2.5 py-1 rounded-full border border-[#D8CFC2] bg-[#F8F5F0] hover:bg-[#EFE9E0] text-[#4A4541] text-[11px] font-medium transition-colors">
+              <span class="text-[11px] text-[#7A353E] font-semibold">${matchingCount} cargos vinculados</span>
+              <button onclick="clearFilters()" class="px-2.5 py-1 rounded-full border border-[#CFC3B2] bg-[#F4EFE7] hover:bg-[#E6DDD0] text-[#26221F] text-[11px] font-medium transition-colors">
                 Ver todos ✕
               </button>
             </div>
@@ -887,10 +884,10 @@
         clearBtn.classList.remove('hidden');
         bannerEl.innerHTML = `
           <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-3 text-xs">
-            <span class="text-[#6E6862]">
-              Filtrando por <strong class="text-[#3A3532]">"${state.searchQuery}"</strong> · <strong class="text-[#7A353E]">${matchingCount}</strong> coincidencias
+            <span class="text-[#59524C]">
+              Filtrando por <strong class="text-[#26221F]">"${state.searchQuery}"</strong> · <strong class="text-[#7A353E]">${matchingCount}</strong> coincidencias
             </span>
-            <button onclick="clearFilters()" class="px-2.5 py-1 rounded-full border border-[#D8CFC2] bg-[#F8F5F0] hover:bg-[#EFE9E0] text-[#4A4541] text-[11px] font-medium transition-colors">
+            <button onclick="clearFilters()" class="px-2.5 py-1 rounded-full border border-[#CFC3B2] bg-[#F4EFE7] hover:bg-[#E6DDD0] text-[#26221F] text-[11px] font-medium transition-colors">
               Limpiar ✕
             </button>
           </div>
@@ -908,15 +905,15 @@
 
       return `
         <div onclick="openRoleModal('gerencia-general')" 
-             class="role-card ${stateClass} cursor-pointer max-w-xl mx-auto bg-[#FDFBF7] rounded-2xl border border-[#DFD5C7] px-6 py-4 shadow-[0_6px_24px_-8px_rgba(74,69,65,0.08)] text-center relative overflow-hidden">
-          <div class="absolute top-0 inset-x-0 h-[3px] bg-[#7A353E]"></div>
+             class="role-card ${stateClass} cursor-pointer max-w-xl mx-auto bg-[#FFFFFF] rounded-2xl border border-[#CFC3B2] px-6 py-4 text-center relative overflow-hidden">
+          <div class="absolute top-0 inset-x-0 h-[3.5px] bg-[#7A353E]"></div>
           <div class="text-[10px] uppercase tracking-[0.2em] text-[#7A353E] font-semibold mb-1">
             Nivel 0 · Gobierno Corporativo · RUT 78.560.882-8
           </div>
-          <h2 class="text-lg md:text-xl font-semibold tracking-tight text-[#3A3532] leading-snug">
+          <h2 class="text-lg md:text-xl font-semibold tracking-tight text-[#26221F] leading-snug">
             Gerencia General · Socias Fundadoras
           </h2>
-          <p class="text-xs text-[#857E77] mt-0.5">
+          <p class="text-xs text-[#635C56] mt-0.5">
             ESTUDIO AFÍN SpA · Dirección Ejecutiva, Estrategia y Gobernanza Transversal
           </p>
         </div>
@@ -925,7 +922,7 @@
 
     function renderDeptSopNav(dept) {
       return `
-        <div class="mt-2.5 pt-2 border-t border-[#EFE9E0] flex flex-wrap items-center justify-center gap-1">
+        <div class="mt-2.5 pt-2 border-t border-[#EAE2D6] flex flex-wrap items-center justify-center gap-1">
           ${dept.sops.map(code => {
             const isSelected = state.activeSop === code;
             const sopInfo = SOP_DETAILS[code];
@@ -935,8 +932,8 @@
                 title="${sopInfo ? sopInfo.title : code}"
                 class="px-2 py-0.5 rounded-md text-[10px] font-medium tracking-wide transition-all ${
                   isSelected
-                    ? 'bg-[#7A353E] text-[#FDFBF7] shadow-2xs'
-                    : 'bg-[#F3EFE8] text-[#6E6862] hover:bg-[#E6DFD5] hover:text-[#3A3532]'
+                    ? 'bg-[#7A353E] text-[#FFFFFF] shadow-2xs'
+                    : 'bg-[#EFE9E0] text-[#4F4842] border border-[#DDD3C5] hover:bg-[#DFD5C7] hover:text-[#26221F]'
                 }"
               >
                 ${code}
@@ -956,17 +953,17 @@
 
       return `
         <div onclick="openRoleModal('${role.id}')" 
-             class="role-card ${stateClass} group cursor-pointer bg-[#FDFBF7] rounded-xl border border-[#E6DFD5] p-3.5 flex flex-col justify-between gap-2.5">
+             class="role-card ${stateClass} group cursor-pointer bg-[#FFFFFF] rounded-xl border border-[#D8CCB9] p-3.5 flex flex-col justify-between gap-2.5">
           <div class="flex items-start justify-between gap-2">
-            <div class="text-[13px] font-medium text-[#3A3532] leading-snug group-hover:text-[#7A353E] transition-colors">
+            <div class="text-[13px] font-semibold text-[#26221F] leading-snug group-hover:text-[#7A353E] transition-colors">
               ${role.title}
             </div>
-            <span class="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5 opacity-75" style="background:${dept.color}"></span>
+            <span class="w-2 h-2 rounded-full shrink-0 mt-1.5" style="background:${dept.color}"></span>
           </div>
 
           ${state.activeSop && matches ? `
             <div class="flex items-center gap-1.5">
-              <span class="px-1.5 py-0.5 rounded bg-[#7A353E]/10 text-[#7A353E] text-[10px] font-semibold">
+              <span class="px-1.5 py-0.5 rounded bg-[#7A353E]/12 text-[#7A353E] text-[10px] font-semibold">
                 Ejecuta ${state.activeSop}
               </span>
             </div>
@@ -977,11 +974,11 @@
               <span class="w-1.5 h-1.5 rounded-full ${ind.dot}"></span>
               <span>${ind.label}</span>
             </div>
-            <span class="interactive-arrow text-[11px] text-[#B0A79D] group-hover:text-[#7A353E] group-hover:translate-x-0.5 transition-all">→</span>
+            <span class="interactive-arrow text-[11px] text-[#8C837A] group-hover:text-[#7A353E] group-hover:translate-x-0.5 transition-all">→</span>
           </div>
 
           ${state.showAudit ? `
-            <div class="pt-2 border-t border-[#EFE9E0] text-[11px] text-[#7A353E] leading-relaxed">
+            <div class="pt-2 border-t border-[#EAE2D6] text-[11px] text-[#7A353E] leading-relaxed">
               ${role.audit}
             </div>
           ` : ''}
@@ -1002,21 +999,21 @@
           <div class="max-w-md mx-auto">
             ${levelZeroCard}
             <div class="flex justify-center">
-              <div class="w-px h-6 bg-[#CFC6BA]"></div>
+              <div class="w-px h-6 bg-[#B5A99A]"></div>
             </div>
             <div class="space-y-6">
         `;
         visibleDepts.forEach(dept => {
           const deptRoles = rolesData.filter(r => r.dept === dept.id);
           html += `
-            <section class="bg-[#F3EFE8]/70 rounded-2xl border border-[#E5DDD2] p-4 relative">
-              <div class="pb-3 mb-3.5 border-b border-[#E5DDD2]">
+            <section class="bg-[#E6DDD0] rounded-2xl border border-[#D4C7B5] p-4 relative">
+              <div class="pb-3 mb-3.5 border-b border-[#D4C7B5]">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full" style="background:${dept.color}"></span>
-                    <h2 class="text-sm font-semibold text-[#3A3532]">${dept.name}</h2>
+                    <span class="w-2.5 h-2.5 rounded-full" style="background:${dept.color}"></span>
+                    <h2 class="text-sm font-semibold text-[#26221F]">${dept.name}</h2>
                   </div>
-                  <span class="text-[10px] tracking-widest uppercase text-[#999188]">${dept.id}</span>
+                  <span class="text-[10px] tracking-widest uppercase text-[#635C56] font-semibold">${dept.id}</span>
                 </div>
                 <div class="flex flex-wrap gap-1.5 mt-2.5">
                   ${dept.sops.map(code => {
@@ -1024,7 +1021,7 @@
                     return `
                       <button onclick="toggleSopFilter('${code}', event)"
                         class="px-2 py-0.5 rounded-md text-[10px] font-medium transition-all ${
-                          isSelected ? 'bg-[#7A353E] text-[#FDFBF7]' : 'bg-[#FDFBF7] border border-[#E2D9CC] text-[#6E6862]'
+                          isSelected ? 'bg-[#7A353E] text-[#FFFFFF]' : 'bg-[#FFFFFF] border border-[#CFC3B2] text-[#4F4842]'
                         }">
                         ${code}
                       </button>
@@ -1033,11 +1030,11 @@
                 </div>
               </div>
               <div class="relative pl-4 space-y-3">
-                <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#D4CBC0]"></div>
+                <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#B5A99A]"></div>
                 ${deptRoles.map(r => `
                   <div class="relative">
-                    <div class="absolute -left-2.5 top-5 w-2.5 h-px bg-[#D4CBC0]"></div>
-                    <div class="text-[10px] uppercase tracking-widest text-[#999188] mb-1">Nivel ${r.level}</div>
+                    <div class="absolute -left-2.5 top-5 w-2.5 h-px bg-[#B5A99A]"></div>
+                    <div class="text-[10px] uppercase tracking-widest text-[#635C56] font-medium mb-1">Nivel ${r.level}</div>
                     ${renderRoleCard(r, dept)}
                   </div>
                 `).join('')}
@@ -1054,15 +1051,15 @@
       const gridCols = isSingle ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-5';
 
       const topBranchHtml = isSingle
-        ? `<div class="flex justify-center"><div class="w-px h-7 bg-[#CFC6BA]"></div></div>`
+        ? `<div class="flex justify-center"><div class="w-px h-7 bg-[#B5A99A]"></div></div>`
         : `
           <div class="relative h-8">
-            <div class="absolute left-1/2 top-0 w-px h-4 -translate-x-1/2 bg-[#CFC6BA]"></div>
-            <div class="absolute top-4 left-[10%] right-[10%] h-px bg-[#CFC6BA]"></div>
+            <div class="absolute left-1/2 top-0 w-px h-4 -translate-x-1/2 bg-[#B5A99A]"></div>
+            <div class="absolute top-4 left-[10%] right-[10%] h-px bg-[#B5A99A]"></div>
             <div class="grid grid-cols-5 gap-4 h-full">
               ${visibleDepts.map(() => `
                 <div class="relative h-full">
-                  <div class="absolute left-1/2 top-4 bottom-0 w-px -translate-x-1/2 bg-[#CFC6BA]"></div>
+                  <div class="absolute left-1/2 top-4 bottom-0 w-px -translate-x-1/2 bg-[#B5A99A]"></div>
                 </div>
               `).join('')}
             </div>
@@ -1079,11 +1076,11 @@
             <!-- Encabezados de Departamento con Navegador de SOPs -->
             <div class="grid ${gridCols} gap-4 relative z-10">
               ${visibleDepts.map(dept => `
-                <div class="bg-[#FDFBF7] rounded-xl border border-[#DFD6C9] px-3.5 py-3 text-center relative overflow-hidden shadow-[0_2px_10px_-4px_rgba(74,69,65,0.06)] flex flex-col justify-between">
-                  <div class="absolute top-0 inset-x-0 h-[2.5px]" style="background:${dept.color}"></div>
+                <div class="bg-[#FFFFFF] rounded-xl border border-[#CFC3B2] px-3.5 py-3 text-center relative overflow-hidden shadow-[0_2px_8px_-3px_rgba(46,41,38,0.08)] flex flex-col justify-between">
+                  <div class="absolute top-0 inset-x-0 h-[3px]" style="background:${dept.color}"></div>
                   <div>
-                    <div class="text-[9.5px] uppercase tracking-[0.2em] text-[#999188] mb-1">${dept.id}</div>
-                    <div class="text-[13px] font-semibold tracking-tight text-[#3A3532] leading-tight">${dept.name}</div>
+                    <div class="text-[9.5px] uppercase tracking-[0.2em] text-[#7A726A] font-semibold mb-1">${dept.id}</div>
+                    <div class="text-[13px] font-semibold tracking-tight text-[#26221F] leading-tight">${dept.name}</div>
                   </div>
                   ${renderDeptSopNav(dept)}
                 </div>
@@ -1098,7 +1095,7 @@
                   const lineHeightClass = maxLvl === 4 ? 'bottom-8' : 'bottom-[24%]';
                   return `
                     <div class="relative h-full">
-                      <div class="absolute left-1/2 top-0 ${lineHeightClass} w-px -translate-x-1/2 bg-[#D6CEC2]"></div>
+                      <div class="absolute left-1/2 top-0 ${lineHeightClass} w-px -translate-x-1/2 bg-[#B9AEA0]"></div>
                     </div>
                   `;
                 }).join('')}
@@ -1106,11 +1103,10 @@
 
               <div class="space-y-3.5 relative z-10">
                 ${LEVELS.map(lvl => `
-                  <div class="level-band bg-[#F3EFE8]/55 rounded-2xl border border-[#EAE2D6] p-3.5">
+                  <div class="level-band bg-[#E6DDD0]/85 rounded-2xl border border-[#D6C9B7] p-3.5">
                     <div class="flex items-center gap-2 mb-2.5 px-1">
-                      <span class="text-[11px] font-semibold text-[#7A353E]">Nivel ${lvl.num}</span>
-                      <span class="text-[#C7BEB2]">·</span>
-                      <span class="text-[11px] uppercase tracking-[0.14em] text-[#857E77] font-medium">${lvl.title}</span>
+                      <span class="px-2 py-0.5 rounded bg-[#FFFFFF] border border-[#D4C7B5] text-[10.5px] font-semibold text-[#7A353E]">Nivel ${lvl.num}</span>
+                      <span class="text-[11px] uppercase tracking-[0.14em] text-[#59524C] font-semibold">${lvl.title}</span>
                     </div>
                     <div class="grid ${gridCols} gap-4">
                       ${visibleDepts.map(dept => {
@@ -1122,7 +1118,7 @@
                           <div class="space-y-2.5 relative">
                             ${cellRoles.map(r => `
                               <div class="relative">
-                                <div class="w-1.5 h-1.5 rounded-full bg-[#CFC6BA] mx-auto -mb-[3px] relative z-20 ring-2 ring-[#F8F5F0]"></div>
+                                <div class="w-1.5 h-1.5 rounded-full bg-[#9E9283] mx-auto -mb-[3px] relative z-20 ring-2 ring-[#E6DDD0]"></div>
                                 ${renderRoleCard(r, dept)}
                               </div>
                             `).join('')}
@@ -1147,16 +1143,16 @@
         if (!sop) return '';
         return `
           <div onclick="closeModal(); toggleSopFilter('${code}');" 
-               class="cursor-pointer group bg-white border border-[#EAE2D6] hover:border-[#7A353E]/50 rounded-xl p-3 transition-all">
+               class="cursor-pointer group bg-[#FFFFFF] border border-[#D8CCB9] hover:border-[#7A353E] rounded-xl p-3 transition-all shadow-2xs">
             <div class="flex items-center justify-between gap-2 mb-1">
               <div class="font-semibold text-[#7A353E] group-hover:underline">
                 ${code} · ${sop.title}
               </div>
-              <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#F3EFE8] text-[#78726C] font-medium shrink-0">
+              <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#EFE9E0] text-[#59524C] font-medium shrink-0">
                 ${sop.version}
               </span>
             </div>
-            <div class="text-[#6E6862] leading-relaxed">${sop.desc}</div>
+            <div class="text-[#59524C] leading-relaxed">${sop.desc}</div>
           </div>
         `;
       }).join('');
@@ -1167,8 +1163,8 @@
       if (deliverables && deliverables.length > 0) {
         html += `
           <div>
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">Entregables y Reglas de Control</div>
-            <ul class="space-y-1.5 bg-white border border-[#EAE2D6] rounded-xl p-3.5 text-[#4A4541]">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-2">Entregables y Reglas de Control</div>
+            <ul class="space-y-1.5 bg-[#FFFFFF] border border-[#D8CCB9] rounded-xl p-3.5 text-[#2E2926]">
               ${deliverables.map(item => `
                 <li class="flex items-start gap-2 leading-relaxed">
                   <span class="text-[#7A353E] font-bold mt-0.5">•</span>
@@ -1182,11 +1178,11 @@
       if (risks && risks.length > 0) {
         html += `
           <div>
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">Riesgos Operativos que Mitiga</div>
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-2">Riesgos Operativos que Mitiga</div>
             <div class="space-y-1.5">
               ${risks.map(risk => `
-                <div class="bg-[#F9F4EF] border border-[#E6DACB] rounded-lg px-3 py-2 text-[#5E534A] flex items-start gap-2 leading-relaxed">
-                  <span class="text-[#96735B] font-semibold shrink-0">Shield</span>
+                <div class="bg-[#F2ECE2] border border-[#D8CBB8] rounded-lg px-3 py-2 text-[#453E39] flex items-start gap-2 leading-relaxed">
+                  <span class="text-[#7A353E] font-semibold shrink-0">▪</span>
                   <span>${risk}</span>
                 </div>
               `).join('')}
@@ -1204,14 +1200,14 @@
 
       if (state.specialModal === 'kpis') {
         content.innerHTML = `
-          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#ECE4D8]">
+          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
             <div>
               <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
                 Sección 9 · Documento Maestro V. 2.5
               </div>
-              <h3 class="text-lg font-semibold tracking-tight text-[#3A3532]">Tablero de KPIs Estratégicos y Operativos</h3>
+              <h3 class="text-lg font-semibold tracking-tight text-[#26221F]">Tablero de KPIs Estratégicos y Operativos</h3>
             </div>
-            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#E2D9CC] bg-[#F8F5F0] hover:bg-[#EFE9E0] text-[#6E6862] flex items-center justify-center text-xs transition-colors shrink-0">
+            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
               ✕
             </button>
           </div>
@@ -1223,12 +1219,12 @@
               </div>
               <div class="space-y-2">
                 ${MASTER_KPIS.external.map(k => `
-                  <div class="bg-white border border-[#EAE2D6] rounded-xl p-3 flex items-start justify-between gap-3">
+                  <div class="bg-[#FFFFFF] border border-[#D8CCB9] rounded-xl p-3 flex items-start justify-between gap-3">
                     <div>
-                      <div class="font-semibold text-[#3A3532]">${k.name}</div>
-                      <div class="text-[#6E6862] mt-0.5 leading-relaxed">${k.desc}</div>
+                      <div class="font-semibold text-[#26221F]">${k.name}</div>
+                      <div class="text-[#59524C] mt-0.5 leading-relaxed">${k.desc}</div>
                     </div>
-                    <span class="px-2.5 py-1 rounded-full bg-[#7A353E]/10 text-[#7A353E] font-semibold text-[10.5px] shrink-0">
+                    <span class="px-2.5 py-1 rounded-full bg-[#7A353E]/12 text-[#7A353E] font-semibold text-[10.5px] shrink-0">
                       ${k.target}
                     </span>
                   </div>
@@ -1237,17 +1233,17 @@
             </div>
 
             <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#78736E] mb-2">
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#59524C] mb-2">
                 2. KPIs Internos (Eficiencia Operativa de los 10 SOPs)
               </div>
               <div class="space-y-2">
                 ${MASTER_KPIS.internal.map(k => `
-                  <div class="bg-[#F6F2EC] border border-[#E5DDD2] rounded-xl p-3 flex items-start justify-between gap-3">
+                  <div class="bg-[#EFE9E0] border border-[#D4C7B5] rounded-xl p-3 flex items-start justify-between gap-3">
                     <div>
-                      <div class="font-semibold text-[#3A3532]">${k.name}</div>
-                      <div class="text-[#6E6862] mt-0.5 leading-relaxed">${k.desc}</div>
+                      <div class="font-semibold text-[#26221F]">${k.name}</div>
+                      <div class="text-[#59524C] mt-0.5 leading-relaxed">${k.desc}</div>
                     </div>
-                    <span class="px-2.5 py-1 rounded-full bg-white border border-[#DED5C8] text-[#4A4541] font-medium text-[10.5px] shrink-0">
+                    <span class="px-2.5 py-1 rounded-full bg-[#FFFFFF] border border-[#CFC3B2] text-[#2E2926] font-medium text-[10.5px] shrink-0">
                       ${k.target}
                     </span>
                   </div>
@@ -1261,197 +1257,31 @@
 
       if (state.specialModal === 'versions') {
         content.innerHTML = `
-          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#ECE4D8]">
+          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
             <div>
               <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
                 Gobernanza Documental · Versionado Semántico (X.Y)
               </div>
-              <h3 class="text-lg font-semibold tracking-tight text-[#3A3532]">Control de Versiones · ORG-EA V. 2.5</h3>
+              <h3 class="text-lg font-semibold tracking-tight text-[#26221F]">Control de Versiones · ORG-EA V. 2.5</h3>
             </div>
-            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#E2D9CC] bg-[#F8F5F0] hover:bg-[#EFE9E0] text-[#6E6862] flex items-center justify-center text-xs transition-colors shrink-0">
+            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
               ✕
             </button>
           </div>
 
           <div class="mt-5 space-y-4 text-xs">
-            <p class="text-[#6E6862] leading-relaxed">
-              Sincronizado con <strong class="text-[#3A3532]">Propuesta de Estructuración y Negocio - ESTUDIO AFÍN SpA (DOC-MAESTRO V. 2.5)</strong>. El primer dígito (X) registra cambios estructurales mayores y el segundo (Y) iteraciones de precisión operativa.
+            <p class="text-[#59524C] leading-relaxed">
+              Sincronizado con <strong class="text-[#26221F]">Propuesta de Estructuración y Negocio - ESTUDIO AFÍN SpA (DOC-MAESTRO V. 2.5)</strong>. El primer dígito (X) registra cambios estructurales mayores y el segundo (Y) iteraciones de precisión operativa.
             </p>
-            <div class="border border-[#EAE2D6] rounded-xl overflow-hidden bg-white">
+            <div class="border border-[#D8CCB9] rounded-xl overflow-hidden bg-[#FFFFFF]">
               <table class="w-full text-left border-collapse">
                 <thead>
-                  <tr class="bg-[#F3EFE8] text-[10px] uppercase tracking-wider text-[#78726C] border-b border-[#EAE2D6]">
+                  <tr class="bg-[#EAE2D6] text-[10px] uppercase tracking-wider text-[#59524C] border-b border-[#D8CCB9]">
                     <th class="py-2.5 px-3 font-semibold">Versión</th>
                     <th class="py-2.5 px-3 font-semibold">Fecha</th>
                     <th class="py-2.5 px-3 font-semibold">Descripción del Cambio</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-[#EFE9E0]">
+                <tbody class="divide-y divide-[#EAE2D6]">
                   ${VERSION_HISTORY.map(v => `
-                    <tr class="${v.ver === '2.5' ? 'bg-[#FDF8F6]' : ''}">
-                      <td class="py-2.5 px-3 font-semibold text-[#7A353E] whitespace-nowrap">V. ${v.ver}</td>
-                      <td class="py-2.5 px-3 text-[#857E77] whitespace-nowrap">${v.date}</td>
-                      <td class="py-2.5 px-3 text-[#4A4541] leading-relaxed">${v.desc}</td>
-                    </tr>
-                  `).join('')}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        `;
-      }
-    }
-
-    function renderModal() {
-      const modal = document.getElementById('floating-modal');
-      const content = document.getElementById('modal-content');
-
-      if (state.specialModal) {
-        renderSpecialModals();
-        return;
-      }
-
-      if (!state.selectedRoleId) {
-        modal.classList.add('hidden');
-        return;
-      }
-
-      if (state.selectedRoleId === 'gerencia-general') {
-        const exec = EXECUTIVE_ROLE;
-        modal.classList.remove('hidden');
-        content.innerHTML = `
-          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#ECE4D8]">
-            <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
-                Nivel 0 · Gobierno Corporativo
-              </div>
-              <h3 class="text-lg font-semibold tracking-tight text-[#3A3532] leading-snug">${exec.title}</h3>
-            </div>
-            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#E2D9CC] bg-[#F8F5F0] hover:bg-[#EFE9E0] text-[#6E6862] flex items-center justify-center text-xs transition-colors shrink-0">
-              ✕
-            </button>
-          </div>
-
-          <div class="mt-5 space-y-5 text-xs">
-            <!-- Identidad Legal Formal -->
-            <div class="bg-white border border-[#DFD5C7] rounded-xl p-3.5">
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Identidad Jurídica Vigente</div>
-              <div class="font-semibold text-[#3A3532]">${exec.legalEntity}</div>
-            </div>
-
-            <!-- Línea de Fuego Corporativa -->
-            <div class="bg-[#F6F1E9] border border-[#E8DEC9] rounded-xl p-4">
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Línea de Fuego Corporativa</div>
-              <p class="text-[#5C4E50] leading-relaxed">${exec.fireLine}</p>
-            </div>
-
-            <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-1.5">Responsabilidad Ejecutiva</div>
-              <p class="text-[#4A4541] text-[13px] leading-relaxed">${exec.mission}</p>
-            </div>
-
-            ${renderDeliverablesAndRisks(exec.deliverables, exec.risksMitigated)}
-
-            <div>
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188]">SOPs Clave Supervisados</span>
-                <span class="text-[10px] text-[#A39A90]">Clic para resaltar en el mapa</span>
-              </div>
-              <div class="space-y-2">
-                ${renderSopListInModal(exec.sops)}
-              </div>
-            </div>
-
-            <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">Indicadores Globales</div>
-              <div class="flex flex-wrap gap-2">
-                ${exec.kpis.map(k => `
-                  <span class="px-3 py-1 rounded-full bg-[#F3EFE8] border border-[#E5DDD2] text-[#4A4541]">${k}</span>
-                `).join('')}
-              </div>
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      const role = rolesData.find(r => r.id === state.selectedRoleId);
-      if (!role) return;
-
-      const dept = DEPARTMENTS.find(d => d.id === role.dept);
-      const currentStatus = role.status[state.stage];
-      modal.classList.remove('hidden');
-
-      content.innerHTML = `
-        <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#ECE4D8]">
-          <div>
-            <div class="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] mb-1" style="color:${dept.color}">
-              <span>${dept.id} · ${dept.name}</span>
-              <span>·</span>
-              <span>Nivel ${role.level}</span>
-            </div>
-            <h3 class="text-lg font-semibold tracking-tight text-[#3A3532] leading-snug">${role.title}</h3>
-          </div>
-          <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#E2D9CC] bg-[#F8F5F0] hover:bg-[#EFE9E0] text-[#6E6862] flex items-center justify-center text-xs transition-colors shrink-0">
-            ✕
-          </button>
-        </div>
-
-        <div class="mt-5 space-y-5 text-xs">
-          <div>
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-1.5">Responsabilidad Principal</div>
-            <p class="text-[#4A4541] text-[13px] leading-relaxed">${role.mission}</p>
-          </div>
-
-          <div class="bg-[#F6F1E9] border border-[#E8DEC9] rounded-xl p-4">
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Criterio Ultra-Lean</div>
-            <p class="text-[#5C4E50] leading-relaxed">${role.audit}</p>
-          </div>
-
-          ${renderDeliverablesAndRisks(role.deliverables, role.risksMitigated)}
-
-          <div>
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">Modalidad en etapa (${state.stage === 'hoy' ? 'Hoy' : 'Escala'})</div>
-            <div class="grid grid-cols-3 gap-2">
-              ${['Interno', 'Vacante', 'Externo'].map(opt => `
-                <button onclick="changeRoleStatus('${role.id}', '${opt}')"
-                  class="py-2 px-2.5 rounded-lg border text-center font-medium transition-all ${currentStatus === opt ? 'bg-[#7A353E] text-[#FDFBF7] border-[#7A353E]' : 'bg-white text-[#4A4541] border-[#E5DDD2] hover:border-[#7A353E]/50'}">
-                  ${opt === 'Interno' ? 'Equipo Interno' : opt === 'Vacante' ? 'Por incorporar' : 'Externo'}
-                </button>
-              `).join('')}
-            </div>
-          </div>
-
-          <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188]">SOPs Vinculados (${role.sops.length})</span>
-              <span class="text-[10px] text-[#A39A90]">Clic para resaltar en el mapa</span>
-            </div>
-            <div class="space-y-2">
-              ${renderSopListInModal(role.sops)}
-            </div>
-          </div>
-
-          <div>
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">Indicadores Clave</div>
-            <div class="flex flex-wrap gap-2">
-              ${role.kpis.map(k => `
-                <span class="px-3 py-1 rounded-full bg-[#F3EFE8] border border-[#E5DDD2] text-[#4A4541]">${k}</span>
-              `).join('')}
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    function renderAll() {
-      renderFiltersAndSummary();
-      renderCanvas();
-      renderModal();
-      updatePresentationMeta();
-    }
-
-    renderAll();
-  </script>
-</body>
-</html>
+                    <tr class="${v.ver === '2.
