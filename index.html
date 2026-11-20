@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Organigrama Estudio Afín | Roles y Estructura</title>
+  <title>Organigrama Estudio Afín SpA | Roles y Estructura</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -47,7 +47,7 @@
     ::-webkit-scrollbar-track { background: #F2EDE4; }
     ::-webkit-scrollbar-thumb { background: #D4CBC0; border-radius: 2px; }
 
-    /* MODO PRESENTACIÓN (VISTA PREVIA EJECUTIVA EN PANTALLA) */
+    /* MODO PRESENTACIÓN */
     body.presentation-mode {
       background-color: #FAF8F4;
     }
@@ -75,7 +75,7 @@
         background-color: #FAF8F4 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        zoom: 0.86;
+        zoom: 0.85;
       }
       #app-header,
       #presentation-toolbar,
@@ -105,7 +105,7 @@
 </head>
 <body class="min-h-screen flex flex-col selection:bg-[#7A353E]/15 selection:text-[#7A353E]">
 
-  <!-- BARRA FLOTANTE EXCLUSIVA DE MODO PRESENTACIÓN -->
+  <!-- BARRA FLOTANTE DE MODO PRESENTACIÓN -->
   <div id="presentation-toolbar" class="hidden fixed bottom-5 right-6 z-40 items-center gap-2 bg-[#3A3532] text-[#FDFBF7] px-3.5 py-2 rounded-full shadow-lg border border-[#524C47] text-xs">
     <span class="text-[#D4CBC0] pr-1">Vista Lámina Ejecutiva</span>
     <button onclick="window.print()" class="px-3 py-1 rounded-full bg-[#7A353E] hover:bg-[#8E404B] text-[#FDFBF7] font-medium transition-colors flex items-center gap-1.5">
@@ -120,11 +120,11 @@
     </button>
   </div>
 
-  <!-- CABECERA FORMAL DE LÁMINA (VISIBLE EN PRESENTACIÓN E IMPRESIÓN PDF) -->
+  <!-- CABECERA FORMAL DE LÁMINA (PRESENTACIÓN E IMPRESIÓN PDF) -->
   <div id="presentation-header" class="hidden max-w-[1400px] w-full mx-auto px-5 md:px-8 pt-5 pb-3 border-b border-[#DFD6C9] items-end justify-between">
     <div>
       <div class="text-[10px] uppercase tracking-[0.22em] text-[#7A353E] font-semibold mb-0.5">
-        Estudio Afín · Arquitectura Organizacional
+        ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional
       </div>
       <h1 class="text-xl font-semibold tracking-tight text-[#3A3532]">
         Organigrama Corporativo, Roles y Gobernanza de Procesos
@@ -142,7 +142,7 @@
       <!-- Identidad y Título -->
       <div class="flex items-baseline gap-2.5">
         <h1 class="text-lg md:text-xl font-semibold tracking-tight text-[#3A3532]">
-          Organigrama Estudio Afín
+          Estudio Afín SpA
         </h1>
         <span class="hidden sm:inline-block text-[#C4BBB0] font-light">|</span>
         <span class="text-sm md:text-[15px] font-normal text-[#7A353E]">
@@ -152,13 +152,13 @@
 
       <!-- Controles Refinados + Buscador Rápido + Presentación -->
       <div class="flex flex-wrap items-center gap-2">
-        <!-- Buscador Rápido de Roles o SOPs -->
+        <!-- Buscador Rápido -->
         <div class="relative">
           <input
             type="text"
             id="quick-search"
             oninput="handleSearch(this.value)"
-            placeholder="Buscar cargo o SOP (ej. COM-04)..."
+            placeholder="Buscar cargo, SOP o entregable..."
             class="w-44 sm:w-56 pl-7 pr-7 py-1.5 rounded-full border border-[#DED5C8] bg-[#FDFBF7] text-[11.5px] text-[#3A3532] placeholder-[#A39A90] focus:outline-none focus:border-[#7A353E] transition-all"
           />
           <svg class="w-3.5 h-3.5 text-[#999188] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -209,14 +209,24 @@
       </div>
     </div>
 
-    <!-- Sub-barra de navegación por áreas -->
+    <!-- Sub-barra de navegación por áreas + Accesos Maestros -->
     <div class="bg-[#F3EFE8]/80 border-t border-[#EAE2D6] px-5 md:px-8 py-2">
       <div class="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-3 text-[11.5px]">
         <div id="dept-filters" class="flex items-center gap-1.5 overflow-x-auto pb-0.5 md:pb-0">
           <!-- Render dinámico -->
         </div>
-        <div id="load-summary" class="flex items-center gap-4 text-[11px] text-[#857E77] tracking-wide">
-          <!-- Render dinámico -->
+        <div class="flex items-center gap-3">
+          <div id="load-summary" class="hidden xl:flex items-center gap-3.5 text-[11px] text-[#857E77] tracking-wide">
+            <!-- Render dinámico -->
+          </div>
+          <span class="hidden xl:inline text-[#D4CBC0]">|</span>
+          <!-- Accesos directos al Documento Maestro V. 2.5 -->
+          <button onclick="openSpecialModal('kpis')" class="px-2.5 py-1 rounded-full border border-[#D8CFC2] bg-[#FDFBF7] hover:border-[#7A353E]/50 text-[#4A4541] hover:text-[#7A353E] text-[11px] font-medium transition-all">
+            KPIs Maestros
+          </button>
+          <button onclick="openSpecialModal('versions')" class="px-2.5 py-1 rounded-full border border-[#D8CFC2] bg-[#FDFBF7] hover:border-[#7A353E]/50 text-[#6E6862] hover:text-[#7A353E] text-[11px] font-medium transition-all">
+            ORG-EA V. 2.5
+          </button>
         </div>
       </div>
     </div>
@@ -236,13 +246,13 @@
 
   <!-- PIE DE PÁGINA FORMAL (VISIBLE EN PRESENTACIÓN E IMPRESIÓN PDF) -->
   <footer id="presentation-footer" class="hidden max-w-[1400px] w-full mx-auto px-5 md:px-8 py-3 border-t border-[#DFD6C9] items-center justify-between text-[10.5px] text-[#857E77]">
-    <span>Estudio Afín · Documento de Estructura Organizacional y Gobernanza Operativa (10 SOPs)</span>
+    <span>ESTUDIO AFÍN SpA (RUT 78.560.882-8) · Documento de Estructura Organizacional y Gobernanza (Sincronizado DOC-MAESTRO V. 2.5)</span>
     <span id="presentation-legend">● Equipo interno &nbsp;·&nbsp; ○ Por incorporar &nbsp;·&nbsp; ● Aliado externo</span>
   </footer>
 
   <!-- MODAL FLOTANTE -->
   <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#4A4541]/25 backdrop-blur-[3px] flex items-center justify-center p-4">
-    <div class="modal-animate w-full max-w-lg max-h-[88vh] overflow-y-auto bg-[#FDFBF7] rounded-2xl border border-[#E2D9CC] shadow-[0_24px_48px_-12px_rgba(58,53,50,0.18)] p-6 md:p-7">
+    <div class="modal-animate w-full max-w-xl max-h-[88vh] overflow-y-auto bg-[#FDFBF7] rounded-2xl border border-[#E2D9CC] shadow-[0_24px_48px_-12px_rgba(58,53,50,0.18)] p-6 md:p-7">
       <div id="modal-content"></div>
     </div>
   </div>
@@ -268,13 +278,13 @@
         dept: 'COM',
         version: 'V. 1.0',
         title: 'Prospección, Calificación y Onboarding',
-        desc: 'Filtro de calificación (CAPEX, plazos y exclusión de anti-clientes), firma de contrato y activación condicionada al Hito 1 (50%).'
+        desc: 'Filtro de calificación (CAPEX, plazos y exclusión de anti-clientes), firma de contrato marco y activación condicionada al Hito 1 (50%).'
       },
       'COM-02': {
         dept: 'COM',
         version: 'V. 2.1',
         title: 'Comunicación Oficial y Gestión de Cambios',
-        desc: 'Correo como único canal vinculante, SLAs de respuesta y órdenes de cambio pagadas por adelantado antes de ejecutar.'
+        desc: 'Correo como único canal vinculante, SLAs de respuesta (< 8h hábiles) y órdenes de cambio pagadas por adelantado antes de ejecutar.'
       },
       'COM-03': {
         dept: 'COM',
@@ -292,13 +302,13 @@
         dept: 'DIS',
         version: 'V. 2.1',
         title: 'Conceptualización Espacial y FF&E',
-        desc: 'Levantamiento, Moodboard de conversión (máx. 2 revisiones, sin renders 3D lentos) y matriz de compras FF&E Open Book.'
+        desc: 'Levantamiento, Moodboard de conversión (máx. 2 revisiones, sin renders 3D lentos) y matriz de compras FF&E Open Book con Plan B.'
       },
       'LOG-01': {
         dept: 'LOG',
         version: 'V. 2.1',
         title: 'Procura, Recepción y Acopio',
-        desc: 'Órdenes de compra tras Hito 2 (30%), acopio transitorio y control de calidad binario antes de firmar guía de despacho.'
+        desc: 'Órdenes de compra tras Hito 2 (30%), acopio transitorio y control de calidad binario en ventana de 24h antes de firmar guía.'
       },
       'LOG-02': {
         dept: 'LOG',
@@ -326,6 +336,34 @@
       }
     };
 
+    // Elemento 4: Tablero Completo de KPIs Maestros (Sección 9 DOC-MAESTRO V. 2.5)
+    const MASTER_KPIS = {
+      external: [
+        { name: 'CSAT Operativo', target: '> 85% (≥ 4,25/5)', desc: 'Valida eficiencia del modelo llave en mano y cumplimiento de plazos.' },
+        { name: 'NPS de Marca', target: '9 a 10 puntos', desc: 'Convierte a inversionistas en canal de adquisición orgánica (CAC ~ 0).' },
+        { name: 'CES (Fricción)', target: 'Baja / Mínima', desc: 'Confirma el alivio operativo y de carga mental del propietario.' },
+        { name: 'Retención / LTV', target: '> 50% recompra 12m', desc: 'Asegura recurrencia de cartera para cumplir los 7 proyectos/año.' },
+        { name: 'Pricing Power', target: '> 4,5 / 5', desc: 'Luz verde para ajustar al alza honorarios de diseño o markup FF&E.' }
+      ],
+      internal: [
+        { name: 'Lead Time de Diseño', target: 'Según tipología', desc: 'Días desde Briefing hasta aprobación de Moodboard y Matriz FF&E.' },
+        { name: 'Tasa de Retrabajo', target: '≤ 2 rondas', desc: 'Evita iteraciones infinitas; mide precisión del levantamiento inicial.' },
+        { name: 'CAPEX Variance', target: '~ 0% desviación', desc: 'Diferencia entre presupuesto aprobado y gasto real ejecutado.' },
+        { name: 'Eficiencia Logística', target: '> 95% a tiempo', desc: 'Despachos recibidos sin defectos ni mermas en ventana de 24h.' },
+        { name: 'Rotación Cuadrillas', target: 'Mínima / Cero', desc: 'Estabilidad de instaladores y cumplimiento del protocolo Obra Limpia.' }
+      ]
+    };
+
+    // Elemento 5: Historial de Versiones Semántico (Sección 14 DOC-MAESTRO V. 2.5)
+    const VERSION_HISTORY = [
+      { ver: '1.0', date: 'Abr 2026', desc: 'Estructura base inicial de roles y procedimientos operativos.' },
+      { ver: '2.0', date: 'Nov 2026', desc: 'Alineación al modelo Ultra-Lean (5 áreas) para renta corta y segundas viviendas.' },
+      { ver: '2.2', date: '19 Nov 2026', desc: 'Integración completa de los 10 SOPs cerrados (incluyendo COM-04 Post-Venta).' },
+      { ver: '2.3', date: '19 Nov 2026', desc: 'Incorporación de razón social ESTUDIO AFÍN SpA (RUT 78.560.882-8) en Nivel 0.' },
+      { ver: '2.5', date: '20 Nov 2026', desc: 'Sincronización integral con DOC-MAESTRO V. 2.5: entregables, riesgos, KPIs y PDF.' }
+    ];
+
+    // Elemento 1: Gobernanza Societaria e Identidad Legal en Nivel 0
     const EXECUTIVE_ROLE = {
       id: 'gerencia-general',
       dept: 'DIR',
@@ -333,8 +371,19 @@
       color: '#7A353E',
       level: 0,
       title: 'Gerencia General · Socias Fundadoras',
-      mission: 'Liderar la estrategia global de Estudio Afín, aprobar alianzas clave, custodiar la cultura corporativa y dirigir transversalmente las 5 áreas de la firma.',
+      legalEntity: 'ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Constituida el 18/11/2026 (Ley N° 20.659)',
+      fireLine: 'El core de Estudio Afín SpA es estrictamente el diseño y la implementación física llave en mano. La empresa se desmarca de la administración comercial, fijación de tarifas o gestión de reservas de la propiedad (responsabilidad exclusiva del cliente o Property Manager).',
+      mission: 'Liderar la estrategia global de Estudio Afín SpA, aprobar alianzas B2B clave, custodiar la cultura corporativa y dirigir transversalmente las 5 áreas de la firma.',
       audit: 'Estructura bicéfala ejecutiva en la cúspide (Nivel 0). En etapa inicial, la Gerencia General lidera las direcciones clave antes de delegar mandos medios.',
+      deliverables: [
+        'Aprobación de alianzas B2B con Property Managers y corredoras boutique.',
+        'Firma de Contratos Marco de Prestación de Servicios y validación de excepciones.',
+        'Revisión trimestral de tableros de KPIs Externos e Internos (meta 7 proyectos/año).'
+      ],
+      risksMitigated: [
+        'Desviación de alcance hacia administración hotelera o gestión de reservas.',
+        'Ingreso de clientes incompatibles con la capacidad operativa del estudio.'
+      ],
       sops: ['COM-01', 'DIS-01', 'FIN-01'],
       kpis: ['7 proyectos/año', 'CSAT > 85%', 'NPS 9–10']
     };
@@ -347,6 +396,15 @@
         status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Liderar alianzas B2B con Property Managers, filtrar inversionistas y cerrar contratos.',
         audit: 'Fusión total de prospección, cuentas y cierre comercial en un solo liderazgo.',
+        deliverables: [
+          'Formulario de Calificación de Inversión aplicado antes de cotizar.',
+          'Aplicación estricta de Criterios de Exclusión Comercial (anti-clientes y muebles reciclados).',
+          'Contrato Marco firmado y activación condicionada al pago del Hito 1 (50%).'
+        ],
+        risksMitigated: [
+          'Desgaste en cotizaciones infructuosas o clientes sin presupuesto (CAPEX).',
+          'Reclamos post-entrega por desgaste de huéspedes no cubiertos por garantía.'
+        ],
         sops: ['COM-01', 'COM-02', 'COM-04'],
         kpis: ['7 proyectos/año', 'NPS 9–10']
       },
@@ -356,6 +414,15 @@
         status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Definir el concepto visual adaptado al entorno y aprobar el presupuesto FF&E.',
         audit: 'Elimina renders 3D lentos; prioriza Moodboards ágiles orientados a conversión.',
+        deliverables: [
+          'Moodboard de conversión aprobado en máximo 2 rondas de revisión.',
+          'Matriz de Compras FF&E valorizada con opciones Plan B ante quiebres de stock.',
+          'Curaduría de mobiliario de alto tráfico alineada a la identidad del inmueble.'
+        ],
+        risksMitigated: [
+          'Cuellos de botella por modelados 3D lentos o fabricación a medida innecesaria.',
+          'Desviación del presupuesto inicial comprometido con el inversionista.'
+        ],
         sops: ['DIS-01'],
         kpis: ['Máx. 2 rondas revisión', 'Lead Time diseño']
       },
@@ -365,6 +432,15 @@
         status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Controlar cadena de abastecimiento, negociar con proveedores y velar por plazos.',
         audit: 'Absorbe dirección de compras y control de proveedores bajo una sola cabeza.',
+        deliverables: [
+          'Plan maestro de compras ejecutado solo tras confirmación del Hito 2 (30%).',
+          'Red de proveedores retail y talleres externos homologados con SLA vigente.',
+          'Protocolo de recepción binaria (aceptación/rechazo en 24h) y acopio transitorio.'
+        ],
+        risksMitigated: [
+          'Quiebres de stock en retail que retrasen la salida al mercado (Go-Live).',
+          'Recepción de mobiliario dañado o fuera de medida (±2 mm en talleres).'
+        ],
         sops: ['LOG-01', 'LOG-02'],
         kpis: ['Cumplimiento proveedores', 'Cero quiebres']
       },
@@ -374,6 +450,15 @@
         status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Asegurar ejecución llave en mano sin fricciones en edificios y entrega conforme.',
         audit: 'Unificada junto a Operaciones para evitar brechas entre compra y obra.',
+        deliverables: [
+          'Cumplimiento del Protocolo Obra Limpia (permisos conserjería 48h antes).',
+          'Montaje escénico hotelero (Styling) y pauta fotográfica profesional Airbnb/Booking.',
+          'Acta de Entrega conforme firmada junto al cliente o Property Manager.'
+        ],
+        risksMitigated: [
+          'Multas de copropiedad por ruidos, daños en ascensores o retiro tardío de cartones.',
+          'Disputas post-venta gracias al respaldo fotográfico de cierre (TER-02).'
+        ],
         sops: ['TER-01', 'TER-02', 'COM-03'],
         kpis: ['CSAT > 85%', 'Entrega en fecha']
       },
@@ -383,6 +468,15 @@
         status: { hoy: 'Interno', escala: 'Interno' },
         mission: 'Custodiar flujo de caja por hitos (50-30-20), aprobar pagos y validar rentabilidad.',
         audit: 'Regla estricta de cero financiamiento propio del mobiliario.',
+        deliverables: [
+          'Calendario de cobros inamovible 50% (firma) - 30% (pre-compra) - 20% (entrega).',
+          'Carpetas de liquidación transparente Open Book con respaldo tributario.',
+          'Control de margen neto por proyecto y fondo de reserva para garantías.'
+        ],
+        risksMitigated: [
+          'Descalce de caja o financiamiento de muebles del cliente con capital de la SpA.',
+          'Inconsistencias tributarias ante el SII en el manejo de fondos a rendir.'
+        ],
         sops: ['FIN-01'],
         kpis: ['Variación CAPEX ~ 0%', 'Margen markup']
       },
@@ -394,6 +488,15 @@
         status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Gestionar comunicaciones oficiales, órdenes de cambio, entrega de llaves y garantías post-venta.',
         audit: 'Fusiona Onboarding + Gestión de Cambios + Handover + Post-Venta en una sola persona.',
+        deliverables: [
+          'Bitácora oficial vía correo electrónico (único canal vinculante).',
+          'Órdenes de Cambio formalizadas y prepagadas antes de ejecutar.',
+          'Kit de Handover: Manual Property Manager, Welcome Book huésped y encuesta 7 preguntas.'
+        ],
+        risksMitigated: [
+          'Cambios informales pedidos por WhatsApp sin respaldo ni pago previo.',
+          'Reclamos fuera de plazo (post 30 días) o por daños causados por huéspedes.'
+        ],
         sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04'],
         kpis: ['SLA respuesta < 8h', 'CSAT Handover']
       },
@@ -403,6 +506,14 @@
         status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Ejecutar levantamiento en terreno, armar Moodboards y cerrar matriz de compra.',
         audit: 'Absorbe interiorismo + especificación técnica en un perfil integral.',
+        deliverables: [
+          'Ficha de levantamiento métrico y fotográfico en terreno.',
+          'Láminas de Moodboard por ambiente y ficha técnica de mobiliario a medida.',
+          'Matriz FF&E cerrada con links, SKUs, precios netos y alternativas Plan B.'
+        ],
+        risksMitigated: [
+          'Errores de dimensiones en accesos, ascensores o distribución de recintos.'
+        ],
         sops: ['DIS-01'],
         kpis: ['85–90% compra retail', 'Precisión medidas']
       },
@@ -412,6 +523,14 @@
         status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Emitir órdenes de compra, recibir despachos con checklist y coordinar bodega.',
         audit: 'Contratación prioritaria #1 en crecimiento para liberar carga operativa.',
+        deliverables: [
+          'Órdenes de compra emitidas y seguimiento consolidado de despachos.',
+          'Checklist de recepción física firmado antes de aceptar guías de despacho.',
+          'Inventario actualizado de acopio transitorio por proyecto.'
+        ],
+        risksMitigated: [
+          'Aceptación tácita de productos fallados o incompletos por falta de revisión.'
+        ],
         sops: ['LOG-01', 'LOG-02'],
         kpis: ['Rechazo en 24h', '0 mermas en bodega']
       },
@@ -421,6 +540,14 @@
         status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Coordinar permisos en conserjería, supervisar maestros y dirigir styling final.',
         audit: 'Fusiona supervisión técnica en obra + dirección de arte fotográfica.',
+        deliverables: [
+          'Autorización de ingreso y protección de áreas comunes gestionada 48h antes.',
+          'Checklist de terminaciones, limpieza fina post-obra y montaje escénico.',
+          'Dirección en terreno de la sesión fotográfica estándar Airbnb/Booking.'
+        ],
+        risksMitigated: [
+          'Atrasos en montaje por restricciones horarias o de ascensores en edificios.'
+        ],
         sops: ['TER-01', 'TER-02'],
         kpis: ['Obra limpia 100%', '0 multas edificio']
       },
@@ -430,6 +557,14 @@
         status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Emitir facturas por hitos, rendir boletas Open Book y controlar márgenes.',
         audit: 'Se mantiene interno hasta escala; contabilidad tributaria va 100% externa.',
+        deliverables: [
+          'DTEs emitidos por hitos (50% - 30% - 20%) y órdenes de cambio.',
+          'Planilla de conciliación Open Book con boletas/facturas adjuntas.',
+          'Reporte de rentabilidad neta por proyecto cerrado.'
+        ],
+        risksMitigated: [
+          'Ejecución de compras o cambios sin transferencia acreditada en cuenta SpA.'
+        ],
         sops: ['FIN-01'],
         kpis: ['Cobro 100% pre-compra', 'Cierre Open Book']
       },
@@ -441,6 +576,10 @@
         status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Armar láminas de Moodboard, verificar stock en tiendas y actualizar planillas.',
         audit: 'Contratación de apoyo en crecimiento para liberar horas operativas de diseño.',
+        deliverables: [
+          'Validación de disponibilidad de stock en tiempo real previo a aprobar Matriz FF&E.',
+          'Cotizaciones rápidas para reposiciones Fast-Track (COM-04).'
+        ],
         sops: ['DIS-01', 'COM-04'],
         kpis: ['Stock validado 100%', 'Cotización < 48h']
       },
@@ -450,6 +589,10 @@
         status: { hoy: 'Interno', escala: 'Vacante' },
         mission: 'Ejecutar recepciones físicas, proteger ascensores y asistir armado en terreno.',
         audit: 'Rol puente compartido entre Logística y Terreno para evitar tiempos muertos.',
+        deliverables: [
+          'Protección física de pasillos/ascensores y retiro total de embalajes en el día.',
+          'Apoyo en recepción de despachos y etiquetado por recinto.'
+        ],
         sops: ['LOG-01', 'TER-01'],
         kpis: ['Checklist 100% firmado', 'Retiro cartones día 1']
       },
@@ -461,6 +604,10 @@
         status: { hoy: 'Externo', escala: 'Externo' },
         mission: 'Fabricar piezas especiales bajo plano y proveer acopio temporal por proyecto.',
         audit: 'Cero taller carpintero propio (costo fijo eliminado). Pago 100% variable.',
+        deliverables: [
+          'Muestras físicas de terminación aprobadas y piezas fabricadas bajo tolerancia ±2 mm.',
+          'Almacenaje seguro y despacho consolidado a obra.'
+        ],
         sops: ['LOG-01', 'LOG-02'],
         kpis: ['Tolerancia +/- 2mm', 'Entrega puntual']
       },
@@ -470,6 +617,10 @@
         status: { hoy: 'Externo', escala: 'Externo' },
         mission: 'Ejecutar pintura, instalaciones, aseo profundo y fotografía comercial Airbnb.',
         audit: 'Equipos variables contratados por obra bajo protocolo de Obra Limpia.',
+        deliverables: [
+          'Instalación de cortinas, luminarias, arte y armado de mobiliario sin daños.',
+          'Aseo profundo final y galería fotográfica editada en 48h.'
+        ],
         sops: ['TER-01', 'TER-02', 'COM-04'],
         kpis: ['0 daños áreas comunes', 'Fotos listas en 48h']
       },
@@ -479,6 +630,10 @@
         status: { hoy: 'Externo', escala: 'Externo' },
         mission: 'Llevar contabilidad mensual, declaraciones F29/Renta y cumplimiento SII.',
         audit: 'Externalizado desde el día 1 mediante fee mensual fijo.',
+        deliverables: [
+          'Declaración mensual F29, libros contables al día y Operación Renta anual.',
+          'Asesoría tributaria sobre tratamiento de fondos Open Book ante SII.'
+        ],
         sops: ['FIN-01'],
         kpis: ['0 multas SII', 'Balance al día']
       }
@@ -491,6 +646,7 @@
       activeSop: null,
       searchQuery: '',
       selectedRoleId: null,
+      specialModal: null, // 'kpis' | 'versions' | null
       presentationMode: false,
       deviceMode: window.innerWidth < 860 ? 'mobile' : 'desktop'
     };
@@ -546,7 +702,7 @@
       const today = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' });
       metaEl.innerHTML = `
         <div class="font-semibold text-[#3A3532]">${stageLabel}</div>
-        <div>Emitido: ${today} · ORG-EA V. 2.1</div>
+        <div>Emitido: ${today} · ORG-EA V. 2.5 (Sincronizado DOC-MAESTRO V. 2.5)</div>
       `;
     }
 
@@ -607,12 +763,20 @@
     }
 
     function openRoleModal(roleId) {
+      state.specialModal = null;
       state.selectedRoleId = roleId;
+      renderModal();
+    }
+
+    function openSpecialModal(type) {
+      state.selectedRoleId = null;
+      state.specialModal = type;
       renderModal();
     }
 
     function closeModal() {
       state.selectedRoleId = null;
+      state.specialModal = null;
       document.getElementById('floating-modal').classList.add('hidden');
     }
 
@@ -624,7 +788,7 @@
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        if (state.selectedRoleId) {
+        if (state.selectedRoleId || state.specialModal) {
           closeModal();
         } else if (state.presentationMode) {
           togglePresentationMode();
@@ -648,11 +812,12 @@
         const q = state.searchQuery.toLowerCase();
         const inTitle = role.title.toLowerCase().includes(q);
         const inMission = role.mission.toLowerCase().includes(q);
+        const inDeliverables = (role.deliverables || []).some(d => d.toLowerCase().includes(q));
         const inSops = role.sops.some(code => {
           const sopObj = SOP_DETAILS[code];
           return code.toLowerCase().includes(q) || (sopObj && sopObj.title.toLowerCase().includes(q));
         });
-        return inTitle || inMission || inSops;
+        return inTitle || inMission || inDeliverables || inSops;
       }
       return true;
     }
@@ -746,13 +911,13 @@
              class="role-card ${stateClass} cursor-pointer max-w-xl mx-auto bg-[#FDFBF7] rounded-2xl border border-[#DFD5C7] px-6 py-4 shadow-[0_6px_24px_-8px_rgba(74,69,65,0.08)] text-center relative overflow-hidden">
           <div class="absolute top-0 inset-x-0 h-[3px] bg-[#7A353E]"></div>
           <div class="text-[10px] uppercase tracking-[0.2em] text-[#7A353E] font-semibold mb-1">
-            Nivel 0 · Gobierno Corporativo
+            Nivel 0 · Gobierno Corporativo · RUT 78.560.882-8
           </div>
           <h2 class="text-lg md:text-xl font-semibold tracking-tight text-[#3A3532] leading-snug">
             Gerencia General · Socias Fundadoras
           </h2>
           <p class="text-xs text-[#857E77] mt-0.5">
-            Dirección Ejecutiva, Estrategia y Gobernanza Transversal
+            ESTUDIO AFÍN SpA · Dirección Ejecutiva, Estrategia y Gobernanza Transversal
           </p>
         </div>
       `;
@@ -911,7 +1076,7 @@
             
             ${topBranchHtml}
 
-            <!-- Encabezados de Departamento con Navegador de SOPs integrado -->
+            <!-- Encabezados de Departamento con Navegador de SOPs -->
             <div class="grid ${gridCols} gap-4 relative z-10">
               ${visibleDepts.map(dept => `
                 <div class="bg-[#FDFBF7] rounded-xl border border-[#DFD6C9] px-3.5 py-3 text-center relative overflow-hidden shadow-[0_2px_10px_-4px_rgba(74,69,65,0.06)] flex flex-col justify-between">
@@ -925,7 +1090,7 @@
               `).join('')}
             </div>
 
-            <!-- Contenedor de Bandas con Líneas Verticales Continuas de Reporte -->
+            <!-- Ejes verticales de reporte y Bandas de Nivel -->
             <div class="relative pt-3.5">
               <div class="grid ${gridCols} gap-4 absolute inset-0 pointer-events-none z-0">
                 ${visibleDepts.map(dept => {
@@ -939,7 +1104,6 @@
                 }).join('')}
               </div>
 
-              <!-- Bandas por Nivel Jerárquico -->
               <div class="space-y-3.5 relative z-10">
                 ${LEVELS.map(lvl => `
                   <div class="level-band bg-[#F3EFE8]/55 rounded-2xl border border-[#EAE2D6] p-3.5">
@@ -998,9 +1162,154 @@
       }).join('');
     }
 
+    function renderDeliverablesAndRisks(deliverables, risks) {
+      let html = '';
+      if (deliverables && deliverables.length > 0) {
+        html += `
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">Entregables y Reglas de Control</div>
+            <ul class="space-y-1.5 bg-white border border-[#EAE2D6] rounded-xl p-3.5 text-[#4A4541]">
+              ${deliverables.map(item => `
+                <li class="flex items-start gap-2 leading-relaxed">
+                  <span class="text-[#7A353E] font-bold mt-0.5">•</span>
+                  <span>${item}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        `;
+      }
+      if (risks && risks.length > 0) {
+        html += `
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">Riesgos Operativos que Mitiga</div>
+            <div class="space-y-1.5">
+              ${risks.map(risk => `
+                <div class="bg-[#F9F4EF] border border-[#E6DACB] rounded-lg px-3 py-2 text-[#5E534A] flex items-start gap-2 leading-relaxed">
+                  <span class="text-[#96735B] font-semibold shrink-0">Shield</span>
+                  <span>${risk}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      return html;
+    }
+
+    function renderSpecialModals() {
+      const modal = document.getElementById('floating-modal');
+      const content = document.getElementById('modal-content');
+      modal.classList.remove('hidden');
+
+      if (state.specialModal === 'kpis') {
+        content.innerHTML = `
+          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#ECE4D8]">
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
+                Sección 9 · Documento Maestro V. 2.5
+              </div>
+              <h3 class="text-lg font-semibold tracking-tight text-[#3A3532]">Tablero de KPIs Estratégicos y Operativos</h3>
+            </div>
+            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#E2D9CC] bg-[#F8F5F0] hover:bg-[#EFE9E0] text-[#6E6862] flex items-center justify-center text-xs transition-colors shrink-0">
+              ✕
+            </button>
+          </div>
+
+          <div class="mt-5 space-y-5 text-xs">
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-2">
+                1. KPIs Externos (Experiencia del Inversionista)
+              </div>
+              <div class="space-y-2">
+                ${MASTER_KPIS.external.map(k => `
+                  <div class="bg-white border border-[#EAE2D6] rounded-xl p-3 flex items-start justify-between gap-3">
+                    <div>
+                      <div class="font-semibold text-[#3A3532]">${k.name}</div>
+                      <div class="text-[#6E6862] mt-0.5 leading-relaxed">${k.desc}</div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full bg-[#7A353E]/10 text-[#7A353E] font-semibold text-[10.5px] shrink-0">
+                      ${k.target}
+                    </span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#78736E] mb-2">
+                2. KPIs Internos (Eficiencia Operativa de los 10 SOPs)
+              </div>
+              <div class="space-y-2">
+                ${MASTER_KPIS.internal.map(k => `
+                  <div class="bg-[#F6F2EC] border border-[#E5DDD2] rounded-xl p-3 flex items-start justify-between gap-3">
+                    <div>
+                      <div class="font-semibold text-[#3A3532]">${k.name}</div>
+                      <div class="text-[#6E6862] mt-0.5 leading-relaxed">${k.desc}</div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full bg-white border border-[#DED5C8] text-[#4A4541] font-medium text-[10.5px] shrink-0">
+                      ${k.target}
+                    </span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (state.specialModal === 'versions') {
+        content.innerHTML = `
+          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#ECE4D8]">
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
+                Gobernanza Documental · Versionado Semántico (X.Y)
+              </div>
+              <h3 class="text-lg font-semibold tracking-tight text-[#3A3532]">Control de Versiones · ORG-EA V. 2.5</h3>
+            </div>
+            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#E2D9CC] bg-[#F8F5F0] hover:bg-[#EFE9E0] text-[#6E6862] flex items-center justify-center text-xs transition-colors shrink-0">
+              ✕
+            </button>
+          </div>
+
+          <div class="mt-5 space-y-4 text-xs">
+            <p class="text-[#6E6862] leading-relaxed">
+              Sincronizado con <strong class="text-[#3A3532]">Propuesta de Estructuración y Negocio - ESTUDIO AFÍN SpA (DOC-MAESTRO V. 2.5)</strong>. El primer dígito (X) registra cambios estructurales mayores y el segundo (Y) iteraciones de precisión operativa.
+            </p>
+            <div class="border border-[#EAE2D6] rounded-xl overflow-hidden bg-white">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-[#F3EFE8] text-[10px] uppercase tracking-wider text-[#78726C] border-b border-[#EAE2D6]">
+                    <th class="py-2.5 px-3 font-semibold">Versión</th>
+                    <th class="py-2.5 px-3 font-semibold">Fecha</th>
+                    <th class="py-2.5 px-3 font-semibold">Descripción del Cambio</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-[#EFE9E0]">
+                  ${VERSION_HISTORY.map(v => `
+                    <tr class="${v.ver === '2.5' ? 'bg-[#FDF8F6]' : ''}">
+                      <td class="py-2.5 px-3 font-semibold text-[#7A353E] whitespace-nowrap">V. ${v.ver}</td>
+                      <td class="py-2.5 px-3 text-[#857E77] whitespace-nowrap">${v.date}</td>
+                      <td class="py-2.5 px-3 text-[#4A4541] leading-relaxed">${v.desc}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+    }
+
     function renderModal() {
       const modal = document.getElementById('floating-modal');
       const content = document.getElementById('modal-content');
+
+      if (state.specialModal) {
+        renderSpecialModals();
+        return;
+      }
 
       if (!state.selectedRoleId) {
         modal.classList.add('hidden');
@@ -1024,15 +1333,24 @@
           </div>
 
           <div class="mt-5 space-y-5 text-xs">
+            <!-- Identidad Legal Formal -->
+            <div class="bg-white border border-[#DFD5C7] rounded-xl p-3.5">
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Identidad Jurídica Vigente</div>
+              <div class="font-semibold text-[#3A3532]">${exec.legalEntity}</div>
+            </div>
+
+            <!-- Línea de Fuego Corporativa -->
+            <div class="bg-[#F6F1E9] border border-[#E8DEC9] rounded-xl p-4">
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Línea de Fuego Corporativa</div>
+              <p class="text-[#5C4E50] leading-relaxed">${exec.fireLine}</p>
+            </div>
+
             <div>
               <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-1.5">Responsabilidad Ejecutiva</div>
               <p class="text-[#4A4541] text-[13px] leading-relaxed">${exec.mission}</p>
             </div>
 
-            <div class="bg-[#F6F1E9] border border-[#E8DEC9] rounded-xl p-4">
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Criterio Ultra-Lean</div>
-              <p class="text-[#5C4E50] leading-relaxed">${exec.audit}</p>
-            </div>
+            ${renderDeliverablesAndRisks(exec.deliverables, exec.risksMitigated)}
 
             <div>
               <div class="flex items-center justify-between mb-2">
@@ -1089,6 +1407,8 @@
             <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Criterio Ultra-Lean</div>
             <p class="text-[#5C4E50] leading-relaxed">${role.audit}</p>
           </div>
+
+          ${renderDeliverablesAndRisks(role.deliverables, role.risksMitigated)}
 
           <div>
             <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#999188] mb-2">Modalidad en etapa (${state.stage === 'hoy' ? 'Hoy' : 'Escala'})</div>
