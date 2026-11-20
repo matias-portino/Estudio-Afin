@@ -130,9 +130,7 @@
         Organigrama Corporativo, Roles y Gobernanza de Procesos
       </h1>
     </div>
-    <div id="presentation-meta" class="text-right text-[11px] text-[#5E5751]">
-      <!-- Render dinámico -->
-    </div>
+    <div id="presentation-meta" class="text-right text-[11px] text-[#5E5751]"></div>
   </div>
 
   <!-- CABECERA INTERACTIVA -->
@@ -212,13 +210,9 @@
     <!-- Sub-barra de navegación por áreas + Accesos Maestros -->
     <div class="bg-[#EAE2D6] border-t border-[#D8CCB9] px-5 md:px-8 py-2">
       <div class="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-3 text-[11.5px]">
-        <div id="dept-filters" class="flex items-center gap-1.5 overflow-x-auto pb-0.5 md:pb-0">
-          <!-- Render dinámico -->
-        </div>
+        <div id="dept-filters" class="flex items-center gap-1.5 overflow-x-auto pb-0.5 md:pb-0"></div>
         <div class="flex items-center gap-3">
-          <div id="load-summary" class="hidden xl:flex items-center gap-3.5 text-[11px] text-[#635C56] tracking-wide">
-            <!-- Render dinámico -->
-          </div>
+          <div id="load-summary" class="hidden xl:flex items-center gap-3.5 text-[11px] text-[#635C56] tracking-wide"></div>
           <span class="hidden xl:inline text-[#BFB3A3]">|</span>
           <!-- Accesos directos al Documento Maestro V. 2.5 -->
           <button onclick="openSpecialModal('kpis')" class="px-2.5 py-1 rounded-full border border-[#C9BBA8] bg-[#FFFFFF] hover:border-[#7A353E] text-[#2E2926] hover:text-[#7A353E] text-[11px] font-medium transition-all shadow-2xs">
@@ -232,16 +226,12 @@
     </div>
 
     <!-- Banner dinámico cuando hay un SOP o búsqueda activa -->
-    <div id="active-sop-banner" class="hidden bg-[#FFFFFF] border-t border-[#D4C7B5] px-5 md:px-8 py-2.5 shadow-xs">
-      <!-- Render dinámico -->
-    </div>
+    <div id="active-sop-banner" class="hidden bg-[#FFFFFF] border-t border-[#D4C7B5] px-5 md:px-8 py-2.5 shadow-xs"></div>
   </header>
 
   <!-- LIENZO PRINCIPAL -->
   <main class="flex-1 max-w-[1400px] w-full mx-auto px-5 md:px-8 py-7">
-    <div id="org-canvas" class="w-full">
-      <!-- Renderizado dinámico -->
-    </div>
+    <div id="org-canvas" class="w-full"></div>
   </main>
 
   <!-- PIE DE PÁGINA FORMAL (VISIBLE EN PRESENTACIÓN E IMPRESIÓN PDF) -->
@@ -662,6 +652,7 @@
       state.stage = stage;
       ['hoy', 'escala'].forEach(s => {
         const btn = document.getElementById(`btn-stage-${s}`);
+        if (!btn) return;
         btn.className = s === stage
           ? 'px-3 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FFFFFF] shadow-2xs'
           : 'px-3 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]';
@@ -672,10 +663,12 @@
     function toggleAudit() {
       state.showAudit = !state.showAudit;
       const btn = document.getElementById('btn-audit');
-      btn.textContent = state.showAudit ? 'Auditoría: ON' : 'Auditoría: OFF';
-      btn.className = state.showAudit
-        ? 'px-3 py-1.5 rounded-full border border-[#7A353E] bg-[#7A353E] text-[#FFFFFF] text-[11px] tracking-wide font-medium transition-all'
-        : 'px-3 py-1.5 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] text-[#59524C] hover:border-[#7A353E]/50 hover:text-[#26221F] text-[11px] tracking-wide font-medium transition-all';
+      if (btn) {
+        btn.textContent = state.showAudit ? 'Auditoría: ON' : 'Auditoría: OFF';
+        btn.className = state.showAudit
+          ? 'px-3 py-1.5 rounded-full border border-[#7A353E] bg-[#7A353E] text-[#FFFFFF] text-[11px] tracking-wide font-medium transition-all'
+          : 'px-3 py-1.5 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] text-[#59524C] hover:border-[#7A353E]/50 hover:text-[#26221F] text-[11px] tracking-wide font-medium transition-all';
+      }
       renderAll();
     }
 
@@ -705,12 +698,18 @@
 
     function setDeviceMode(mode) {
       state.deviceMode = mode;
-      document.getElementById('btn-view-desktop').className = mode === 'desktop'
-        ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#26221F] shadow-2xs'
-        : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]';
-      document.getElementById('btn-view-mobile').className = mode === 'mobile'
-        ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#26221F] shadow-2xs'
-        : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]';
+      const desktopBtn = document.getElementById('btn-view-desktop');
+      const mobileBtn = document.getElementById('btn-view-mobile');
+      if (desktopBtn) {
+        desktopBtn.className = mode === 'desktop'
+          ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#26221F] shadow-2xs'
+          : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]';
+      }
+      if (mobileBtn) {
+        mobileBtn.className = mode === 'mobile'
+          ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#26221F] shadow-2xs'
+          : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]';
+      }
       renderAll();
     }
 
@@ -736,10 +735,12 @@
     function handleSearch(val) {
       state.searchQuery = val.trim();
       const clearBtn = document.getElementById('btn-clear-search');
-      if (state.searchQuery.length > 0 || state.activeSop) {
-        clearBtn.classList.remove('hidden');
-      } else {
-        clearBtn.classList.add('hidden');
+      if (clearBtn) {
+        if (state.searchQuery.length > 0 || state.activeSop) {
+          clearBtn.classList.remove('hidden');
+        } else {
+          clearBtn.classList.add('hidden');
+        }
       }
       const upper = state.searchQuery.toUpperCase();
       if (SOP_DETAILS[upper]) {
@@ -755,7 +756,8 @@
       state.searchQuery = '';
       const input = document.getElementById('quick-search');
       if (input) input.value = '';
-      document.getElementById('btn-clear-search').classList.add('hidden');
+      const clearBtn = document.getElementById('btn-clear-search');
+      if (clearBtn) clearBtn.classList.add('hidden');
       renderAll();
     }
 
@@ -774,11 +776,12 @@
     function closeModal() {
       state.selectedRoleId = null;
       state.specialModal = null;
-      document.getElementById('floating-modal').classList.add('hidden');
+      const modal = document.getElementById('floating-modal');
+      if (modal) modal.classList.add('hidden');
     }
 
     function handleBackdropClick(e) {
-      if (e.target.id === 'floating-modal') {
+      if (e.target && e.target.id === 'floating-modal') {
         closeModal();
       }
     }
@@ -825,6 +828,7 @@
 
     function renderFiltersAndSummary() {
       const filtersEl = document.getElementById('dept-filters');
+      if (!filtersEl) return;
       const allActive = state.activeDept === 'ALL';
       let html = `
         <button onclick="setDeptFilter('ALL')" class="px-3 py-1 rounded-full font-medium transition-all shrink-0 ${allActive ? 'bg-[#26221F] text-[#FFFFFF] shadow-2xs' : 'text-[#59524C] hover:bg-[#DFD5C7]'}">
@@ -847,20 +851,25 @@
         const s = r.status[state.stage];
         if (counts[s] !== undefined) counts[s]++;
       });
-      document.getElementById('load-summary').innerHTML = `
-        <span>SOPs · <strong class="font-semibold text-[#26221F]">10</strong></span>
-        <span>Internos · <strong class="font-semibold text-[#26221F]">${counts['Interno']}</strong></span>
-        ${counts['Vacante'] > 0 ? `<span>Por incorporar · <strong class="font-semibold text-[#7A353E]">${counts['Vacante']}</strong></span>` : ''}
-        <span>Externos · <strong class="font-semibold text-[#26221F]">${counts['Externo']}</strong></span>
-      `;
+      const summaryEl = document.getElementById('load-summary');
+      if (summaryEl) {
+        summaryEl.innerHTML = `
+          <span>SOPs · <strong class="font-semibold text-[#26221F]">10</strong></span>
+          <span>Internos · <strong class="font-semibold text-[#26221F]">${counts['Interno']}</strong></span>
+          ${counts['Vacante'] > 0 ? `<span>Por incorporar · <strong class="font-semibold text-[#7A353E]">${counts['Vacante']}</strong></span>` : ''}
+          <span>Externos · <strong class="font-semibold text-[#26221F]">${counts['Externo']}</strong></span>
+        `;
+      }
 
       const bannerEl = document.getElementById('active-sop-banner');
       const clearBtn = document.getElementById('btn-clear-search');
+      if (!bannerEl) return;
+
       if (state.activeSop && SOP_DETAILS[state.activeSop]) {
         const sop = SOP_DETAILS[state.activeSop];
         const matchingCount = rolesData.filter(r => r.sops.includes(state.activeSop)).length;
         bannerEl.classList.remove('hidden');
-        clearBtn.classList.remove('hidden');
+        if (clearBtn) clearBtn.classList.remove('hidden');
         bannerEl.innerHTML = `
           <div class="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
             <div class="flex flex-wrap items-center gap-2.5">
@@ -881,7 +890,7 @@
       } else if (state.searchQuery) {
         const matchingCount = rolesData.filter(r => isRoleMatch(r)).length;
         bannerEl.classList.remove('hidden');
-        clearBtn.classList.remove('hidden');
+        if (clearBtn) clearBtn.classList.remove('hidden');
         bannerEl.innerHTML = `
           <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-3 text-xs">
             <span class="text-[#59524C]">
@@ -894,7 +903,7 @@
         `;
       } else {
         bannerEl.classList.add('hidden');
-        clearBtn.classList.add('hidden');
+        if (clearBtn) clearBtn.classList.add('hidden');
       }
     }
 
@@ -988,6 +997,7 @@
 
     function renderCanvas() {
       const canvas = document.getElementById('org-canvas');
+      if (!canvas) return;
       const visibleDepts = state.activeDept === 'ALL'
         ? DEPARTMENTS
         : DEPARTMENTS.filter(d => d.id === state.activeDept);
@@ -1091,7 +1101,8 @@
             <div class="relative pt-3.5">
               <div class="grid ${gridCols} gap-4 absolute inset-0 pointer-events-none z-0">
                 ${visibleDepts.map(dept => {
-                  const maxLvl = Math.max(...rolesData.filter(r => r.dept === dept.id).map(r => r.level));
+                  const deptRoles = rolesData.filter(r => r.dept === dept.id);
+                  const maxLvl = deptRoles.length > 0 ? Math.max(...deptRoles.map(r => r.level)) : 1;
                   const lineHeightClass = maxLvl === 4 ? 'bottom-8' : 'bottom-[24%]';
                   return `
                     <div class="relative h-full">
@@ -1196,6 +1207,7 @@
     function renderSpecialModals() {
       const modal = document.getElementById('floating-modal');
       const content = document.getElementById('modal-content');
+      if (!modal || !content) return;
       modal.classList.remove('hidden');
 
       if (state.specialModal === 'kpis') {
@@ -1284,4 +1296,177 @@
                 </thead>
                 <tbody class="divide-y divide-[#EAE2D6]">
                   ${VERSION_HISTORY.map(v => `
-                    <tr class="${v.ver === '2.
+                    <tr class="${v.ver === '2.5' ? 'bg-[#FAF3F1]' : ''}">
+                      <td class="py-2.5 px-3 font-semibold text-[#7A353E] whitespace-nowrap">V. ${v.ver}</td>
+                      <td class="py-2.5 px-3 text-[#635C56] whitespace-nowrap">${v.date}</td>
+                      <td class="py-2.5 px-3 text-[#2E2926] leading-relaxed">${v.desc}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function renderModal() {
+      const modal = document.getElementById('floating-modal');
+      const content = document.getElementById('modal-content');
+      if (!modal || !content) return;
+
+      if (state.specialModal) {
+        renderSpecialModals();
+        return;
+      }
+
+      if (!state.selectedRoleId) {
+        modal.classList.add('hidden');
+        return;
+      }
+
+      if (state.selectedRoleId === 'gerencia-general') {
+        const exec = EXECUTIVE_ROLE;
+        modal.classList.remove('hidden');
+        content.innerHTML = `
+          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
+                Nivel 0 · Gobierno Corporativo
+              </div>
+              <h3 class="text-lg font-semibold tracking-tight text-[#26221F] leading-snug">${exec.title}</h3>
+            </div>
+            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
+              ✕
+            </button>
+          </div>
+
+          <div class="mt-5 space-y-5 text-xs">
+            <div class="bg-[#FFFFFF] border border-[#CFC3B2] rounded-xl p-3.5">
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Identidad Jurídica Vigente</div>
+              <div class="font-semibold text-[#26221F]">${exec.legalEntity}</div>
+            </div>
+
+            <div class="bg-[#EFE9E0] border border-[#D4C7B5] rounded-xl p-4">
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Línea de Fuego Corporativa</div>
+              <p class="text-[#3A3430] leading-relaxed">${exec.fireLine}</p>
+            </div>
+
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-1.5">Responsabilidad Ejecutiva</div>
+              <p class="text-[#2E2926] text-[13px] leading-relaxed">${exec.mission}</p>
+            </div>
+
+            ${renderDeliverablesAndRisks(exec.deliverables, exec.risksMitigated)}
+
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A]">SOPs Clave Supervisados</span>
+                <span class="text-[10px] text-[#7A726A]">Clic para resaltar en el mapa</span>
+              </div>
+              <div class="space-y-2">
+                ${renderSopListInModal(exec.sops)}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-2">Indicadores Globales</div>
+              <div class="flex flex-wrap gap-2">
+                ${exec.kpis.map(k => `
+                  <span class="px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#CFC3B2] text-[#26221F] font-medium">${k}</span>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const role = rolesData.find(r => r.id === state.selectedRoleId);
+      if (!role) return;
+
+      const dept = DEPARTMENTS.find(d => d.id === role.dept);
+      const currentStatus = role.status[state.stage];
+      modal.classList.remove('hidden');
+
+      content.innerHTML = `
+        <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
+          <div>
+            <div class="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] mb-1" style="color:${dept.color}">
+              <span>${dept.id} · ${dept.name}</span>
+              <span>·</span>
+              <span>Nivel ${role.level}</span>
+            </div>
+            <h3 class="text-lg font-semibold tracking-tight text-[#26221F] leading-snug">${role.title}</h3>
+          </div>
+          <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
+            ✕
+          </button>
+        </div>
+
+        <div class="mt-5 space-y-5 text-xs">
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-1.5">Responsabilidad Principal</div>
+            <p class="text-[#2E2926] text-[13px] leading-relaxed">${role.mission}</p>
+          </div>
+
+          <div class="bg-[#EFE9E0] border border-[#D4C7B5] rounded-xl p-4">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Criterio Ultra-Lean</div>
+            <p class="text-[#3A3430] leading-relaxed">${role.audit}</p>
+          </div>
+
+          ${renderDeliverablesAndRisks(role.deliverables, role.risksMitigated)}
+
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-2">Modalidad en etapa (${state.stage === 'hoy' ? 'Hoy' : 'Escala'})</div>
+            <div class="grid grid-cols-3 gap-2">
+              ${['Interno', 'Vacante', 'Externo'].map(opt => `
+                <button onclick="changeRoleStatus('${role.id}', '${opt}')"
+                  class="py-2 px-2.5 rounded-lg border text-center font-medium transition-all ${currentStatus === opt ? 'bg-[#7A353E] text-[#FFFFFF] border-[#7A353E]' : 'bg-[#FFFFFF] text-[#2E2926] border-[#CFC3B2] hover:border-[#7A353E]/60'}">
+                  ${opt === 'Interno' ? 'Equipo Interno' : opt === 'Vacante' ? 'Por incorporar' : 'Externo'}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A]">SOPs Vinculados (${role.sops.length})</span>
+              <span class="text-[10px] text-[#7A726A]">Clic para resaltar en el mapa</span>
+            </div>
+            <div class="space-y-2">
+              ${renderSopListInModal(role.sops)}
+            </div>
+          </div>
+
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-2">Indicadores Clave</div>
+            <div class="flex flex-wrap gap-2">
+              ${role.kpis.map(k => `
+                <span class="px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#CFC3B2] text-[#26221F] font-medium">${k}</span>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAll() {
+      try {
+        renderFiltersAndSummary();
+        renderCanvas();
+        renderModal();
+        updatePresentationMeta();
+      } catch (err) {
+        console.error('Error al renderizar organigrama:', err);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderAll);
+    } else {
+      renderAll();
+    }
+  </script>
+</body>
+</html>
