@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Organigrama Estudio Afín SpA | Roles, Dotación y Estructura</title>
+  <title>Organigrama Estudio Afín SpA | Estructura y Roles</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -16,37 +16,37 @@
     .role-card {
       position: relative;
       z-index: 10;
-      box-shadow: 0 2px 8px -2px rgba(46, 41, 38, 0.08), 0 1px 2px 0 rgba(46, 41, 38, 0.04);
-      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, border-color 0.22s ease, opacity 0.22s ease;
+      box-shadow: 0 1px 4px rgba(46, 41, 38, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
     }
     .role-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px -8px rgba(46, 41, 38, 0.16);
-      border-color: #9E6B71;
+      transform: translateY(-1.5px);
+      box-shadow: 0 8px 18px -6px rgba(46, 41, 38, 0.12);
+      border-color: #9E8279;
     }
     .role-card.is-highlighted {
-      border-color: #7A353E !important;
-      box-shadow: 0 10px 24px -6px rgba(122, 53, 62, 0.26);
+      border-color: #7D5459 !important;
+      box-shadow: 0 6px 16px -4px rgba(125, 84, 89, 0.22);
       background-color: #FFFFFF;
     }
     .role-card.is-dimmed {
-      opacity: 0.32;
-      filter: grayscale(35%);
+      opacity: 0.30;
+      filter: grayscale(40%);
     }
     .role-card.is-dimmed:hover {
       opacity: 0.85;
       filter: none;
     }
     @keyframes modalFade {
-      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      from { opacity: 0; transform: translateY(8px) scale(0.985); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
     .modal-animate {
-      animation: modalFade 0.22s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: modalFade 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: #E6DDD0; }
-    ::-webkit-scrollbar-thumb { background: #BFB3A3; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb { background: #C4B8A8; border-radius: 3px; }
 
     /* MODO PRESENTACIÓN */
     body.presentation-mode {
@@ -75,7 +75,7 @@
         background-color: #F4EFE7 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        zoom: 0.84;
+        zoom: 0.85;
       }
       #app-header,
       #presentation-toolbar,
@@ -103,52 +103,52 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-[#7A353E]/15 selection:text-[#7A353E]">
+<body class="min-h-screen flex flex-col selection:bg-[#7D5459]/15 selection:text-[#7D5459]">
 
   <!-- BARRA FLOTANTE DE MODO PRESENTACIÓN -->
-  <div id="presentation-toolbar" class="hidden fixed bottom-5 right-6 z-40 items-center gap-2 bg-[#26221F] text-[#FFFFFF] px-3.5 py-2 rounded-full shadow-lg border border-[#47403B] text-xs">
-    <span class="text-[#D4CBC0] pr-1">Vista Lámina Ejecutiva</span>
-    <button onclick="window.print()" class="px-3 py-1 rounded-full bg-[#7A353E] hover:bg-[#8E404B] text-[#FFFFFF] font-medium transition-colors flex items-center gap-1.5">
+  <div id="presentation-toolbar" class="hidden fixed bottom-5 right-6 z-40 items-center gap-2 bg-[#2E2926] text-[#FAF7F2] px-3.5 py-2 rounded-full shadow-lg border border-[#4D4540] text-xs">
+    <span class="text-[#D4CBC0] pr-1">Vista Lámina</span>
+    <button onclick="window.print()" class="px-3 py-1 rounded-full bg-[#7D5459] hover:bg-[#8E6268] text-[#FFFFFF] font-medium transition-colors flex items-center gap-1.5">
       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
         <rect x="6" y="14" width="12" height="8"></rect>
       </svg>
-      <span>Imprimir / Guardar PDF</span>
+      <span>Imprimir / PDF</span>
     </button>
-    <button onclick="togglePresentationMode()" class="px-2.5 py-1 rounded-full bg-[#453E39] hover:bg-[#574F49] text-[#FFFFFF] font-medium transition-colors">
-      Salir (Esc)
+    <button onclick="togglePresentationMode()" class="px-2.5 py-1 rounded-full bg-[#4A423D] hover:bg-[#5C534D] text-[#FFFFFF] font-medium transition-colors">
+      Salir
     </button>
   </div>
 
   <!-- CABECERA FORMAL DE LÁMINA (PRESENTACIÓN E IMPRESIÓN PDF) -->
-  <div id="presentation-header" class="hidden max-w-[1400px] w-full mx-auto px-5 md:px-8 pt-5 pb-3 border-b border-[#CFC3B2] items-end justify-between">
+  <div id="presentation-header" class="hidden max-w-[1380px] w-full mx-auto px-5 md:px-8 pt-5 pb-3 border-b border-[#D6C9B7] items-end justify-between">
     <div>
-      <div class="text-[10px] uppercase tracking-[0.22em] text-[#7A353E] font-semibold mb-0.5">
-        ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional y Dotación
+      <div class="text-[10px] uppercase tracking-[0.2em] text-[#7D5459] font-semibold mb-0.5">
+        ESTUDIO AFÍN SpA · RUT 78.560.882-8
       </div>
-      <h1 class="text-xl font-semibold tracking-tight text-[#26221F]">
-        Organigrama Corporativo, Células de Especialistas y Gobernanza
+      <h1 class="text-lg font-semibold tracking-tight text-[#2E2926]">
+        Organigrama Corporativo y Estructura de Roles
       </h1>
     </div>
-    <div id="presentation-meta" class="text-right text-[11px] text-[#5E5751]"></div>
+    <div id="presentation-meta" class="text-right text-[11px] text-[#6E665F]"></div>
   </div>
 
   <!-- CABECERA INTERACTIVA -->
-  <header id="app-header" class="bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#D8CCB9] sticky top-0 z-30 shadow-[0_1px_4px_rgba(46,41,38,0.04)]">
-    <div class="max-w-[1400px] mx-auto px-5 md:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
+  <header id="app-header" class="bg-[#FAF7F2]/90 backdrop-blur-md border-b border-[#DDD2C2] sticky top-0 z-30">
+    <div class="max-w-[1380px] mx-auto px-5 md:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
       
       <!-- Identidad y Título -->
       <div class="flex items-baseline gap-2.5">
-        <h1 class="text-lg md:text-xl font-semibold tracking-tight text-[#26221F]">
+        <h1 class="text-base md:text-lg font-semibold tracking-tight text-[#2E2926]">
           Estudio Afín SpA
         </h1>
-        <span class="hidden sm:inline-block text-[#BFB3A3] font-light">|</span>
-        <span class="text-sm md:text-[15px] font-medium text-[#7A353E]">
-          Roles, Dotación y Estructura
+        <span class="hidden sm:inline-block text-[#C9BDAE] font-light">/</span>
+        <span class="text-xs md:text-sm font-medium text-[#7D5459]">
+          Estructura y Roles
         </span>
       </div>
 
-      <!-- Controles Refinados + Buscador Rápido + Filtro de Vínculo + Presentación -->
+      <!-- Controles Minimalistas -->
       <div class="flex flex-wrap items-center gap-2">
         <!-- Buscador Rápido -->
         <div class="relative">
@@ -156,143 +156,144 @@
             type="text"
             id="quick-search"
             oninput="handleSearch(this.value)"
-            placeholder="Buscar cargo, SOP o especialidad..."
-            class="w-44 sm:w-56 pl-7 pr-7 py-1.5 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] text-[11.5px] text-[#26221F] placeholder-[#8C837A] focus:outline-none focus:border-[#7A353E] transition-all"
+            placeholder="Buscar rol o SOP..."
+            class="w-40 sm:w-48 pl-7 pr-6 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] text-[11px] text-[#2E2926] placeholder-[#968D84] focus:outline-none focus:border-[#7D5459] transition-all"
           />
-          <svg class="w-3.5 h-3.5 text-[#7A726A] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <svg class="w-3 h-3 text-[#8A8178] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"></circle>
             <path d="m21 21-4.3-4.3"></path>
           </svg>
           <button
             id="btn-clear-search"
             onclick="clearFilters()"
-            title="Limpiar filtro"
-            class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-[#635C56] hover:text-[#7A353E] font-semibold px-1"
+            title="Limpiar"
+            class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-[#6E665F] hover:text-[#7D5459] font-semibold"
           >✕</button>
         </div>
 
-        <!-- Filtro Macro de Vínculo -->
-        <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D4C7B5] flex items-center text-[11px] tracking-wide">
-          <button onclick="setLinkFilter('ALL')" id="btn-link-ALL" class="px-2.5 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FFFFFF] shadow-2xs">
+        <!-- Filtro de Vínculo -->
+        <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D8CCB9] flex items-center text-[11px]">
+          <button onclick="setLinkFilter('ALL')" id="btn-link-ALL" class="px-2.5 py-0.5 rounded-full font-medium transition-all bg-[#7D5459] text-[#FFFFFF]">
             Todos
           </button>
-          <button onclick="setLinkFilter('Interno')" id="btn-link-Interno" class="px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]">
-            Núcleo Interno
+          <button onclick="setLinkFilter('Interno')" id="btn-link-Interno" class="px-2.5 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]">
+            Interno
           </button>
-          <button onclick="setLinkFilter('Externo')" id="btn-link-Externo" class="px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]">
-            Aliados Externos
+          <button onclick="setLinkFilter('Externo')" id="btn-link-Externo" class="px-2.5 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]">
+            Externo
           </button>
         </div>
 
         <!-- Vista PC / Móvil -->
-        <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D4C7B5] flex items-center text-[11px] tracking-wide">
-          <button onclick="setDeviceMode('desktop')" id="btn-view-desktop" class="px-2.5 py-1 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#26221F] shadow-2xs">
+        <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D8CCB9] flex items-center text-[11px]">
+          <button onclick="setDeviceMode('desktop')" id="btn-view-desktop" class="px-2 py-0.5 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#2E2926] shadow-2xs">
             PC
           </button>
-          <button onclick="setDeviceMode('mobile')" id="btn-view-mobile" class="px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]">
+          <button onclick="setDeviceMode('mobile')" id="btn-view-mobile" class="px-2 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]">
             Móvil
           </button>
         </div>
 
         <!-- Botón Vista Presentación / PDF -->
-        <button onclick="togglePresentationMode()" title="Modo presentación limpio y exportación PDF" class="px-3 py-1.5 rounded-full border border-[#7A353E]/40 bg-[#7A353E]/10 hover:bg-[#7A353E] text-[#7A353E] hover:text-[#FFFFFF] text-[11px] tracking-wide font-medium transition-all flex items-center gap-1.5">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <button onclick="togglePresentationMode()" title="Vista presentación y PDF" class="px-2.5 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] hover:border-[#7D5459] text-[#59524C] hover:text-[#7D5459] text-[11px] font-medium transition-all flex items-center gap-1.5">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <rect x="2" y="3" width="20" height="14" rx="2"></rect>
             <path d="M8 21h8M12 17v4"></path>
           </svg>
-          <span>Presentación / PDF</span>
+          <span>Lámina / PDF</span>
         </button>
       </div>
     </div>
 
-    <!-- Sub-barra de navegación por áreas + Dotación Global + Accesos Maestros -->
-    <div class="bg-[#EAE2D6] border-t border-[#D8CCB9] px-5 md:px-8 py-2">
-      <div class="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-3 text-[11.5px]">
-        <div id="dept-filters" class="flex items-center gap-1.5 overflow-x-auto pb-0.5 md:pb-0"></div>
-        <div class="flex items-center gap-3">
-          <div id="load-summary" class="hidden xl:flex items-center gap-3.5 text-[11px] text-[#635C56] tracking-wide"></div>
-          <span class="hidden xl:inline text-[#BFB3A3]">|</span>
-          <button onclick="openSpecialModal('kpis')" class="px-2.5 py-1 rounded-full border border-[#C9BBA8] bg-[#FFFFFF] hover:border-[#7A353E] text-[#2E2926] hover:text-[#7A353E] text-[11px] font-medium transition-all shadow-2xs">
-            KPIs Maestros
+    <!-- Sub-barra de navegación por áreas -->
+    <div class="bg-[#EAE2D6]/85 border-t border-[#DDD2C2] px-5 md:px-8 py-1.5">
+      <div class="max-w-[1380px] mx-auto flex flex-wrap items-center justify-between gap-2 text-[11px]">
+        <div id="dept-filters" class="flex items-center gap-1 overflow-x-auto pb-0.5 md:pb-0"></div>
+        <div class="flex items-center gap-2.5">
+          <div id="load-summary" class="hidden xl:flex items-center gap-3 text-[10.5px] text-[#6E665F]"></div>
+          <span class="hidden xl:inline text-[#C9BDAE]">|</span>
+          <button onclick="openSpecialModal('kpis')" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#FFFFFF]/90 hover:border-[#7D5459] text-[#4F4842] hover:text-[#7D5459] text-[10.5px] font-medium transition-all">
+            KPIs
           </button>
-          <button onclick="openSpecialModal('versions')" class="px-2.5 py-1 rounded-full border border-[#C9BBA8] bg-[#FFFFFF] hover:border-[#7A353E] text-[#59524C] hover:text-[#7A353E] text-[11px] font-medium transition-all shadow-2xs">
-            ORG-EA V. 2.7
+          <button onclick="openSpecialModal('versions')" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#FFFFFF]/90 hover:border-[#7D5459] text-[#6E665F] hover:text-[#7D5459] text-[10.5px] font-medium transition-all">
+            V. 2.8
           </button>
         </div>
       </div>
     </div>
 
     <!-- Banner dinámico cuando hay un SOP o búsqueda activa -->
-    <div id="active-sop-banner" class="hidden bg-[#FFFFFF] border-t border-[#D4C7B5] px-5 md:px-8 py-2.5 shadow-xs"></div>
+    <div id="active-sop-banner" class="hidden bg-[#FAF7F2] border-t border-[#D6C9B7] px-5 md:px-8 py-2"></div>
   </header>
 
   <!-- LIENZO PRINCIPAL -->
-  <main class="flex-1 max-w-[1400px] w-full mx-auto px-5 md:px-8 py-7">
+  <main class="flex-1 max-w-[1380px] w-full mx-auto px-5 md:px-8 py-6">
     <div id="org-canvas" class="w-full"></div>
   </main>
 
-  <!-- PIE DE PÁGINA FORMAL (VISIBLE EN PRESENTACIÓN E IMPRESIÓN PDF) -->
-  <footer id="presentation-footer" class="hidden max-w-[1400px] w-full mx-auto px-5 md:px-8 py-3 border-t border-[#CFC3B2] items-center justify-between text-[10.5px] text-[#635C56]">
-    <span>ESTUDIO AFÍN SpA (RUT 78.560.882-8) · Estructura de Especialistas, Staff Asesor y Gobernanza (ORG-EA V. 2.7)</span>
-    <span id="presentation-legend">● Especialista interno &nbsp;·&nbsp; ● Staff / Célula externa</span>
+  <!-- PIE DE PÁGINA FORMAL (PRESENTACIÓN / PDF) -->
+  <footer id="presentation-footer" class="hidden max-w-[1380px] w-full mx-auto px-5 md:px-8 py-3 border-t border-[#D6C9B7] items-center justify-between text-[10px] text-[#6E665F]">
+    <span>ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional (ORG-EA V. 2.8)</span>
+    <span>● Interno &nbsp;·&nbsp; ○ Externo / Staff</span>
   </footer>
 
-  <!-- MODAL FLOTANTE -->
-  <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#26221F]/35 backdrop-blur-[3px] flex items-center justify-center p-4">
-    <div class="modal-animate w-full max-w-xl max-h-[88vh] overflow-y-auto bg-[#FAF7F2] rounded-2xl border border-[#CFC3B2] shadow-[0_24px_48px_-12px_rgba(38,34,31,0.25)] p-6 md:p-7">
+  <!-- MODAL FLOTANTE (DETALLE PROFUNDO BAJO DEMANDA) -->
+  <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#2E2926]/30 backdrop-blur-[2px] flex items-center justify-center p-4">
+    <div class="modal-animate w-full max-w-xl max-h-[88vh] overflow-y-auto bg-[#FAF7F2] rounded-2xl border border-[#D4C7B5] shadow-[0_20px_40px_-12px_rgba(46,41,38,0.2)] p-6">
       <div id="modal-content"></div>
     </div>
   </div>
 
   <script>
+    /* PALETA TENUE Y MIMETIZADA CON LINO / ARENA / CARBÓN */
     const DEPARTMENTS = [
       {
         id: 'COM',
         name: 'Comercial & Cliente',
-        color: '#7A353E',
-        tintBg: '#F4EAEB',
-        tintBorder: '#DFC5C8',
+        color: '#82565B',     // Burdeos piedra suave
+        tintBg: '#F3ECEA',
+        tintBorder: '#DFD2CF',
         sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04']
       },
       {
         id: 'DIS',
         name: 'Diseño Estratégico',
-        color: '#B85A43',
-        tintBg: '#F6EDE9',
-        tintBorder: '#E3C9BF',
+        color: '#9C6D5E',     // Terracota empolvado
+        tintBg: '#F4EDE9',
+        tintBorder: '#E0D2CB',
         sops: ['DIS-01']
       },
       {
         id: 'LOG',
         name: 'Operaciones & Logística',
-        color: '#465765',
-        tintBg: '#EBF0F4',
-        tintBorder: '#C7D3DC',
+        color: '#636D73',     // Pizarra cálido apagado
+        tintBg: '#ECEEEB',
+        tintBorder: '#D2D6D4',
         sops: ['LOG-01', 'LOG-02']
       },
       {
         id: 'TER',
         name: 'Montaje & Terreno',
-        color: '#526A56',
-        tintBg: '#ECF2ED',
-        tintBorder: '#C7D7C9',
+        color: '#667568',     // Salvia grisáceo tenue
+        tintBg: '#ECF0EC',
+        tintBorder: '#D1D9D2',
         sops: ['TER-01', 'TER-02']
       },
       {
         id: 'FIN',
         name: 'Admin & Finanzas',
-        color: '#9A7440',
-        tintBg: '#F5EFE6',
-        tintBorder: '#E0D0B8',
+        color: '#8C785E',     // Topo bronce suave
+        tintBg: '#F2EDE4',
+        tintBorder: '#DDD3C3',
         sops: ['FIN-01']
       }
     ];
 
     const LEVELS = [
-      { id: 1, num: '1', title: 'Dirección de Área' },
+      { id: 1, num: '1', title: 'Dirección' },
       { id: 2, num: '2', title: 'Liderazgo Operativo' },
-      { id: 3, num: '3', title: 'Ejecución y Apoyo Técnico' },
-      { id: 4, num: '4', title: 'Células de Aliados Externos' }
+      { id: 3, num: '3', title: 'Ejecución Técnica' },
+      { id: 4, num: '4', title: 'Aliados Externos' }
     ];
 
     const SOP_DETAILS = {
@@ -371,7 +372,7 @@
         { name: 'Tasa de Retrabajo', target: '≤ 2 rondas', desc: 'Evita iteraciones infinitas; mide precisión del levantamiento inicial.' },
         { name: 'Desviación Presupuestaria', target: '~ 0% desviación', desc: 'Diferencia entre presupuesto aprobado y gasto real ejecutado.' },
         { name: 'Eficiencia Logística', target: '> 95% a tiempo', desc: 'Despachos recibidos sin defectos ni mermas en ventana de 24h.' },
-        { name: 'Estabilidad de Cuadrillas', target: 'Rotación mínima', desc: 'Continuidad de instaladores y cumplimiento del cumplimiento Obra Limpia.' }
+        { name: 'Estabilidad de Cuadrillas', target: 'Rotación mínima', desc: 'Continuidad de instaladores y cumplimiento del protocolo Obra Limpia.' }
       ]
     };
 
@@ -380,20 +381,22 @@
       { ver: '2.0', date: 'Nov 2026', desc: 'Alineación al modelo Ultra-Lean (5 áreas) para renta corta y segundas viviendas.' },
       { ver: '2.2', date: '19 Nov 2026', desc: 'Integración completa de los 10 SOPs cerrados (incluyendo COM-04 Post-Venta).' },
       { ver: '2.3', date: '19 Nov 2026', desc: 'Incorporación de razón social ESTUDIO AFÍN SpA (RUT 78.560.882-8) en Nivel 0.' },
-      { ver: '2.5', date: '20 Nov 2026', desc: 'Sincronización con DOC-MAESTRO V. 2.5, filtro por vínculo y criterio desplegable por ficha.' },
-      { ver: '2.6', date: '20 Nov 2026', desc: 'Pilares cromáticos por área, dotación de especialistas y escalabilidad por célula.' },
-      { ver: '2.7', date: '20 Nov 2026', desc: 'Incorporación de nodo Staff lateral: Consultor Estratégico & Control de Gestión.' }
+      { ver: '2.5', date: '20 Nov 2026', desc: 'Sincronización con DOC-MAESTRO V. 2.5, filtro por vínculo y criterio desplegable.' },
+      { ver: '2.6', date: '20 Nov 2026', desc: 'Pilares por área, dotación de especialistas y escalabilidad por célula.' },
+      { ver: '2.7', date: '20 Nov 2026', desc: 'Incorporación de nodo Staff lateral: Consultor Estratégico & Control de Gestión.' },
+      { ver: '2.8', date: '20 Nov 2026', desc: 'Síntesis visual minimalista y paleta cromática tenue mimetizada con lino/arena.' }
     ];
 
     const EXECUTIVE_ROLE = {
       id: 'gerencia-general',
       dept: 'DIR',
       deptName: 'Gobierno Corporativo',
-      color: '#7A353E',
+      color: '#7D5459',
       level: 0,
       linkType: 'Interno',
       minHeadcount: 2,
       maxHeadcount: 2,
+      shortDotacion: '2 Socias',
       headcountBadge: '2 Socias · Gobierno Corporativo',
       teamStructure: 'Dirección ejecutiva bicéfala ejercida por las dos socias fundadoras de Estudio Afín SpA. Ambas comparten la visión estratégica y se dividen el liderazgo directo de las áreas clave según su especialidad.',
       title: 'Gerencia General · Socias Fundadoras',
@@ -417,12 +420,13 @@
     const STAFF_CONSULTANT_ROLE = {
       id: 'staff-consultor',
       dept: 'STAFF',
-      deptName: 'Asesoría Estratégica Externa',
-      color: '#6E5A4F',
+      deptName: 'Asesoría Externa',
+      color: '#8C785E',
       level: 0,
       linkType: 'Externo',
       minHeadcount: 1,
       maxHeadcount: 1,
+      shortDotacion: '1 Staff',
       headcountBadge: '1 especialista externo · Soporte transversal',
       teamStructure: 'Rol de staff externo (consultoría especializada independiente, sin subordinación de línea ni costo fijo interino). Reporta y asesora directamente a la Gerencia General en arquitectura organizacional, mejora de procesos y control de gestión.',
       title: 'Consultor Estratégico & Control de Gestión',
@@ -446,6 +450,7 @@
       {
         id: 'com-dir', dept: 'COM', level: 1, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
         headcountBadge: '1 especialista · Dirección',
         teamStructure: 'Rol de conducción comercial asumido a nivel directivo (1 especialista con dedicación compartida junto a gestión de cuentas).',
         title: 'Dirección Comercial & Cuentas',
@@ -466,6 +471,7 @@
       {
         id: 'dis-dir', dept: 'DIS', level: 1, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
         headcountBadge: '1 especialista · Dirección',
         teamStructure: 'Liderazgo creativo y curatorial ejercido por 1 especialista con formación en arquitectura o diseño interior.',
         title: 'Dirección Creativa & Mobiliario',
@@ -486,6 +492,7 @@
       {
         id: 'log-dir', dept: 'LOG', level: 1, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
         headcountBadge: '1 especialista · Dirección',
         teamStructure: 'Conducción estratégica de abastecimiento y cadena de suministro ejercida por 1 especialista.',
         title: 'Dirección de Operaciones',
@@ -506,6 +513,7 @@
       {
         id: 'ter-dir', dept: 'TER', level: 1, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
         headcountBadge: '1 especialista · Dirección',
         teamStructure: 'Dirección técnica de obra y puesta en escena liderada por 1 especialista.',
         title: 'Dirección de Montaje',
@@ -526,6 +534,7 @@
       {
         id: 'fin-dir', dept: 'FIN', level: 1, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
         headcountBadge: '1 especialista · Dirección',
         teamStructure: 'Gobernanza financiera y resguardo de caja ejercida por 1 especialista a nivel directivo.',
         title: 'Dirección Financiera & Control',
@@ -548,6 +557,7 @@
       {
         id: 'com-lead', dept: 'COM', level: 2, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
         headcountBadge: '1 especialista · Rol dedicado',
         teamStructure: '1 especialista dedicado a gestionar de punta a punta la relación con clientes activos (hasta 7 proyectos anuales sin perder calidad de atención).',
         title: 'Especialista Comercial & Entrega',
@@ -568,6 +578,7 @@
       {
         id: 'dis-lead', dept: 'DIS', level: 2, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 2,
+        shortDotacion: '1–2 esp.',
         headcountBadge: '1–2 especialistas · Escalable',
         teamStructure: '1 especialista titular por cada 3–4 proyectos activos; escala a 2 especialistas cuando coinciden habilitaciones simultáneas o segundas viviendas fuera de Santiago.',
         title: 'Especialista en Diseño de Mobiliario',
@@ -587,6 +598,7 @@
       {
         id: 'log-lead', dept: 'LOG', level: 2, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
         headcountBadge: '1 especialista · Rol dedicado',
         teamStructure: '1 especialista dedicado al control centralizado de compras, recepción física en ventana de 24h y trazabilidad de bodega.',
         title: 'Especialista de Procura & Acopio',
@@ -606,6 +618,7 @@
       {
         id: 'ter-lead', dept: 'TER', level: 2, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 2,
+        shortDotacion: '1–2 esp.',
         headcountBadge: '1–2 especialistas · Escalable',
         teamStructure: '1 especialista en terreno por obra activa; escala a 2 especialistas cuando hay montajes paralelos en distintas comunas o regiones.',
         title: 'Especialista de Obra & Ambientación',
@@ -625,6 +638,7 @@
       {
         id: 'fin-lead', dept: 'FIN', level: 2, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
         headcountBadge: '1 especialista · Rol dedicado',
         teamStructure: '1 especialista dedicado a conciliación a Libro Abierto, facturación por hitos y control presupuestario.',
         title: 'Especialista Control & Libro Abierto',
@@ -646,6 +660,7 @@
       {
         id: 'dis-exec', dept: 'DIS', level: 3, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 2,
+        shortDotacion: '1–2 esp.',
         headcountBadge: '1–2 especialistas · Célula apoyo',
         teamStructure: '1 especialista técnico en especificación y cotizaciones; amplía a 2 integrantes en temporadas peak para validar stock sin frenar entregas.',
         title: 'Especialista Técnico & Cotizaciones',
@@ -661,6 +676,7 @@
       {
         id: 'ter-exec', dept: 'TER', level: 3, linkType: 'Interno',
         minHeadcount: 1, maxHeadcount: 2,
+        shortDotacion: '1–2 esp.',
         headcountBadge: '1–2 especialistas · Célula puente',
         teamStructure: 'Célula operativa de 1 a 2 especialistas compartidos entre bodega y obra para cubrir recepciones y montajes simultáneos.',
         title: 'Especialista Logística & Montaje',
@@ -678,6 +694,7 @@
       {
         id: 'log-ext', dept: 'LOG', level: 4, linkType: 'Externo',
         minHeadcount: 0, maxHeadcount: 0,
+        shortDotacion: 'Célula ext.',
         headcountBadge: 'Célula externa · Por proyecto',
         teamStructure: 'Red homologada de talleres mueblistas y operadores de bodega activados bajo orden de trabajo según requerimientos a medida.',
         title: 'Talleres Externos & Bodega',
@@ -693,6 +710,7 @@
       {
         id: 'ter-ext', dept: 'TER', level: 4, linkType: 'Externo',
         minHeadcount: 0, maxHeadcount: 0,
+        shortDotacion: '2–4 téc.',
         headcountBadge: 'Célula externa · 2–4 técnicos/obra',
         teamStructure: 'Célula variable de 2 a 4 técnicos especialistas (instaladores, aseo fino y fotógrafo comercial) dimensionada según metraje del inmueble.',
         title: 'Cuadrillas, Aseo & Fotografía',
@@ -708,6 +726,7 @@
       {
         id: 'fin-ext', dept: 'FIN', level: 4, linkType: 'Externo',
         minHeadcount: 0, maxHeadcount: 0,
+        shortDotacion: 'Estudio ext.',
         headcountBadge: 'Estudio externo · Mensual',
         teamStructure: 'Equipo externo de contabilidad y asesoría tributaria con dedicación mensual permanente para cumplimiento ante el SII.',
         title: 'Contador & Asesor Tributario',
@@ -743,17 +762,7 @@
       const maxInt = internalRoles.reduce((acc, r) => acc + (r.maxHeadcount || 0), 0);
       const intLabel = minInt === maxInt ? `${minInt} esp.` : `${minInt}–${maxInt} esp.`;
 
-      if (externalRoles.length > 0) {
-        return `${intLabel} + célula ext.`;
-      }
-      return `${intLabel} internos`;
-    }
-
-    function getLinkBadge(linkType) {
-      if (linkType === 'Externo') {
-        return { dot: 'bg-[#9E8263]', text: 'text-[#7A6248]', label: 'Célula / Asesoría externa' };
-      }
-      return { dot: 'bg-[#453E39]', text: 'text-[#4F4842]', label: 'Núcleo interno' };
+      return externalRoles.length > 0 ? `${intLabel} + ext.` : intLabel;
     }
 
     function setLinkFilter(filter) {
@@ -762,8 +771,8 @@
         const btn = document.getElementById(`btn-link-${f}`);
         if (!btn) return;
         btn.className = f === filter
-          ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#7A353E] text-[#FFFFFF] shadow-2xs'
-          : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]';
+          ? 'px-2.5 py-0.5 rounded-full font-medium transition-all bg-[#7D5459] text-[#FFFFFF]'
+          : 'px-2.5 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]';
       });
       renderAll();
     }
@@ -790,14 +799,14 @@
       const metaEl = document.getElementById('presentation-meta');
       if (!metaEl) return;
       const filterLabel = state.linkFilter === 'ALL'
-        ? 'Estructura Integral · 12–16 Especialistas + Staff Asesor + 3 Células Externas'
+        ? 'Estructura Integral · 12–16 Especialistas + Staff + 3 Células'
         : state.linkFilter === 'Interno'
-          ? 'Vista: Núcleo Interno Estudio Afín SpA'
-          : 'Vista: Staff Asesor y Células Externas';
+          ? 'Núcleo Interno Estudio Afín SpA'
+          : 'Staff y Células Externas';
       const today = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' });
       metaEl.innerHTML = `
-        <div class="font-semibold text-[#26221F]">${filterLabel}</div>
-        <div>Emitido: ${today} · ORG-EA V. 2.7 (Sincronizado DOC-MAESTRO V. 2.6)</div>
+        <div class="font-medium text-[#2E2926]">${filterLabel}</div>
+        <div>${today} · ORG-EA V. 2.8</div>
       `;
     }
 
@@ -807,13 +816,13 @@
       const mobileBtn = document.getElementById('btn-view-mobile');
       if (desktopBtn) {
         desktopBtn.className = mode === 'desktop'
-          ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#26221F] shadow-2xs'
-          : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]';
+          ? 'px-2 py-0.5 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#2E2926] shadow-2xs'
+          : 'px-2 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]';
       }
       if (mobileBtn) {
         mobileBtn.className = mode === 'mobile'
-          ? 'px-2.5 py-1 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#26221F] shadow-2xs'
-          : 'px-2.5 py-1 rounded-full font-medium transition-all text-[#59524C] hover:text-[#26221F]';
+          ? 'px-2 py-0.5 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#2E2926] shadow-2xs'
+          : 'px-2 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]';
       }
       renderAll();
     }
@@ -935,15 +944,15 @@
       if (!filtersEl) return;
       const allActive = state.activeDept === 'ALL';
       let html = `
-        <button onclick="setDeptFilter('ALL')" class="px-3 py-1 rounded-full font-medium transition-all shrink-0 ${allActive ? 'bg-[#26221F] text-[#FFFFFF] shadow-2xs' : 'text-[#59524C] hover:bg-[#DFD5C7]'}">
-          Todas las áreas
+        <button onclick="setDeptFilter('ALL')" class="px-2.5 py-0.5 rounded-full font-medium transition-all shrink-0 ${allActive ? 'bg-[#3D3632] text-[#FAF7F2]' : 'text-[#635C56] hover:bg-[#DFD5C7]'}">
+          Todas
         </button>
       `;
       DEPARTMENTS.forEach(d => {
         const active = state.activeDept === d.id;
         html += `
-          <button onclick="setDeptFilter('${d.id}')" class="px-3 py-1 rounded-full font-medium transition-all flex items-center gap-1.5 shrink-0 ${active ? 'bg-[#FFFFFF] text-[#26221F] border border-[#C9BBA8] shadow-2xs' : 'text-[#59524C] hover:bg-[#DFD5C7]'}">
-            <span class="w-2.5 h-2.5 rounded-full" style="background:${d.color}"></span>
+          <button onclick="setDeptFilter('${d.id}')" class="px-2.5 py-0.5 rounded-full font-medium transition-all flex items-center gap-1.5 shrink-0 ${active ? 'bg-[#FFFFFF] text-[#2E2926] border border-[#CFC3B2]' : 'text-[#635C56] hover:bg-[#DFD5C7]'}">
+            <span class="w-2 h-2 rounded-full opacity-85" style="background:${d.color}"></span>
             <span>${d.name}</span>
           </button>
         `;
@@ -953,14 +962,13 @@
       const internalRoles = rolesData.filter(r => r.linkType === 'Interno');
       const minSpec = internalRoles.reduce((acc, r) => acc + r.minHeadcount, 0);
       const maxSpec = internalRoles.reduce((acc, r) => acc + r.maxHeadcount, 0);
-      const externalCells = rolesData.filter(r => r.linkType === 'Externo').length;
 
       const summaryEl = document.getElementById('load-summary');
       if (summaryEl) {
         summaryEl.innerHTML = `
-          <span>SOPs · <strong class="font-semibold text-[#26221F]">10</strong></span>
-          <span>Dotación · <strong class="font-semibold text-[#26221F]">${minSpec}–${maxSpec} esp.</strong></span>
-          <span>Staff + Externos · <strong class="font-semibold text-[#7A6248]">1 staff + ${externalCells} células</strong></span>
+          <span>10 SOPs</span>
+          <span>·</span>
+          <span>${minSpec}–${maxSpec} especialistas + staff</span>
         `;
       }
 
@@ -970,36 +978,31 @@
 
       if (state.activeSop && SOP_DETAILS[state.activeSop]) {
         const sop = SOP_DETAILS[state.activeSop];
-        const matchingCount = rolesData.filter(r => r.sops.includes(state.activeSop)).length;
         bannerEl.classList.remove('hidden');
         if (clearBtn) clearBtn.classList.remove('hidden');
         bannerEl.innerHTML = `
-          <div class="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
-            <div class="flex flex-wrap items-center gap-2.5">
-              <span class="px-2 py-0.5 rounded bg-[#7A353E] text-[#FFFFFF] text-[10.5px] font-semibold tracking-wider">
-                ${state.activeSop} · ${sop.version}
+          <div class="max-w-[1380px] mx-auto flex flex-wrap items-center justify-between gap-3 text-[11px]">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2 py-0.5 rounded bg-[#7D5459] text-[#FFFFFF] text-[10px] font-semibold">
+                ${state.activeSop}
               </span>
-              <span class="font-semibold text-[#26221F]">${sop.title}:</span>
-              <span class="text-[#59524C]">${sop.desc}</span>
+              <span class="font-semibold text-[#2E2926]">${sop.title}:</span>
+              <span class="text-[#635C56]">${sop.desc}</span>
             </div>
-            <div class="flex items-center gap-3 shrink-0">
-              <span class="text-[11px] text-[#7A353E] font-semibold">${matchingCount} roles vinculados</span>
-              <button onclick="clearFilters()" class="px-2.5 py-1 rounded-full border border-[#CFC3B2] bg-[#F4EFE7] hover:bg-[#E6DDD0] text-[#26221F] text-[11px] font-medium transition-colors">
-                Ver todos ✕
-              </button>
-            </div>
+            <button onclick="clearFilters()" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#EFE9E0] hover:bg-[#E6DDD0] text-[#2E2926] text-[10.5px] font-medium shrink-0">
+              Cerrar ✕
+            </button>
           </div>
         `;
       } else if (state.searchQuery) {
-        const matchingCount = rolesData.filter(r => isRoleMatch(r)).length + (isRoleMatch(STAFF_CONSULTANT_ROLE) ? 1 : 0);
         bannerEl.classList.remove('hidden');
         if (clearBtn) clearBtn.classList.remove('hidden');
         bannerEl.innerHTML = `
-          <div class="max-w-[1400px] mx-auto flex items-center justify-between gap-3 text-xs">
-            <span class="text-[#59524C]">
-              Filtrando por <strong class="text-[#26221F]">"${state.searchQuery}"</strong> · <strong class="text-[#7A353E]">${matchingCount}</strong> coincidencias
+          <div class="max-w-[1380px] mx-auto flex items-center justify-between gap-3 text-[11px]">
+            <span class="text-[#635C56]">
+              Filtro: <strong class="text-[#2E2926]">"${state.searchQuery}"</strong>
             </span>
-            <button onclick="clearFilters()" class="px-2.5 py-1 rounded-full border border-[#CFC3B2] bg-[#F4EFE7] hover:bg-[#E6DDD0] text-[#26221F] text-[11px] font-medium transition-colors">
+            <button onclick="clearFilters()" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#EFE9E0] hover:bg-[#E6DDD0] text-[#2E2926] text-[10.5px] font-medium">
               Limpiar ✕
             </button>
           </div>
@@ -1019,81 +1022,70 @@
       const staffStateClass = filtering ? (staffMatches ? 'is-highlighted' : 'is-dimmed') : '';
 
       return `
-        <div class="max-w-5xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-3 lg:gap-0 relative">
-          <!-- Espaciador izquierdo en desktop para mantener centrado perfecto del tronco principal -->
-          <div class="hidden lg:block lg:w-[270px] shrink-0"></div>
+        <div class="max-w-4xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-3 lg:gap-0 relative">
+          <div class="hidden lg:block lg:w-[240px] shrink-0"></div>
 
           <!-- Nodo Central: Gerencia General -->
           <div onclick="openRoleModal('gerencia-general')" 
-               class="role-card ${execStateClass} cursor-pointer w-full max-w-lg bg-[#FFFFFF] rounded-2xl border border-[#CFC3B2] px-6 py-4 text-center relative overflow-hidden shrink-0">
-            <div class="absolute top-0 inset-x-0 h-[4px] bg-[#7A353E]"></div>
-            <div class="flex items-center justify-center gap-2 mb-1">
-              <span class="text-[10px] uppercase tracking-[0.2em] text-[#7A353E] font-semibold">
-                Nivel 0 · Gobierno Corporativo
-              </span>
-              <span class="px-2 py-0.5 rounded-full bg-[#F4EAEB] text-[#7A353E] text-[10px] font-semibold">
-                2 Socias Fundadoras
-              </span>
+               class="role-card ${execStateClass} cursor-pointer w-full max-w-md bg-[#FAF7F2] rounded-2xl border border-[#CFC3B2] px-5 py-3.5 text-center relative overflow-hidden shrink-0">
+            <div class="absolute top-0 inset-x-0 h-[3px] bg-[#7D5459]"></div>
+            <div class="text-[9.5px] uppercase tracking-[0.18em] text-[#7D5459] font-semibold mb-0.5">
+              Nivel 0 · 2 Socias Fundadoras
             </div>
-            <h2 class="text-lg md:text-xl font-semibold tracking-tight text-[#26221F] leading-snug">
-              Gerencia General · Socias Fundadoras
+            <h2 class="text-base md:text-lg font-semibold tracking-tight text-[#2E2926]">
+              Gerencia General
             </h2>
-            <p class="text-xs text-[#635C56] mt-0.5">
-              ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Dirección Ejecutiva Transversal
+            <p class="text-[11px] text-[#756D65] mt-0.5">
+              ESTUDIO AFÍN SpA · Gobierno Corporativo
             </p>
           </div>
 
-          <!-- Conector punteado horizontal (Desktop) / vertical (Móvil) hacia Staff Asesor -->
+          <!-- Conector punteado hacia Staff Asesor -->
           <div class="flex lg:hidden flex-col items-center">
-            <div class="w-px h-4 border-l-2 border-dashed border-[#9E8263]"></div>
+            <div class="w-px h-3.5 border-l border-dashed border-[#A89A8A]"></div>
           </div>
-          <div class="hidden lg:flex items-center w-8 shrink-0">
-            <div class="w-full border-t-2 border-dashed border-[#9E8263]"></div>
+          <div class="hidden lg:flex items-center w-7 shrink-0">
+            <div class="w-full border-t border-dashed border-[#A89A8A]"></div>
           </div>
 
-          <!-- Nodo Lateral Staff: Consultor Estratégico & Control de Gestión -->
+          <!-- Nodo Lateral Staff -->
           <div onclick="openRoleModal('staff-consultor')"
-               class="role-card ${staffStateClass} group cursor-pointer w-full max-w-lg lg:w-[260px] bg-[#FAF7F2] rounded-2xl border-2 border-dashed border-[#B59D84] hover:border-[#7A353E] px-4 py-3 text-left relative shrink-0">
-            <div class="flex items-center justify-between gap-1.5 mb-1">
-              <span class="text-[9.5px] uppercase tracking-[0.18em] text-[#7A6248] font-bold">
-                Staff · Asesoría Externa
+               class="role-card ${staffStateClass} group cursor-pointer w-full max-w-md lg:w-[232px] bg-[#F5F0E8] rounded-xl border border-dashed border-[#BFB2A2] hover:border-[#7D5459] px-3.5 py-2.5 text-left relative shrink-0">
+            <div class="flex items-center justify-between gap-1.5 mb-0.5">
+              <span class="text-[9px] uppercase tracking-[0.16em] text-[#7D6E5D] font-semibold">
+                Staff · Externo
               </span>
-              <span class="w-1.5 h-1.5 rounded-full bg-[#9E8263]"></span>
+              <span class="w-1.5 h-1.5 rounded-full border border-[#8C785E]"></span>
             </div>
-            <div class="text-[12.5px] font-semibold text-[#26221F] leading-snug group-hover:text-[#7A353E] transition-colors">
+            <div class="text-[12px] font-medium text-[#2E2926] leading-snug group-hover:text-[#7D5459] transition-colors">
               Consultor Estratégico & Control de Gestión
-            </div>
-            <div class="mt-2 flex items-center justify-between gap-1.5 pt-1.5 border-t border-[#E6DDD0]">
-              <span class="text-[10px] font-medium text-[#6E5A4F]">
-                Soporte transversal · SOPs & KPIs
-              </span>
-              <span class="interactive-arrow text-[11px] text-[#8C837A] group-hover:text-[#7A353E] transition-all">→</span>
             </div>
           </div>
         </div>
       `;
     }
 
+    /* CABECERA DE ÁREA MINIMALISTA Y TENUE */
     function renderDeptPillarHeader(dept) {
       const capacityLabel = getDeptCapacitySummary(dept.id);
       return `
-        <div class="relative pt-3 pb-3 px-3 rounded-t-xl border-b-2 flex flex-col justify-between transition-all"
-             style="background-color:${dept.tintBg}; border-top: 4px solid ${dept.color}; border-bottom-color:${dept.color}; border-left: 1px solid ${dept.tintBorder}; border-right: 1px solid ${dept.tintBorder};">
+        <div class="relative pt-2.5 pb-2.5 px-3 rounded-t-xl border-b flex flex-col justify-between transition-all"
+             style="background-color:${dept.tintBg}; border-top: 2.5px solid ${dept.color}; border-bottom-color:${dept.tintBorder}; border-left: 1px solid ${dept.tintBorder}; border-right: 1px solid ${dept.tintBorder};">
           <div>
-            <div class="flex items-center justify-between gap-1 mb-1">
-              <span class="text-[9.5px] uppercase tracking-[0.22em] font-bold" style="color:${dept.color}">
-                ÁREA ${dept.id}
+            <div class="flex items-center justify-between gap-1 mb-0.5">
+              <span class="text-[9px] uppercase tracking-[0.2em] font-semibold" style="color:${dept.color}">
+                ${dept.id}
               </span>
-              <span class="px-2 py-0.5 rounded-full text-[9.5px] font-semibold bg-[#FFFFFF]/90 border" style="color:${dept.color}; border-color:${dept.tintBorder}">
+              <span class="text-[9.5px] font-medium text-[#6E665F]">
                 ${capacityLabel}
               </span>
             </div>
-            <h3 class="text-[13.5px] font-bold tracking-tight text-[#26221F] leading-tight text-left">
+            <h3 class="text-[13px] font-semibold tracking-tight text-[#2E2926] leading-tight text-left">
               ${dept.name}
             </h3>
           </div>
 
-          <div class="mt-2.5 pt-2 border-t flex flex-wrap items-center gap-1" style="border-color:${dept.tintBorder}">
+          <div class="mt-2 pt-1.5 border-t flex flex-wrap items-center gap-1" style="border-color:${dept.tintBorder}">
             ${dept.sops.map(code => {
               const isSelected = state.activeSop === code;
               const sopInfo = SOP_DETAILS[code];
@@ -1101,11 +1093,11 @@
                 <button
                   onclick="toggleSopFilter('${code}', event)"
                   title="${sopInfo ? sopInfo.title : code}"
-                  style="${isSelected ? `background-color:${dept.color}; color:#FFFFFF;` : `border-color:${dept.tintBorder};`}"
-                  class="px-1.5 py-0.5 rounded text-[9.5px] font-semibold tracking-wide transition-all ${
+                  style="${isSelected ? `background-color:${dept.color}; color:#FFFFFF;` : ''}"
+                  class="px-1.5 py-0.5 rounded text-[9px] font-medium tracking-wide transition-all ${
                     isSelected
-                      ? 'shadow-2xs'
-                      : 'bg-[#FFFFFF]/85 text-[#3A3430] border hover:bg-[#FFFFFF]'
+                      ? ''
+                      : 'bg-[#FAF7F2]/90 text-[#59524C] border border-[#DDD2C2] hover:bg-[#FFFFFF] hover:text-[#2E2926]'
                   }"
                 >
                   ${code}
@@ -1117,48 +1109,35 @@
       `;
     }
 
+    /* TARJETA DE ROL ULTRA-MINIMALISTA (SIN RUIDO VISUAL) */
     function renderRoleCard(role, dept) {
-      const ind = getLinkBadge(role.linkType);
+      const isExternal = role.linkType === 'Externo';
       const filtering = hasActiveFilter();
       const matches = isRoleMatch(role);
       const stateClass = filtering ? (matches ? 'is-highlighted' : 'is-dimmed') : '';
 
       return `
         <div onclick="openRoleModal('${role.id}')" 
-             style="border-left: 3px solid ${dept.color};"
-             class="role-card ${stateClass} group cursor-pointer bg-[#FFFFFF] rounded-xl border border-[#D8CCB9] p-3.5 flex flex-col justify-between gap-2">
-          <div class="flex items-start justify-between gap-2">
-            <div class="text-[12.5px] font-semibold text-[#26221F] leading-snug group-hover:text-[#7A353E] transition-colors">
-              ${role.title}
-            </div>
-          </div>
-
-          <div>
-            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-medium border"
-                  style="background-color:${dept.tintBg}; color:#2E2926; border-color:${dept.tintBorder};">
-              <svg class="w-2.5 h-2.5 shrink-0" style="color:${dept.color}" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path>
-              </svg>
-              <span>${role.headcountBadge}</span>
-            </span>
+             style="border-left: 2px solid ${dept.color};"
+             class="role-card ${stateClass} group cursor-pointer bg-[#FAF7F2] hover:bg-[#FFFFFF] rounded-xl border border-[#DDD2C2] px-3.5 py-3 flex flex-col justify-between gap-2.5">
+          <div class="text-[12.5px] font-medium text-[#2E2926] leading-snug group-hover:text-[#7D5459] transition-colors">
+            ${role.title}
           </div>
 
           ${state.activeSop && matches ? `
-            <div class="flex items-center gap-1.5">
-              <span class="px-1.5 py-0.5 rounded bg-[#7A353E]/12 text-[#7A353E] text-[10px] font-semibold">
-                Ejecuta ${state.activeSop}
+            <div>
+              <span class="px-1.5 py-0.5 rounded bg-[#7D5459]/10 text-[#7D5459] text-[9.5px] font-medium">
+                ${state.activeSop}
               </span>
             </div>
           ` : ''}
           
-          <div class="flex items-center justify-between gap-2 pt-1 border-t border-[#F0EAE1]">
-            <div class="flex items-center gap-1.5 text-[10.5px] ${ind.text}">
-              <span class="w-1.5 h-1.5 rounded-full ${ind.dot}"></span>
-              <span>${ind.label}</span>
+          <div class="flex items-center justify-between gap-2 pt-1.5 border-t border-[#ECE4D8] text-[10px] text-[#756D65]">
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full ${isExternal ? 'border border-[#8C785E]' : ''}" style="${!isExternal ? `background:${dept.color}` : ''}"></span>
+              <span>${role.shortDotacion} · ${isExternal ? 'Externo' : 'Interno'}</span>
             </div>
-            <span class="interactive-arrow text-[11px] text-[#8C837A] group-hover:text-[#7A353E] group-hover:translate-x-0.5 transition-all">→</span>
+            <span class="interactive-arrow text-[#9E948A] group-hover:text-[#7D5459] group-hover:translate-x-0.5 transition-all">→</span>
           </div>
         </div>
       `;
@@ -1178,23 +1157,23 @@
           <div class="max-w-md mx-auto">
             ${levelZeroBlock}
             <div class="flex justify-center">
-              <div class="w-px h-6 bg-[#B5A99A]"></div>
+              <div class="w-px h-5 bg-[#C4B8A8]"></div>
             </div>
-            <div class="space-y-6">
+            <div class="space-y-5">
         `;
         visibleDepts.forEach(dept => {
           const deptRoles = rolesData.filter(r => r.dept === dept.id);
           html += `
-            <section class="bg-[#E6DDD0] rounded-2xl border border-[#D4C7B5] p-3.5 relative">
-              <div class="mb-3.5">
+            <section class="bg-[#E6DDD0]/75 rounded-2xl border border-[#D8CCB9] p-3 relative">
+              <div class="mb-3">
                 ${renderDeptPillarHeader(dept)}
               </div>
-              <div class="relative pl-4 space-y-3">
-                <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#B5A99A]"></div>
+              <div class="relative pl-3.5 space-y-2.5">
+                <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#C4B8A8]"></div>
                 ${deptRoles.map(r => `
                   <div class="relative">
-                    <div class="absolute -left-2.5 top-5 w-2.5 h-px bg-[#B5A99A]"></div>
-                    <div class="text-[10px] uppercase tracking-widest text-[#635C56] font-medium mb-1">Nivel ${r.level}</div>
+                    <div class="absolute -left-2 top-4 w-2 h-px bg-[#C4B8A8]"></div>
+                    <div class="text-[9.5px] uppercase tracking-widest text-[#756D65] mb-1">Nivel ${r.level}</div>
                     ${renderRoleCard(r, dept)}
                   </div>
                 `).join('')}
@@ -1211,15 +1190,15 @@
       const gridCols = isSingle ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-5';
 
       const topBranchHtml = isSingle
-        ? `<div class="flex justify-center"><div class="w-px h-7 bg-[#B5A99A]"></div></div>`
+        ? `<div class="flex justify-center"><div class="w-px h-6 bg-[#C4B8A8]"></div></div>`
         : `
-          <div class="relative h-8">
-            <div class="absolute left-1/2 top-0 w-px h-4 -translate-x-1/2 bg-[#B5A99A]"></div>
-            <div class="absolute top-4 left-[10%] right-[10%] h-px bg-[#B5A99A]"></div>
-            <div class="grid grid-cols-5 gap-4 h-full">
+          <div class="relative h-7">
+            <div class="absolute left-1/2 top-0 w-px h-3.5 -translate-x-1/2 bg-[#C4B8A8]"></div>
+            <div class="absolute top-3.5 left-[10%] right-[10%] h-px bg-[#C4B8A8]"></div>
+            <div class="grid grid-cols-5 gap-3.5 h-full">
               ${visibleDepts.map(() => `
                 <div class="relative h-full">
-                  <div class="absolute left-1/2 top-4 bottom-0 w-px -translate-x-1/2 bg-[#B5A99A]"></div>
+                  <div class="absolute left-1/2 top-3.5 bottom-0 w-px -translate-x-1/2 bg-[#C4B8A8]"></div>
                 </div>
               `).join('')}
             </div>
@@ -1229,48 +1208,47 @@
       let html = `
         ${levelZeroBlock}
         <div class="overflow-x-auto pb-4">
-          <div class="${isSingle ? 'max-w-md mx-auto' : 'min-w-[1040px]'}">
+          <div class="${isSingle ? 'max-w-md mx-auto' : 'min-w-[1000px]'}">
             
             ${topBranchHtml}
 
-            <!-- Pilares Arquitectónicos de Departamento -->
-            <div class="grid ${gridCols} gap-4 relative z-10">
+            <!-- Pilares Minimalistas de Departamento -->
+            <div class="grid ${gridCols} gap-3.5 relative z-10">
               ${visibleDepts.map(dept => renderDeptPillarHeader(dept)).join('')}
             </div>
 
-            <!-- Ejes verticales de reporte y Bandas de Nivel -->
-            <div class="relative pt-3.5">
-              <div class="grid ${gridCols} gap-4 absolute inset-0 pointer-events-none z-0">
+            <!-- Ejes verticales y Bandas de Nivel -->
+            <div class="relative pt-3">
+              <div class="grid ${gridCols} gap-3.5 absolute inset-0 pointer-events-none z-0">
                 ${visibleDepts.map(dept => {
                   const deptRoles = rolesData.filter(r => r.dept === dept.id);
                   const maxLvl = deptRoles.length > 0 ? Math.max(...deptRoles.map(r => r.level)) : 1;
                   const lineHeightClass = maxLvl === 4 ? 'bottom-8' : 'bottom-[24%]';
                   return `
                     <div class="relative h-full">
-                      <div class="absolute left-1/2 top-0 ${lineHeightClass} w-px -translate-x-1/2 bg-[#B9AEA0]"></div>
+                      <div class="absolute left-1/2 top-0 ${lineHeightClass} w-px -translate-x-1/2 bg-[#C7BCAE]"></div>
                     </div>
                   `;
                 }).join('')}
               </div>
 
-              <div class="space-y-3.5 relative z-10">
+              <div class="space-y-3 relative z-10">
                 ${LEVELS.map(lvl => `
-                  <div class="level-band bg-[#E6DDD0]/85 rounded-2xl border border-[#D6C9B7] p-3.5">
-                    <div class="flex items-center gap-2 mb-2.5 px-1">
-                      <span class="px-2 py-0.5 rounded bg-[#FFFFFF] border border-[#D4C7B5] text-[10.5px] font-semibold text-[#7A353E]">Nivel ${lvl.num}</span>
-                      <span class="text-[11px] uppercase tracking-[0.14em] text-[#59524C] font-semibold">${lvl.title}</span>
+                  <div class="level-band bg-[#E6DDD0]/65 rounded-2xl border border-[#D8CCB9] p-3">
+                    <div class="flex items-center gap-2 mb-2 px-1">
+                      <span class="text-[10px] font-semibold text-[#7D5459]">N${lvl.num}</span>
+                      <span class="text-[10px] uppercase tracking-[0.14em] text-[#6E665F] font-medium">${lvl.title}</span>
                     </div>
-                    <div class="grid ${gridCols} gap-4">
+                    <div class="grid ${gridCols} gap-3.5">
                       ${visibleDepts.map(dept => {
                         const cellRoles = rolesData.filter(r => r.dept === dept.id && r.level === lvl.id);
                         if (cellRoles.length === 0) {
-                          return `<div class="min-h-[82px] flex items-center justify-center"></div>`;
+                          return `<div class="min-h-[68px]"></div>`;
                         }
                         return `
-                          <div class="space-y-2.5 relative">
+                          <div class="space-y-2 relative">
                             ${cellRoles.map(r => `
                               <div class="relative">
-                                <div class="w-1.5 h-1.5 rounded-full mx-auto -mb-[3px] relative z-20 ring-2 ring-[#E6DDD0]" style="background:${dept.color}"></div>
                                 ${renderRoleCard(r, dept)}
                               </div>
                             `).join('')}
@@ -1292,25 +1270,22 @@
     function renderAuditAccordion(auditText) {
       const isOpen = state.modalAuditExpanded;
       return `
-        <div class="rounded-xl border ${isOpen ? 'border-[#7A353E]/40 bg-[#EFE9E0]' : 'border-[#D4C7B5] bg-[#FFFFFF]'} overflow-hidden transition-all">
+        <div class="rounded-xl border ${isOpen ? 'border-[#7D5459]/35 bg-[#EFE9E0]' : 'border-[#DDD2C2] bg-[#FFFFFF]'} overflow-hidden transition-all">
           <button
             type="button"
             onclick="toggleModalAudit()"
-            class="w-full px-4 py-3 flex items-center justify-between gap-3 text-left hover:bg-[#F5EFE6] transition-colors"
+            class="w-full px-4 py-2.5 flex items-center justify-between gap-3 text-left hover:bg-[#F5EFE6] transition-colors"
           >
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-[#7A353E]"></span>
-              <span class="text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#7A353E]">
-                Criterio de Diseño Organizacional / Auditoría
-              </span>
-            </div>
-            <span class="text-[11px] font-semibold text-[#7A353E] flex items-center gap-1 shrink-0">
+            <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7D5459]">
+              Criterio de Diseño Organizacional
+            </span>
+            <span class="text-[10.5px] font-medium text-[#7D5459] flex items-center gap-1 shrink-0">
               <span>${isOpen ? 'Ocultar' : 'Ver fundamento'}</span>
               <span class="transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}">▾</span>
             </span>
           </button>
           ${isOpen ? `
-            <div class="px-4 pb-3.5 pt-1 border-t border-[#D8CCB9] text-[#3A3430] leading-relaxed">
+            <div class="px-4 pb-3 pt-1 border-t border-[#E2D8C9] text-[#453E39] leading-relaxed">
               ${auditText}
             </div>
           ` : ''}
@@ -1324,16 +1299,16 @@
         if (!sop) return '';
         return `
           <div onclick="closeModal(); toggleSopFilter('${code}');" 
-               class="cursor-pointer group bg-[#FFFFFF] border border-[#D8CCB9] hover:border-[#7A353E] rounded-xl p-3 transition-all shadow-2xs">
+               class="cursor-pointer group bg-[#FFFFFF] border border-[#DDD2C2] hover:border-[#7D5459] rounded-xl p-3 transition-all">
             <div class="flex items-center justify-between gap-2 mb-1">
-              <div class="font-semibold text-[#7A353E] group-hover:underline">
+              <div class="font-medium text-[#7D5459] group-hover:underline">
                 ${code} · ${sop.title}
               </div>
-              <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#EFE9E0] text-[#59524C] font-medium shrink-0">
+              <span class="text-[9.5px] px-1.5 py-0.5 rounded bg-[#EFE9E0] text-[#6E665F] shrink-0">
                 ${sop.version}
               </span>
             </div>
-            <div class="text-[#59524C] leading-relaxed">${sop.desc}</div>
+            <div class="text-[#635C56] leading-relaxed">${sop.desc}</div>
           </div>
         `;
       }).join('');
@@ -1344,11 +1319,11 @@
       if (deliverables && deliverables.length > 0) {
         html += `
           <div>
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-2">Entregables y Reglas de Control</div>
-            <ul class="space-y-1.5 bg-[#FFFFFF] border border-[#D8CCB9] rounded-xl p-3.5 text-[#2E2926]">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">Entregables y Control</div>
+            <ul class="space-y-1.5 bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3.5 text-[#3A3430]">
               ${deliverables.map(item => `
                 <li class="flex items-start gap-2 leading-relaxed">
-                  <span class="text-[#7A353E] font-bold mt-0.5">•</span>
+                  <span class="text-[#7D5459] mt-0.5">•</span>
                   <span>${item}</span>
                 </li>
               `).join('')}
@@ -1359,11 +1334,11 @@
       if (risks && risks.length > 0) {
         html += `
           <div>
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-2">Riesgos Operativos que Mitiga</div>
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">Riesgos Mitigados</div>
             <div class="space-y-1.5">
               ${risks.map(risk => `
-                <div class="bg-[#F2ECE2] border border-[#D8CBB8] rounded-lg px-3 py-2 text-[#453E39] flex items-start gap-2 leading-relaxed">
-                  <span class="text-[#7A353E] font-semibold shrink-0">▪</span>
+                <div class="bg-[#F2ECE2] border border-[#DFD4C4] rounded-lg px-3 py-2 text-[#4F4842] flex items-start gap-2 leading-relaxed">
+                  <span class="text-[#7D5459] shrink-0">▪</span>
                   <span>${risk}</span>
                 </div>
               `).join('')}
@@ -1382,31 +1357,31 @@
 
       if (state.specialModal === 'kpis') {
         content.innerHTML = `
-          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
+          <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E2D8C9]">
             <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
-                Sección 9 · Documento Maestro V. 2.6
+              <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7D5459] mb-0.5">
+                Documento Maestro V. 2.6
               </div>
-              <h3 class="text-lg font-semibold tracking-tight text-[#26221F]">Tablero de KPIs Estratégicos y Operativos</h3>
+              <h3 class="text-base font-semibold text-[#2E2926]">KPIs Estratégicos y Operativos</h3>
             </div>
-            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
+            <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
               ✕
             </button>
           </div>
 
-          <div class="mt-5 space-y-5 text-xs">
+          <div class="mt-4 space-y-4 text-xs">
             <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-2">
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7D5459] mb-2">
                 1. KPIs Externos (Experiencia del Propietario)
               </div>
               <div class="space-y-2">
                 ${MASTER_KPIS.external.map(k => `
-                  <div class="bg-[#FFFFFF] border border-[#D8CCB9] rounded-xl p-3 flex items-start justify-between gap-3">
+                  <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3 flex items-start justify-between gap-3">
                     <div>
-                      <div class="font-semibold text-[#26221F]">${k.name}</div>
-                      <div class="text-[#59524C] mt-0.5 leading-relaxed">${k.desc}</div>
+                      <div class="font-medium text-[#2E2926]">${k.name}</div>
+                      <div class="text-[#635C56] mt-0.5 leading-relaxed">${k.desc}</div>
                     </div>
-                    <span class="px-2.5 py-1 rounded-full bg-[#7A353E]/12 text-[#7A353E] font-semibold text-[10.5px] shrink-0">
+                    <span class="px-2 py-0.5 rounded-full bg-[#F3ECEA] text-[#7D5459] font-medium text-[10px] shrink-0">
                       ${k.target}
                     </span>
                   </div>
@@ -1415,17 +1390,17 @@
             </div>
 
             <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#59524C] mb-2">
-                2. KPIs Internos (Eficiencia Operativa de los 10 SOPs)
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6E665F] mb-2">
+                2. KPIs Internos (Eficiencia de los 10 SOPs)
               </div>
               <div class="space-y-2">
                 ${MASTER_KPIS.internal.map(k => `
-                  <div class="bg-[#EFE9E0] border border-[#D4C7B5] rounded-xl p-3 flex items-start justify-between gap-3">
+                  <div class="bg-[#EFE9E0] border border-[#D8CCB9] rounded-xl p-3 flex items-start justify-between gap-3">
                     <div>
-                      <div class="font-semibold text-[#26221F]">${k.name}</div>
-                      <div class="text-[#59524C] mt-0.5 leading-relaxed">${k.desc}</div>
+                      <div class="font-medium text-[#2E2926]">${k.name}</div>
+                      <div class="text-[#635C56] mt-0.5 leading-relaxed">${k.desc}</div>
                     </div>
-                    <span class="px-2.5 py-1 rounded-full bg-[#FFFFFF] border border-[#CFC3B2] text-[#2E2926] font-medium text-[10.5px] shrink-0">
+                    <span class="px-2 py-0.5 rounded-full bg-[#FFFFFF] border border-[#D4C7B5] text-[#453E39] font-medium text-[10px] shrink-0">
                       ${k.target}
                     </span>
                   </div>
@@ -1439,37 +1414,37 @@
 
       if (state.specialModal === 'versions') {
         content.innerHTML = `
-          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
+          <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E2D8C9]">
             <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
-                Gobernanza Documental · Versionado Semántico (X.Y)
+              <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7D5459] mb-0.5">
+                Versionado Semántico (X.Y)
               </div>
-              <h3 class="text-lg font-semibold tracking-tight text-[#26221F]">Control de Versiones · ORG-EA V. 2.7</h3>
+              <h3 class="text-base font-semibold text-[#2E2926]">Control de Versiones · ORG-EA V. 2.8</h3>
             </div>
-            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
+            <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
               ✕
             </button>
           </div>
 
-          <div class="mt-5 space-y-4 text-xs">
-            <p class="text-[#59524C] leading-relaxed">
-              Sincronizado con <strong class="text-[#26221F]">Propuesta de Estructuración y Negocio - ESTUDIO AFÍN SpA (DOC-MAESTRO V. 2.6)</strong>. El primer dígito (X) registra cambios estructurales mayores y el segundo (Y) iteraciones de precisión operativa.
+          <div class="mt-4 space-y-3.5 text-xs">
+            <p class="text-[#635C56] leading-relaxed">
+              Sincronizado con <strong class="text-[#2E2926]">DOC-MAESTRO V. 2.6</strong> de ESTUDIO AFÍN SpA.
             </p>
-            <div class="border border-[#D8CCB9] rounded-xl overflow-hidden bg-[#FFFFFF]">
+            <div class="border border-[#DDD2C2] rounded-xl overflow-hidden bg-[#FFFFFF]">
               <table class="w-full text-left border-collapse">
                 <thead>
-                  <tr class="bg-[#EAE2D6] text-[10px] uppercase tracking-wider text-[#59524C] border-b border-[#D8CCB9]">
-                    <th class="py-2.5 px-3 font-semibold">Versión</th>
-                    <th class="py-2.5 px-3 font-semibold">Fecha</th>
-                    <th class="py-2.5 px-3 font-semibold">Descripción del Cambio</th>
+                  <tr class="bg-[#EAE2D6] text-[10px] uppercase tracking-wider text-[#635C56] border-b border-[#DDD2C2]">
+                    <th class="py-2 px-3 font-semibold">Versión</th>
+                    <th class="py-2 px-3 font-semibold">Fecha</th>
+                    <th class="py-2 px-3 font-semibold">Cambio</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-[#EAE2D6]">
+                <tbody class="divide-y divide-[#ECE4D8]">
                   ${VERSION_HISTORY.map(v => `
-                    <tr class="${v.ver === '2.7' ? 'bg-[#FAF3F1]' : ''}">
-                      <td class="py-2.5 px-3 font-semibold text-[#7A353E] whitespace-nowrap">V. ${v.ver}</td>
-                      <td class="py-2.5 px-3 text-[#635C56] whitespace-nowrap">${v.date}</td>
-                      <td class="py-2.5 px-3 text-[#2E2926] leading-relaxed">${v.desc}</td>
+                    <tr class="${v.ver === '2.8' ? 'bg-[#F8F3F1]' : ''}">
+                      <td class="py-2 px-3 font-medium text-[#7D5459] whitespace-nowrap">V. ${v.ver}</td>
+                      <td class="py-2 px-3 text-[#756D65] whitespace-nowrap">${v.date}</td>
+                      <td class="py-2 px-3 text-[#3A3430] leading-relaxed">${v.desc}</td>
                     </tr>
                   `).join('')}
                 </tbody>
@@ -1499,60 +1474,45 @@
         const exec = EXECUTIVE_ROLE;
         modal.classList.remove('hidden');
         content.innerHTML = `
-          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
+          <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E2D8C9]">
             <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A353E] mb-1">
-                Nivel 0 · Gobierno Corporativo · ${exec.headcountBadge}
+              <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7D5459] mb-0.5">
+                Nivel 0 · ${exec.headcountBadge}
               </div>
-              <h3 class="text-lg font-semibold tracking-tight text-[#26221F] leading-snug">${exec.title}</h3>
+              <h3 class="text-base font-semibold text-[#2E2926]">${exec.title}</h3>
             </div>
-            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
+            <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
               ✕
             </button>
           </div>
 
-          <div class="mt-5 space-y-5 text-xs">
-            <div class="bg-[#FFFFFF] border border-[#CFC3B2] rounded-xl p-3.5">
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Identidad Jurídica Vigente</div>
-              <div class="font-semibold text-[#26221F]">${exec.legalEntity}</div>
+          <div class="mt-4 space-y-4 text-xs">
+            <div class="bg-[#FFFFFF] border border-[#D4C7B5] rounded-xl p-3">
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#7D5459] mb-0.5">Identidad Jurídica</div>
+              <div class="font-medium text-[#2E2926]">${exec.legalEntity}</div>
             </div>
 
-            <div class="bg-[#FFFFFF] border border-[#D8CCB9] rounded-xl p-3.5">
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-1">Conformación y Dotación</div>
-              <p class="text-[#2E2926] leading-relaxed">${exec.teamStructure}</p>
+            <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3">
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-0.5">Dotación</div>
+              <p class="text-[#3A3430] leading-relaxed">${exec.teamStructure}</p>
             </div>
 
-            <div class="bg-[#EFE9E0] border border-[#D4C7B5] rounded-xl p-4">
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A353E] mb-1">Línea de Fuego Corporativa</div>
-              <p class="text-[#3A3430] leading-relaxed">${exec.fireLine}</p>
+            <div class="bg-[#EFE9E0] border border-[#D8CCB9] rounded-xl p-3.5">
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#7D5459] mb-0.5">Línea de Fuego Corporativa</div>
+              <p class="text-[#453E39] leading-relaxed">${exec.fireLine}</p>
             </div>
 
             <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-1.5">Responsabilidad Ejecutiva</div>
-              <p class="text-[#2E2926] text-[13px] leading-relaxed">${exec.mission}</p>
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1">Responsabilidad Ejecutiva</div>
+              <p class="text-[#2E2926] leading-relaxed">${exec.mission}</p>
             </div>
 
             ${renderAuditAccordion(exec.audit)}
-
             ${renderDeliverablesAndRisks(exec.deliverables, exec.risksMitigated)}
 
             <div>
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A]">SOPs Clave Supervisados</span>
-                <span class="text-[10px] text-[#7A726A]">Clic para resaltar en el mapa</span>
-              </div>
-              <div class="space-y-2">
-                ${renderSopListInModal(exec.sops)}
-              </div>
-            </div>
-
-            <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-2">Indicadores Globales</div>
-              <div class="flex flex-wrap gap-2">
-                ${exec.kpis.map(k => `
-                  <span class="px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#CFC3B2] text-[#26221F] font-medium">${k}</span>
-                `).join('')}
-              </div>
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">SOPs Clave</div>
+              <div class="space-y-2">${renderSopListInModal(exec.sops)}</div>
             </div>
           </div>
         `;
@@ -1563,61 +1523,40 @@
         const staff = STAFF_CONSULTANT_ROLE;
         modal.classList.remove('hidden');
         content.innerHTML = `
-          <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
+          <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E2D8C9]">
             <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#7A6248] mb-1">
-                Staff Nivel 0 · Asesoría Estratégica Externa
+              <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8C785E] mb-0.5">
+                Staff Nivel 0 · Asesoría Externa
               </div>
-              <h3 class="text-lg font-semibold tracking-tight text-[#26221F] leading-snug">${staff.title}</h3>
-              <div class="flex flex-wrap items-center gap-2 mt-2">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#F5EFE6] text-[#6E5A4F] border border-[#DFD1BE]">
+              <h3 class="text-base font-semibold text-[#2E2926]">${staff.title}</h3>
+              <div class="mt-1.5">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#F2EDE4] text-[#6E5D47] border border-[#DDD3C3]">
                   ${staff.headcountBadge}
-                </span>
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-dashed border-[#B59D84] text-[10.5px] text-[#7A6248]">
-                  <span class="w-1.5 h-1.5 rounded-full bg-[#9E8263]"></span>
-                  <span>Relación Staff · Línea punteada</span>
                 </span>
               </div>
             </div>
-            <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
+            <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
               ✕
             </button>
           </div>
 
-          <div class="mt-5 space-y-5 text-xs">
-            <div class="bg-[#FFFFFF] border border-[#D8CCB9] rounded-xl p-3.5">
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A6248] mb-1">
-                Naturaleza del Vínculo y Alcance Staff
-              </div>
-              <p class="text-[#2E2926] leading-relaxed">${staff.teamStructure}</p>
+          <div class="mt-4 space-y-4 text-xs">
+            <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3">
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8C785E] mb-0.5">Vínculo y Alcance</div>
+              <p class="text-[#3A3430] leading-relaxed">${staff.teamStructure}</p>
             </div>
 
             <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-1.5">Responsabilidad Principal</div>
-              <p class="text-[#2E2926] text-[13px] leading-relaxed">${staff.mission}</p>
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1">Responsabilidad Principal</div>
+              <p class="text-[#2E2926] leading-relaxed">${staff.mission}</p>
             </div>
 
             ${renderAuditAccordion(staff.audit)}
-
             ${renderDeliverablesAndRisks(staff.deliverables, staff.risksMitigated)}
 
             <div>
-              <div class="flex items-center justify-between mb-2">
-                <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A]">SOPs Diseñados y Auditados</span>
-                <span class="text-[10px] text-[#7A726A]">Clic para resaltar en el mapa</span>
-              </div>
-              <div class="space-y-2">
-                ${renderSopListInModal(staff.sops)}
-              </div>
-            </div>
-
-            <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-2">Indicadores de Gestión</div>
-              <div class="flex flex-wrap gap-2">
-                ${staff.kpis.map(k => `
-                  <span class="px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#CFC3B2] text-[#26221F] font-medium">${k}</span>
-                `).join('')}
-              </div>
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">SOPs Diseñados y Auditados</div>
+              <div class="space-y-2">${renderSopListInModal(staff.sops)}</div>
             </div>
           </div>
         `;
@@ -1628,66 +1567,58 @@
       if (!role) return;
 
       const dept = DEPARTMENTS.find(d => d.id === role.dept);
-      const linkBadge = getLinkBadge(role.linkType);
       modal.classList.remove('hidden');
 
       content.innerHTML = `
-        <div class="flex items-start justify-between gap-4 pb-4 border-b border-[#DFD5C7]">
+        <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E2D8C9]">
           <div>
-            <div class="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] mb-1" style="color:${dept.color}">
+            <div class="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] mb-0.5" style="color:${dept.color}">
               <span>${dept.id} · ${dept.name}</span>
               <span>·</span>
               <span>Nivel ${role.level}</span>
             </div>
-            <h3 class="text-lg font-semibold tracking-tight text-[#26221F] leading-snug">${role.title}</h3>
-            <div class="flex flex-wrap items-center gap-2 mt-2">
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] font-semibold border"
+            <h3 class="text-base font-semibold text-[#2E2926]">${role.title}</h3>
+            <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium border"
                     style="background-color:${dept.tintBg}; color:${dept.color}; border-color:${dept.tintBorder};">
                 ${role.headcountBadge}
               </span>
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-[#D8CCB9] text-[10.5px] ${linkBadge.text}">
-                <span class="w-1.5 h-1.5 rounded-full ${linkBadge.dot}"></span>
-                <span>${linkBadge.label}</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-[#DDD2C2] text-[10px] text-[#635C56]">
+                ${role.linkType}
               </span>
             </div>
           </div>
-          <button onclick="closeModal()" class="w-8 h-8 rounded-full border border-[#CFC3B2] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#59524C] flex items-center justify-center text-xs transition-colors shrink-0">
+          <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
             ✕
           </button>
         </div>
 
-        <div class="mt-5 space-y-5 text-xs">
-          <div class="bg-[#FFFFFF] border border-[#D8CCB9] rounded-xl p-3.5">
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] mb-1" style="color:${dept.color}">
-              Conformación de Equipo y Escalabilidad
+        <div class="mt-4 space-y-4 text-xs">
+          <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3">
+            <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] mb-0.5" style="color:${dept.color}">
+              Dotación y Escalabilidad
             </div>
-            <p class="text-[#2E2926] leading-relaxed">${role.teamStructure}</p>
+            <p class="text-[#3A3430] leading-relaxed">${role.teamStructure}</p>
           </div>
 
           <div>
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-1.5">Responsabilidad Principal</div>
-            <p class="text-[#2E2926] text-[13px] leading-relaxed">${role.mission}</p>
+            <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1">Responsabilidad Principal</div>
+            <p class="text-[#2E2926] leading-relaxed">${role.mission}</p>
           </div>
 
           ${renderAuditAccordion(role.audit)}
-
           ${renderDeliverablesAndRisks(role.deliverables, role.risksMitigated)}
 
           <div>
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A]">SOPs Vinculados (${role.sops.length})</span>
-              <span class="text-[10px] text-[#7A726A]">Clic para resaltar en el mapa</span>
-            </div>
-            <div class="space-y-2">
-              ${renderSopListInModal(role.sops)}
-            </div>
+            <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">SOPs Vinculados (${role.sops.length})</div>
+            <div class="space-y-2">${renderSopListInModal(role.sops)}</div>
           </div>
 
           <div>
-            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7A726A] mb-2">Indicadores Clave</div>
-            <div class="flex flex-wrap gap-2">
+            <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">Indicadores Clave</div>
+            <div class="flex flex-wrap gap-1.5">
               ${role.kpis.map(k => `
-                <span class="px-3 py-1 rounded-full bg-[#FFFFFF] border border-[#CFC3B2] text-[#26221F] font-medium">${k}</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-[#D4C7B5] text-[#3A3430] text-[11px]">${k}</span>
               `).join('')}
             </div>
           </div>
