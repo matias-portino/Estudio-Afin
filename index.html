@@ -16,22 +16,23 @@
     .role-card {
       position: relative;
       z-index: 10;
-      box-shadow: 0 1px 4px rgba(46, 41, 38, 0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 1px 3px rgba(46, 41, 38, 0.035);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
     }
     .role-card:hover {
       transform: translateY(-1.5px);
-      box-shadow: 0 8px 18px -6px rgba(46, 41, 38, 0.12);
-      border-color: #9E8279;
+      box-shadow: 0 8px 18px -6px rgba(46, 41, 38, 0.10);
+      border-color: #9E8E82;
+      background-color: #FFFFFF;
     }
     .role-card.is-highlighted {
       border-color: #7D5459 !important;
-      box-shadow: 0 6px 16px -4px rgba(125, 84, 89, 0.22);
+      box-shadow: 0 6px 16px -4px rgba(125, 84, 89, 0.18);
       background-color: #FFFFFF;
     }
     .role-card.is-dimmed {
-      opacity: 0.30;
-      filter: grayscale(40%);
+      opacity: 0.28;
+      filter: grayscale(45%);
     }
     .role-card.is-dimmed:hover {
       opacity: 0.85;
@@ -133,7 +134,7 @@
     <div id="presentation-meta" class="text-right text-[11px] text-[#6E665F]"></div>
   </div>
 
-  <!-- CABECERA INTERACTIVA -->
+  <!-- CABECERA INTERACTIVA MINIMALISTA -->
   <header id="app-header" class="bg-[#FAF7F2]/90 backdrop-blur-md border-b border-[#DDD2C2] sticky top-0 z-30">
     <div class="max-w-[1380px] mx-auto px-5 md:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
       
@@ -148,7 +149,7 @@
         </span>
       </div>
 
-      <!-- Controles Minimalistas -->
+      <!-- Controles Despejados -->
       <div class="flex flex-wrap items-center gap-2">
         <!-- Buscador Rápido -->
         <div class="relative">
@@ -156,8 +157,8 @@
             type="text"
             id="quick-search"
             oninput="handleSearch(this.value)"
-            placeholder="Buscar rol o SOP..."
-            class="w-40 sm:w-48 pl-7 pr-6 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] text-[11px] text-[#2E2926] placeholder-[#968D84] focus:outline-none focus:border-[#7D5459] transition-all"
+            placeholder="Buscar cargo..."
+            class="w-36 sm:w-44 pl-7 pr-6 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] text-[11px] text-[#2E2926] placeholder-[#968D84] focus:outline-none focus:border-[#7D5459] transition-all"
           />
           <svg class="w-3 h-3 text-[#8A8178] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"></circle>
@@ -170,6 +171,16 @@
             class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-[#6E665F] hover:text-[#7D5459] font-semibold"
           >✕</button>
         </div>
+
+        <!-- Selector Desplegable Único de SOPs (reemplaza botones en cabeceras) -->
+        <select
+          id="sop-select"
+          onchange="handleSopSelect(this.value)"
+          aria-label="Filtrar por Procedimiento"
+          class="px-2.5 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] text-[11px] text-[#59524C] focus:outline-none focus:border-[#7D5459] cursor-pointer transition-all"
+        >
+          <option value="">SOP: Todos</option>
+        </select>
 
         <!-- Filtro de Vínculo -->
         <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D8CCB9] flex items-center text-[11px]">
@@ -185,7 +196,7 @@
         </div>
 
         <!-- Vista PC / Móvil -->
-        <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D8CCB9] flex items-center text-[11px]">
+        <div class="hidden sm:flex bg-[#E6DDD0] p-0.5 rounded-full border border-[#D8CCB9] items-center text-[11px]">
           <button onclick="setDeviceMode('desktop')" id="btn-view-desktop" class="px-2 py-0.5 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#2E2926] shadow-2xs">
             PC
           </button>
@@ -200,29 +211,28 @@
             <rect x="2" y="3" width="20" height="14" rx="2"></rect>
             <path d="M8 21h8M12 17v4"></path>
           </svg>
-          <span>Lámina / PDF</span>
+          <span>Lámina</span>
         </button>
       </div>
     </div>
 
-    <!-- Sub-barra de navegación por áreas -->
-    <div class="bg-[#EAE2D6]/85 border-t border-[#DDD2C2] px-5 md:px-8 py-1.5">
+    <!-- Sub-barra silenciosa de áreas y accesos -->
+    <div class="bg-[#EAE2D6]/75 border-t border-[#DDD2C2] px-5 md:px-8 py-1.5">
       <div class="max-w-[1380px] mx-auto flex flex-wrap items-center justify-between gap-2 text-[11px]">
         <div id="dept-filters" class="flex items-center gap-1 overflow-x-auto pb-0.5 md:pb-0"></div>
-        <div class="flex items-center gap-2.5">
-          <div id="load-summary" class="hidden xl:flex items-center gap-3 text-[10.5px] text-[#6E665F]"></div>
-          <span class="hidden xl:inline text-[#C9BDAE]">|</span>
+        <div class="flex items-center gap-2">
+          <div id="load-summary" class="hidden xl:flex items-center gap-2.5 text-[10.5px] text-[#756D65] mr-1"></div>
           <button onclick="openSpecialModal('kpis')" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#FFFFFF]/90 hover:border-[#7D5459] text-[#4F4842] hover:text-[#7D5459] text-[10.5px] font-medium transition-all">
             KPIs
           </button>
           <button onclick="openSpecialModal('versions')" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#FFFFFF]/90 hover:border-[#7D5459] text-[#6E665F] hover:text-[#7D5459] text-[10.5px] font-medium transition-all">
-            V. 2.8
+            V. 2.9
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Banner dinámico cuando hay un SOP o búsqueda activa -->
+    <!-- Banner dinámico discreto cuando hay filtro activo -->
     <div id="active-sop-banner" class="hidden bg-[#FAF7F2] border-t border-[#D6C9B7] px-5 md:px-8 py-2"></div>
   </header>
 
@@ -233,11 +243,11 @@
 
   <!-- PIE DE PÁGINA FORMAL (PRESENTACIÓN / PDF) -->
   <footer id="presentation-footer" class="hidden max-w-[1380px] w-full mx-auto px-5 md:px-8 py-3 border-t border-[#D6C9B7] items-center justify-between text-[10px] text-[#6E665F]">
-    <span>ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional (ORG-EA V. 2.8)</span>
+    <span>ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional (ORG-EA V. 2.9)</span>
     <span>● Interno &nbsp;·&nbsp; ○ Externo / Staff</span>
   </footer>
 
-  <!-- MODAL FLOTANTE (DETALLE PROFUNDO BAJO DEMANDA) -->
+  <!-- MODAL FLOTANTE (DETALLE PROFUNDO AL HACER CLIC EN UNA TARJETA) -->
   <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#2E2926]/30 backdrop-blur-[2px] flex items-center justify-center p-4">
     <div class="modal-animate w-full max-w-xl max-h-[88vh] overflow-y-auto bg-[#FAF7F2] rounded-2xl border border-[#D4C7B5] shadow-[0_20px_40px_-12px_rgba(46,41,38,0.2)] p-6">
       <div id="modal-content"></div>
@@ -245,55 +255,55 @@
   </div>
 
   <script>
-    /* PALETA TENUE Y MIMETIZADA CON LINO / ARENA / CARBÓN */
+    /* PALETA CASI IMPERCEPTIBLE: VARIACIONES TONALES DE PIEDRA, LINO Y ARENA */
     const DEPARTMENTS = [
       {
         id: 'COM',
         name: 'Comercial & Cliente',
-        color: '#82565B',     // Burdeos piedra suave
-        tintBg: '#F3ECEA',
-        tintBorder: '#DFD2CF',
+        color: '#9E827E',     // Arena rosada pálida
+        tintBg: '#EFE7E3',
+        tintBorder: '#DFD4CE',
         sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04']
       },
       {
         id: 'DIS',
         name: 'Diseño Estratégico',
-        color: '#9C6D5E',     // Terracota empolvado
-        tintBg: '#F4EDE9',
-        tintBorder: '#E0D2CB',
+        color: '#A38879',     // Lino arcilla tenue
+        tintBg: '#F0E9E2',
+        tintBorder: '#E0D5CB',
         sops: ['DIS-01']
       },
       {
         id: 'LOG',
         name: 'Operaciones & Logística',
-        color: '#636D73',     // Pizarra cálido apagado
-        tintBg: '#ECEEEB',
-        tintBorder: '#D2D6D4',
+        color: '#8B8A82',     // Piedra gris cálido
+        tintBg: '#ECEAE4',
+        tintBorder: '#DBD7CF',
         sops: ['LOG-01', 'LOG-02']
       },
       {
         id: 'TER',
         name: 'Montaje & Terreno',
-        color: '#667568',     // Salvia grisáceo tenue
-        tintBg: '#ECF0EC',
-        tintBorder: '#D1D9D2',
+        color: '#888E82',     // Lino oliva pálido
+        tintBg: '#EDEBE4',
+        tintBorder: '#DCD9CF',
         sops: ['TER-01', 'TER-02']
       },
       {
         id: 'FIN',
         name: 'Admin & Finanzas',
-        color: '#8C785E',     // Topo bronce suave
-        tintBg: '#F2EDE4',
-        tintBorder: '#DDD3C3',
+        color: '#9B8E78',     // Crema pergamino
+        tintBg: '#F1ECE1',
+        tintBorder: '#E1D9C9',
         sops: ['FIN-01']
       }
     ];
 
     const LEVELS = [
-      { id: 1, num: '1', title: 'Dirección' },
-      { id: 2, num: '2', title: 'Liderazgo Operativo' },
-      { id: 3, num: '3', title: 'Ejecución Técnica' },
-      { id: 4, num: '4', title: 'Aliados Externos' }
+      { id: 1, num: 'N1', title: 'Dirección' },
+      { id: 2, num: 'N2', title: 'Liderazgo' },
+      { id: 3, num: 'N3', title: 'Ejecución' },
+      { id: 4, num: 'N4', title: 'Aliados' }
     ];
 
     const SOP_DETAILS = {
@@ -384,7 +394,8 @@
       { ver: '2.5', date: '20 Nov 2026', desc: 'Sincronización con DOC-MAESTRO V. 2.5, filtro por vínculo y criterio desplegable.' },
       { ver: '2.6', date: '20 Nov 2026', desc: 'Pilares por área, dotación de especialistas y escalabilidad por célula.' },
       { ver: '2.7', date: '20 Nov 2026', desc: 'Incorporación de nodo Staff lateral: Consultor Estratégico & Control de Gestión.' },
-      { ver: '2.8', date: '20 Nov 2026', desc: 'Síntesis visual minimalista y paleta cromática tenue mimetizada con lino/arena.' }
+      { ver: '2.8', date: '20 Nov 2026', desc: 'Síntesis visual minimalista y paleta cromática tenue.' },
+      { ver: '2.9', date: '21 Nov 2026', desc: 'Mimetismo tonal casi imperceptible, tarjetas de 2 datos, selector SOP único y bandas de nivel ultraligeras.' }
     ];
 
     const EXECUTIVE_ROLE = {
@@ -421,7 +432,7 @@
       id: 'staff-consultor',
       dept: 'STAFF',
       deptName: 'Asesoría Externa',
-      color: '#8C785E',
+      color: '#9B8E78',
       level: 0,
       linkType: 'Externo',
       minHeadcount: 1,
@@ -753,6 +764,24 @@
       deviceMode: window.innerWidth < 860 ? 'mobile' : 'desktop'
     };
 
+    function populateSopDropdown() {
+      const sel = document.getElementById('sop-select');
+      if (!sel) return;
+      const optionsHtml = Object.entries(SOP_DETAILS).map(([code, info]) => {
+        return `<option value="${code}">${code} · ${info.title}</option>`;
+      }).join('');
+      sel.innerHTML = `<option value="">SOP: Todos</option>${optionsHtml}`;
+    }
+
+    function handleSopSelect(val) {
+      state.activeSop = val || null;
+      if (state.activeSop && state.activeDept !== 'ALL') {
+        const deptHasRoles = rolesData.some(r => r.dept === state.activeDept && r.sops.includes(state.activeSop));
+        if (!deptHasRoles) state.activeDept = 'ALL';
+      }
+      renderAll();
+    }
+
     function getDeptCapacitySummary(deptId) {
       const deptRoles = rolesData.filter(r => r.dept === deptId);
       const internalRoles = deptRoles.filter(r => r.linkType === 'Interno');
@@ -806,7 +835,7 @@
       const today = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' });
       metaEl.innerHTML = `
         <div class="font-medium text-[#2E2926]">${filterLabel}</div>
-        <div>${today} · ORG-EA V. 2.8</div>
+        <div>${today} · ORG-EA V. 2.9</div>
       `;
     }
 
@@ -848,14 +877,6 @@
 
     function handleSearch(val) {
       state.searchQuery = val.trim();
-      const clearBtn = document.getElementById('btn-clear-search');
-      if (clearBtn) {
-        if (state.searchQuery.length > 0 || state.activeSop) {
-          clearBtn.classList.remove('hidden');
-        } else {
-          clearBtn.classList.add('hidden');
-        }
-      }
       const upper = state.searchQuery.toUpperCase();
       if (SOP_DETAILS[upper]) {
         state.activeSop = upper;
@@ -872,8 +893,8 @@
       setLinkFilter('ALL');
       const input = document.getElementById('quick-search');
       if (input) input.value = '';
-      const clearBtn = document.getElementById('btn-clear-search');
-      if (clearBtn) clearBtn.classList.add('hidden');
+      const sel = document.getElementById('sop-select');
+      if (sel) sel.value = '';
       renderAll();
     }
 
@@ -952,12 +973,17 @@
         const active = state.activeDept === d.id;
         html += `
           <button onclick="setDeptFilter('${d.id}')" class="px-2.5 py-0.5 rounded-full font-medium transition-all flex items-center gap-1.5 shrink-0 ${active ? 'bg-[#FFFFFF] text-[#2E2926] border border-[#CFC3B2]' : 'text-[#635C56] hover:bg-[#DFD5C7]'}">
-            <span class="w-2 h-2 rounded-full opacity-85" style="background:${d.color}"></span>
+            <span class="w-1.5 h-1.5 rounded-full" style="background:${d.color}"></span>
             <span>${d.name}</span>
           </button>
         `;
       });
       filtersEl.innerHTML = html;
+
+      const sel = document.getElementById('sop-select');
+      if (sel && sel.value !== (state.activeSop || '')) {
+        sel.value = state.activeSop || '';
+      }
 
       const internalRoles = rolesData.filter(r => r.linkType === 'Interno');
       const minSpec = internalRoles.reduce((acc, r) => acc + r.minHeadcount, 0);
@@ -966,9 +992,9 @@
       const summaryEl = document.getElementById('load-summary');
       if (summaryEl) {
         summaryEl.innerHTML = `
-          <span>10 SOPs</span>
-          <span>·</span>
           <span>${minSpec}–${maxSpec} especialistas + staff</span>
+          <span>·</span>
+          <span>● Interno &nbsp;○ Externo</span>
         `;
       }
 
@@ -1023,93 +1049,66 @@
 
       return `
         <div class="max-w-4xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-3 lg:gap-0 relative">
-          <div class="hidden lg:block lg:w-[240px] shrink-0"></div>
+          <div class="hidden lg:block lg:w-[235px] shrink-0"></div>
 
           <!-- Nodo Central: Gerencia General -->
           <div onclick="openRoleModal('gerencia-general')" 
-               class="role-card ${execStateClass} cursor-pointer w-full max-w-md bg-[#FAF7F2] rounded-2xl border border-[#CFC3B2] px-5 py-3.5 text-center relative overflow-hidden shrink-0">
-            <div class="absolute top-0 inset-x-0 h-[3px] bg-[#7D5459]"></div>
-            <div class="text-[9.5px] uppercase tracking-[0.18em] text-[#7D5459] font-semibold mb-0.5">
-              Nivel 0 · 2 Socias Fundadoras
+               class="role-card ${execStateClass} group cursor-pointer w-full max-w-md bg-[#FAF7F2] rounded-2xl border border-[#D4C8B8] px-5 py-3.5 text-center relative overflow-hidden shrink-0">
+            <div class="absolute top-0 inset-x-0 h-[2px] bg-[#7D5459]"></div>
+            <div class="text-[9.5px] uppercase tracking-[0.2em] text-[#7D5459] font-medium mb-0.5">
+              Nivel 0 · 2 Socias
             </div>
-            <h2 class="text-base md:text-lg font-semibold tracking-tight text-[#2E2926]">
+            <h2 class="text-base md:text-[17px] font-semibold tracking-tight text-[#2E2926] group-hover:text-[#7D5459] transition-colors">
               Gerencia General
             </h2>
-            <p class="text-[11px] text-[#756D65] mt-0.5">
-              ESTUDIO AFÍN SpA · Gobierno Corporativo
+            <p class="text-[10.5px] text-[#7D756D] mt-0.5">
+              ESTUDIO AFÍN SpA
             </p>
           </div>
 
           <!-- Conector punteado hacia Staff Asesor -->
           <div class="flex lg:hidden flex-col items-center">
-            <div class="w-px h-3.5 border-l border-dashed border-[#A89A8A]"></div>
+            <div class="w-px h-3.5 border-l border-dashed border-[#B5A898]"></div>
           </div>
           <div class="hidden lg:flex items-center w-7 shrink-0">
-            <div class="w-full border-t border-dashed border-[#A89A8A]"></div>
+            <div class="w-full border-t border-dashed border-[#B5A898]"></div>
           </div>
 
           <!-- Nodo Lateral Staff -->
           <div onclick="openRoleModal('staff-consultor')"
-               class="role-card ${staffStateClass} group cursor-pointer w-full max-w-md lg:w-[232px] bg-[#F5F0E8] rounded-xl border border-dashed border-[#BFB2A2] hover:border-[#7D5459] px-3.5 py-2.5 text-left relative shrink-0">
-            <div class="flex items-center justify-between gap-1.5 mb-0.5">
-              <span class="text-[9px] uppercase tracking-[0.16em] text-[#7D6E5D] font-semibold">
-                Staff · Externo
-              </span>
-              <span class="w-1.5 h-1.5 rounded-full border border-[#8C785E]"></span>
-            </div>
+               class="role-card ${staffStateClass} group cursor-pointer w-full max-w-md lg:w-[228px] bg-[#F5F0E8] rounded-xl border border-dashed border-[#C4B8A8] px-3.5 py-2.5 text-left relative shrink-0">
             <div class="text-[12px] font-medium text-[#2E2926] leading-snug group-hover:text-[#7D5459] transition-colors">
               Consultor Estratégico & Control de Gestión
             </div>
+            <div class="flex items-center justify-between gap-2 mt-1.5 text-[10px] text-[#7D756D]">
+              <div class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full border border-[#8C7E6A]"></span>
+                <span>Staff · 1 esp.</span>
+              </div>
+              <span class="interactive-arrow text-[#A3998E] group-hover:text-[#7D5459] transition-colors">↗</span>
+            </div>
           </div>
         </div>
       `;
     }
 
-    /* CABECERA DE ÁREA MINIMALISTA Y TENUE */
+    /* CABECERA DE DEPARTAMENTO SILENCIOSA (SOLO NOMBRE Y DOTACIÓN) */
     function renderDeptPillarHeader(dept) {
       const capacityLabel = getDeptCapacitySummary(dept.id);
       return `
-        <div class="relative pt-2.5 pb-2.5 px-3 rounded-t-xl border-b flex flex-col justify-between transition-all"
-             style="background-color:${dept.tintBg}; border-top: 2.5px solid ${dept.color}; border-bottom-color:${dept.tintBorder}; border-left: 1px solid ${dept.tintBorder}; border-right: 1px solid ${dept.tintBorder};">
-          <div>
-            <div class="flex items-center justify-between gap-1 mb-0.5">
-              <span class="text-[9px] uppercase tracking-[0.2em] font-semibold" style="color:${dept.color}">
-                ${dept.id}
-              </span>
-              <span class="text-[9.5px] font-medium text-[#6E665F]">
-                ${capacityLabel}
-              </span>
-            </div>
-            <h3 class="text-[13px] font-semibold tracking-tight text-[#2E2926] leading-tight text-left">
-              ${dept.name}
-            </h3>
-          </div>
-
-          <div class="mt-2 pt-1.5 border-t flex flex-wrap items-center gap-1" style="border-color:${dept.tintBorder}">
-            ${dept.sops.map(code => {
-              const isSelected = state.activeSop === code;
-              const sopInfo = SOP_DETAILS[code];
-              return `
-                <button
-                  onclick="toggleSopFilter('${code}', event)"
-                  title="${sopInfo ? sopInfo.title : code}"
-                  style="${isSelected ? `background-color:${dept.color}; color:#FFFFFF;` : ''}"
-                  class="px-1.5 py-0.5 rounded text-[9px] font-medium tracking-wide transition-all ${
-                    isSelected
-                      ? ''
-                      : 'bg-[#FAF7F2]/90 text-[#59524C] border border-[#DDD2C2] hover:bg-[#FFFFFF] hover:text-[#2E2926]'
-                  }"
-                >
-                  ${code}
-                </button>
-              `;
-            }).join('')}
-          </div>
+        <div class="relative pt-2.5 pb-2.5 px-3.5 rounded-xl flex items-center justify-between gap-2 transition-all"
+             style="background-color:${dept.tintBg}; border-top: 2px solid ${dept.color}; border-bottom: 1px solid ${dept.tintBorder}; border-left: 1px solid ${dept.tintBorder}; border-right: 1px solid ${dept.tintBorder};">
+          <h3 class="text-[12.5px] font-semibold tracking-tight text-[#2E2926] leading-tight text-left">
+            ${dept.name}
+          </h3>
+          <span class="text-[10px] text-[#756D65] shrink-0">
+            ${capacityLabel}
+          </span>
         </div>
       `;
     }
 
-    /* TARJETA DE ROL ULTRA-MINIMALISTA (SIN RUIDO VISUAL) */
+    /* TARJETA DE ROL ULTRA-MINIMALISTA (2 DATOS: TÍTULO Y DOTACIÓN + PUNTO DE VÍNCULO) */
     function renderRoleCard(role, dept) {
       const isExternal = role.linkType === 'Externo';
       const filtering = hasActiveFilter();
@@ -1118,8 +1117,7 @@
 
       return `
         <div onclick="openRoleModal('${role.id}')" 
-             style="border-left: 2px solid ${dept.color};"
-             class="role-card ${stateClass} group cursor-pointer bg-[#FAF7F2] hover:bg-[#FFFFFF] rounded-xl border border-[#DDD2C2] px-3.5 py-3 flex flex-col justify-between gap-2.5">
+             class="role-card ${stateClass} group cursor-pointer bg-[#FAF7F2] rounded-xl border border-[#DFD5C7] px-3.5 py-3 flex flex-col justify-between gap-2.5">
           <div class="text-[12.5px] font-medium text-[#2E2926] leading-snug group-hover:text-[#7D5459] transition-colors">
             ${role.title}
           </div>
@@ -1132,12 +1130,12 @@
             </div>
           ` : ''}
           
-          <div class="flex items-center justify-between gap-2 pt-1.5 border-t border-[#ECE4D8] text-[10px] text-[#756D65]">
+          <div class="flex items-center justify-between gap-2 text-[10px] text-[#7D756D]">
             <div class="flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full ${isExternal ? 'border border-[#8C785E]' : ''}" style="${!isExternal ? `background:${dept.color}` : ''}"></span>
-              <span>${role.shortDotacion} · ${isExternal ? 'Externo' : 'Interno'}</span>
+              <span class="w-1.5 h-1.5 rounded-full ${isExternal ? 'border border-[#7D756D]' : ''}" style="${!isExternal ? `background:${dept.color}` : ''}"></span>
+              <span>${role.shortDotacion}</span>
             </div>
-            <span class="interactive-arrow text-[#9E948A] group-hover:text-[#7D5459] group-hover:translate-x-0.5 transition-all">→</span>
+            <span class="interactive-arrow text-[#A3998E] group-hover:text-[#7D5459] group-hover:translate-x-0.5 transition-all">↗</span>
           </div>
         </div>
       `;
@@ -1157,23 +1155,23 @@
           <div class="max-w-md mx-auto">
             ${levelZeroBlock}
             <div class="flex justify-center">
-              <div class="w-px h-5 bg-[#C4B8A8]"></div>
+              <div class="w-px h-5 bg-[#C9BDAE]"></div>
             </div>
             <div class="space-y-5">
         `;
         visibleDepts.forEach(dept => {
           const deptRoles = rolesData.filter(r => r.dept === dept.id);
           html += `
-            <section class="bg-[#E6DDD0]/75 rounded-2xl border border-[#D8CCB9] p-3 relative">
+            <section class="pt-1 relative">
               <div class="mb-3">
                 ${renderDeptPillarHeader(dept)}
               </div>
               <div class="relative pl-3.5 space-y-2.5">
-                <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#C4B8A8]"></div>
+                <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#C9BDAE]"></div>
                 ${deptRoles.map(r => `
                   <div class="relative">
-                    <div class="absolute -left-2 top-4 w-2 h-px bg-[#C4B8A8]"></div>
-                    <div class="text-[9.5px] uppercase tracking-widest text-[#756D65] mb-1">Nivel ${r.level}</div>
+                    <div class="absolute -left-2 top-4 w-2 h-px bg-[#C9BDAE]"></div>
+                    <div class="text-[9.5px] uppercase tracking-widest text-[#7D756D] mb-1">N${r.level}</div>
                     ${renderRoleCard(r, dept)}
                   </div>
                 `).join('')}
@@ -1190,15 +1188,15 @@
       const gridCols = isSingle ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-5';
 
       const topBranchHtml = isSingle
-        ? `<div class="flex justify-center"><div class="w-px h-6 bg-[#C4B8A8]"></div></div>`
+        ? `<div class="flex justify-center"><div class="w-px h-6 bg-[#C9BDAE]"></div></div>`
         : `
           <div class="relative h-7">
-            <div class="absolute left-1/2 top-0 w-px h-3.5 -translate-x-1/2 bg-[#C4B8A8]"></div>
-            <div class="absolute top-3.5 left-[10%] right-[10%] h-px bg-[#C4B8A8]"></div>
-            <div class="grid grid-cols-5 gap-3.5 h-full">
+            <div class="absolute left-1/2 top-0 w-px h-3.5 -translate-x-1/2 bg-[#C9BDAE]"></div>
+            <div class="absolute top-3.5 left-[10%] right-[10%] h-px bg-[#C9BDAE]"></div>
+            <div class="grid grid-cols-5 gap-4 h-full">
               ${visibleDepts.map(() => `
                 <div class="relative h-full">
-                  <div class="absolute left-1/2 top-3.5 bottom-0 w-px -translate-x-1/2 bg-[#C4B8A8]"></div>
+                  <div class="absolute left-1/2 top-3.5 bottom-0 w-px -translate-x-1/2 bg-[#C9BDAE]"></div>
                 </div>
               `).join('')}
             </div>
@@ -1213,20 +1211,20 @@
             ${topBranchHtml}
 
             <!-- Pilares Minimalistas de Departamento -->
-            <div class="grid ${gridCols} gap-3.5 relative z-10">
+            <div class="grid ${gridCols} gap-4 relative z-10">
               ${visibleDepts.map(dept => renderDeptPillarHeader(dept)).join('')}
             </div>
 
-            <!-- Ejes verticales y Bandas de Nivel -->
+            <!-- Ejes verticales y Bandas Ultraligeras de Nivel -->
             <div class="relative pt-3">
-              <div class="grid ${gridCols} gap-3.5 absolute inset-0 pointer-events-none z-0">
+              <div class="grid ${gridCols} gap-4 absolute inset-0 pointer-events-none z-0">
                 ${visibleDepts.map(dept => {
                   const deptRoles = rolesData.filter(r => r.dept === dept.id);
                   const maxLvl = deptRoles.length > 0 ? Math.max(...deptRoles.map(r => r.level)) : 1;
                   const lineHeightClass = maxLvl === 4 ? 'bottom-8' : 'bottom-[24%]';
                   return `
                     <div class="relative h-full">
-                      <div class="absolute left-1/2 top-0 ${lineHeightClass} w-px -translate-x-1/2 bg-[#C7BCAE]"></div>
+                      <div class="absolute left-1/2 top-0 ${lineHeightClass} w-px -translate-x-1/2 bg-[#CEC3B4]"></div>
                     </div>
                   `;
                 }).join('')}
@@ -1234,16 +1232,16 @@
 
               <div class="space-y-3 relative z-10">
                 ${LEVELS.map(lvl => `
-                  <div class="level-band bg-[#E6DDD0]/65 rounded-2xl border border-[#D8CCB9] p-3">
-                    <div class="flex items-center gap-2 mb-2 px-1">
-                      <span class="text-[10px] font-semibold text-[#7D5459]">N${lvl.num}</span>
-                      <span class="text-[10px] uppercase tracking-[0.14em] text-[#6E665F] font-medium">${lvl.title}</span>
+                  <div class="level-band pt-2.5 pb-1 border-t border-[#D8CCB9]">
+                    <div class="flex items-center gap-2 mb-2 px-0.5">
+                      <span class="text-[9.5px] font-semibold text-[#7D5459]">${lvl.num}</span>
+                      <span class="text-[9.5px] uppercase tracking-[0.16em] text-[#7D756D]">${lvl.title}</span>
                     </div>
-                    <div class="grid ${gridCols} gap-3.5">
+                    <div class="grid ${gridCols} gap-4">
                       ${visibleDepts.map(dept => {
                         const cellRoles = rolesData.filter(r => r.dept === dept.id && r.level === lvl.id);
                         if (cellRoles.length === 0) {
-                          return `<div class="min-h-[68px]"></div>`;
+                          return `<div class="min-h-[62px]"></div>`;
                         }
                         return `
                           <div class="space-y-2 relative">
@@ -1419,7 +1417,7 @@
               <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7D5459] mb-0.5">
                 Versionado Semántico (X.Y)
               </div>
-              <h3 class="text-base font-semibold text-[#2E2926]">Control de Versiones · ORG-EA V. 2.8</h3>
+              <h3 class="text-base font-semibold text-[#2E2926]">Control de Versiones · ORG-EA V. 2.9</h3>
             </div>
             <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
               ✕
@@ -1441,7 +1439,7 @@
                 </thead>
                 <tbody class="divide-y divide-[#ECE4D8]">
                   ${VERSION_HISTORY.map(v => `
-                    <tr class="${v.ver === '2.8' ? 'bg-[#F8F3F1]' : ''}">
+                    <tr class="${v.ver === '2.9' ? 'bg-[#F8F3F1]' : ''}">
                       <td class="py-2 px-3 font-medium text-[#7D5459] whitespace-nowrap">V. ${v.ver}</td>
                       <td class="py-2 px-3 text-[#756D65] whitespace-nowrap">${v.date}</td>
                       <td class="py-2 px-3 text-[#3A3430] leading-relaxed">${v.desc}</td>
@@ -1525,12 +1523,12 @@
         content.innerHTML = `
           <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E2D8C9]">
             <div>
-              <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8C785E] mb-0.5">
+              <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#8C7E6A] mb-0.5">
                 Staff Nivel 0 · Asesoría Externa
               </div>
               <h3 class="text-base font-semibold text-[#2E2926]">${staff.title}</h3>
               <div class="mt-1.5">
-                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#F2EDE4] text-[#6E5D47] border border-[#DDD3C3]">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#F1ECE1] text-[#6E6352] border border-[#E1D9C9]">
                   ${staff.headcountBadge}
                 </span>
               </div>
@@ -1542,7 +1540,7 @@
 
           <div class="mt-4 space-y-4 text-xs">
             <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3">
-              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8C785E] mb-0.5">Vínculo y Alcance</div>
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8C7E6A] mb-0.5">Vínculo y Alcance</div>
               <p class="text-[#3A3430] leading-relaxed">${staff.teamStructure}</p>
             </div>
 
@@ -1572,15 +1570,15 @@
       content.innerHTML = `
         <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E2D8C9]">
           <div>
-            <div class="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] mb-0.5" style="color:${dept.color}">
+            <div class="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] mb-0.5 text-[#756D65]">
               <span>${dept.id} · ${dept.name}</span>
               <span>·</span>
               <span>Nivel ${role.level}</span>
             </div>
             <h3 class="text-base font-semibold text-[#2E2926]">${role.title}</h3>
             <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
-              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium border"
-                    style="background-color:${dept.tintBg}; color:${dept.color}; border-color:${dept.tintBorder};">
+              <span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium border text-[#4A433E]"
+                    style="background-color:${dept.tintBg}; border-color:${dept.tintBorder};">
                 ${role.headcountBadge}
               </span>
               <span class="px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-[#DDD2C2] text-[10px] text-[#635C56]">
@@ -1595,7 +1593,7 @@
 
         <div class="mt-4 space-y-4 text-xs">
           <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3">
-            <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] mb-0.5" style="color:${dept.color}">
+            <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#7D5459] mb-0.5">
               Dotación y Escalabilidad
             </div>
             <p class="text-[#3A3430] leading-relaxed">${role.teamStructure}</p>
@@ -1638,8 +1636,12 @@
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', renderAll);
+      document.addEventListener('DOMContentLoaded', () => {
+        populateSopDropdown();
+        renderAll();
+      });
     } else {
+      populateSopDropdown();
       renderAll();
     }
   </script>
