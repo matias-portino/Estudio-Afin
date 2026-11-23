@@ -149,16 +149,16 @@
         </span>
       </div>
 
-      <!-- Controles Despejados -->
+      <!-- Controles Despejados (Enfocados 100% en Estructura y Roles) -->
       <div class="flex flex-wrap items-center gap-2">
-        <!-- Buscador Rápido -->
+        <!-- Buscador Rápido de Cargos -->
         <div class="relative">
           <input
             type="text"
             id="quick-search"
             oninput="handleSearch(this.value)"
-            placeholder="Buscar cargo..."
-            class="w-36 sm:w-44 pl-7 pr-6 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] text-[11px] text-[#2E2926] placeholder-[#968D84] focus:outline-none focus:border-[#7D5459] transition-all"
+            placeholder="Buscar cargo o función..."
+            class="w-40 sm:w-48 pl-7 pr-6 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] text-[11px] text-[#2E2926] placeholder-[#968D84] focus:outline-none focus:border-[#7D5459] transition-all"
           />
           <svg class="w-3 h-3 text-[#8A8178] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"></circle>
@@ -171,16 +171,6 @@
             class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-[#6E665F] hover:text-[#7D5459] font-semibold"
           >✕</button>
         </div>
-
-        <!-- Selector Desplegable Único de SOPs (reemplaza botones en cabeceras) -->
-        <select
-          id="sop-select"
-          onchange="handleSopSelect(this.value)"
-          aria-label="Filtrar por Procedimiento"
-          class="px-2.5 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] text-[11px] text-[#59524C] focus:outline-none focus:border-[#7D5459] cursor-pointer transition-all"
-        >
-          <option value="">SOP: Todos</option>
-        </select>
 
         <!-- Filtro de Vínculo -->
         <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D8CCB9] flex items-center text-[11px]">
@@ -226,14 +216,14 @@
             KPIs
           </button>
           <button onclick="openSpecialModal('versions')" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#FFFFFF]/90 hover:border-[#7D5459] text-[#6E665F] hover:text-[#7D5459] text-[10.5px] font-medium transition-all">
-            V. 2.9
+            V. 3.0
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Banner dinámico discreto cuando hay filtro activo -->
-    <div id="active-sop-banner" class="hidden bg-[#FAF7F2] border-t border-[#D6C9B7] px-5 md:px-8 py-2"></div>
+    <!-- Banner dinámico discreto cuando hay búsqueda de cargo activa -->
+    <div id="active-search-banner" class="hidden bg-[#FAF7F2] border-t border-[#D6C9B7] px-5 md:px-8 py-2"></div>
   </header>
 
   <!-- LIENZO PRINCIPAL -->
@@ -243,7 +233,7 @@
 
   <!-- PIE DE PÁGINA FORMAL (PRESENTACIÓN / PDF) -->
   <footer id="presentation-footer" class="hidden max-w-[1380px] w-full mx-auto px-5 md:px-8 py-3 border-t border-[#D6C9B7] items-center justify-between text-[10px] text-[#6E665F]">
-    <span>ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional (ORG-EA V. 2.9)</span>
+    <span>ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional (ORG-EA V. 3.0)</span>
     <span>● Interno &nbsp;·&nbsp; ○ Externo / Staff</span>
   </footer>
 
@@ -260,7 +250,7 @@
       {
         id: 'COM',
         name: 'Comercial & Cliente',
-        color: '#9E827E',     // Arena rosada pálida
+        color: '#9E827E',
         tintBg: '#EFE7E3',
         tintBorder: '#DFD4CE',
         sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04']
@@ -268,7 +258,7 @@
       {
         id: 'DIS',
         name: 'Diseño Estratégico',
-        color: '#A38879',     // Lino arcilla tenue
+        color: '#A38879',
         tintBg: '#F0E9E2',
         tintBorder: '#E0D5CB',
         sops: ['DIS-01']
@@ -276,7 +266,7 @@
       {
         id: 'LOG',
         name: 'Operaciones & Logística',
-        color: '#8B8A82',     // Piedra gris cálido
+        color: '#8B8A82',
         tintBg: '#ECEAE4',
         tintBorder: '#DBD7CF',
         sops: ['LOG-01', 'LOG-02']
@@ -284,7 +274,7 @@
       {
         id: 'TER',
         name: 'Montaje & Terreno',
-        color: '#888E82',     // Lino oliva pálido
+        color: '#888E82',
         tintBg: '#EDEBE4',
         tintBorder: '#DCD9CF',
         sops: ['TER-01', 'TER-02']
@@ -292,7 +282,7 @@
       {
         id: 'FIN',
         name: 'Admin & Finanzas',
-        color: '#9B8E78',     // Crema pergamino
+        color: '#9B8E78',
         tintBg: '#F1ECE1',
         tintBorder: '#E1D9C9',
         sops: ['FIN-01']
@@ -306,6 +296,7 @@
       { id: 4, num: 'N4', title: 'Aliados' }
     ];
 
+    /* REFERENCIA INTERNA DE SOPs (SE MANTIENE DENTRO DE LA FICHA MODAL DE CADA TARJETA) */
     const SOP_DETAILS = {
       'COM-01': {
         dept: 'COM',
@@ -395,7 +386,8 @@
       { ver: '2.6', date: '20 Nov 2026', desc: 'Pilares por área, dotación de especialistas y escalabilidad por célula.' },
       { ver: '2.7', date: '20 Nov 2026', desc: 'Incorporación de nodo Staff lateral: Consultor Estratégico & Control de Gestión.' },
       { ver: '2.8', date: '20 Nov 2026', desc: 'Síntesis visual minimalista y paleta cromática tenue.' },
-      { ver: '2.9', date: '21 Nov 2026', desc: 'Mimetismo tonal casi imperceptible, tarjetas de 2 datos, selector SOP único y bandas de nivel ultraligeras.' }
+      { ver: '2.9', date: '21 Nov 2026', desc: 'Mimetismo tonal casi imperceptible, tarjetas de 2 datos y bandas de nivel ultraligeras.' },
+      { ver: '3.0', date: '21 Nov 2026', desc: 'Separación de arquitectura: se retira el filtro macro de SOPs del organigrama para delegarlo al Dashboard Operativo, manteniendo los SOPs referenciados dentro de cada ficha.' }
     ];
 
     const EXECUTIVE_ROLE = {
@@ -755,7 +747,6 @@
     let state = {
       linkFilter: 'ALL',
       activeDept: 'ALL',
-      activeSop: null,
       searchQuery: '',
       selectedRoleId: null,
       modalAuditExpanded: false,
@@ -763,24 +754,6 @@
       presentationMode: false,
       deviceMode: window.innerWidth < 860 ? 'mobile' : 'desktop'
     };
-
-    function populateSopDropdown() {
-      const sel = document.getElementById('sop-select');
-      if (!sel) return;
-      const optionsHtml = Object.entries(SOP_DETAILS).map(([code, info]) => {
-        return `<option value="${code}">${code} · ${info.title}</option>`;
-      }).join('');
-      sel.innerHTML = `<option value="">SOP: Todos</option>${optionsHtml}`;
-    }
-
-    function handleSopSelect(val) {
-      state.activeSop = val || null;
-      if (state.activeSop && state.activeDept !== 'ALL') {
-        const deptHasRoles = rolesData.some(r => r.dept === state.activeDept && r.sops.includes(state.activeSop));
-        if (!deptHasRoles) state.activeDept = 'ALL';
-      }
-      renderAll();
-    }
 
     function getDeptCapacitySummary(deptId) {
       const deptRoles = rolesData.filter(r => r.dept === deptId);
@@ -835,7 +808,7 @@
       const today = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' });
       metaEl.innerHTML = `
         <div class="font-medium text-[#2E2926]">${filterLabel}</div>
-        <div>${today} · ORG-EA V. 2.9</div>
+        <div>${today} · ORG-EA V. 3.0</div>
       `;
     }
 
@@ -861,40 +834,17 @@
       renderAll();
     }
 
-    function toggleSopFilter(sopCode, event) {
-      if (event) event.stopPropagation();
-      if (state.activeSop === sopCode) {
-        state.activeSop = null;
-      } else {
-        state.activeSop = sopCode;
-        if (state.activeDept !== 'ALL') {
-          const deptHasRoles = rolesData.some(r => r.dept === state.activeDept && r.sops.includes(sopCode));
-          if (!deptHasRoles) state.activeDept = 'ALL';
-        }
-      }
-      renderAll();
-    }
-
     function handleSearch(val) {
       state.searchQuery = val.trim();
-      const upper = state.searchQuery.toUpperCase();
-      if (SOP_DETAILS[upper]) {
-        state.activeSop = upper;
-      } else if (state.searchQuery.length > 0) {
-        state.activeSop = null;
-      }
       renderAll();
     }
 
     function clearFilters() {
-      state.activeSop = null;
       state.searchQuery = '';
       state.linkFilter = 'ALL';
       setLinkFilter('ALL');
       const input = document.getElementById('quick-search');
       if (input) input.value = '';
-      const sel = document.getElementById('sop-select');
-      if (sel) sel.value = '';
       renderAll();
     }
 
@@ -938,26 +888,19 @@
       if (state.linkFilter !== 'ALL' && role.linkType !== state.linkFilter) {
         return false;
       }
-      if (state.activeSop && !role.sops.includes(state.activeSop)) {
-        return false;
-      }
       if (state.searchQuery) {
         const q = state.searchQuery.toLowerCase();
         const inTitle = role.title.toLowerCase().includes(q);
         const inMission = role.mission.toLowerCase().includes(q);
         const inBadge = (role.headcountBadge || '').toLowerCase().includes(q);
         const inDeliverables = (role.deliverables || []).some(d => d.toLowerCase().includes(q));
-        const inSops = role.sops.some(code => {
-          const sopObj = SOP_DETAILS[code];
-          return code.toLowerCase().includes(q) || (sopObj && sopObj.title.toLowerCase().includes(q));
-        });
-        return inTitle || inMission || inBadge || inDeliverables || inSops;
+        return inTitle || inMission || inBadge || inDeliverables;
       }
       return true;
     }
 
     function hasActiveFilter() {
-      return Boolean(state.activeSop || state.searchQuery || state.linkFilter !== 'ALL');
+      return Boolean(state.searchQuery || state.linkFilter !== 'ALL');
     }
 
     function renderFiltersAndSummary() {
@@ -980,11 +923,6 @@
       });
       filtersEl.innerHTML = html;
 
-      const sel = document.getElementById('sop-select');
-      if (sel && sel.value !== (state.activeSop || '')) {
-        sel.value = state.activeSop || '';
-      }
-
       const internalRoles = rolesData.filter(r => r.linkType === 'Interno');
       const minSpec = internalRoles.reduce((acc, r) => acc + r.minHeadcount, 0);
       const maxSpec = internalRoles.reduce((acc, r) => acc + r.maxHeadcount, 0);
@@ -998,35 +936,17 @@
         `;
       }
 
-      const bannerEl = document.getElementById('active-sop-banner');
+      const bannerEl = document.getElementById('active-search-banner');
       const clearBtn = document.getElementById('btn-clear-search');
       if (!bannerEl) return;
 
-      if (state.activeSop && SOP_DETAILS[state.activeSop]) {
-        const sop = SOP_DETAILS[state.activeSop];
-        bannerEl.classList.remove('hidden');
-        if (clearBtn) clearBtn.classList.remove('hidden');
-        bannerEl.innerHTML = `
-          <div class="max-w-[1380px] mx-auto flex flex-wrap items-center justify-between gap-3 text-[11px]">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="px-2 py-0.5 rounded bg-[#7D5459] text-[#FFFFFF] text-[10px] font-semibold">
-                ${state.activeSop}
-              </span>
-              <span class="font-semibold text-[#2E2926]">${sop.title}:</span>
-              <span class="text-[#635C56]">${sop.desc}</span>
-            </div>
-            <button onclick="clearFilters()" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#EFE9E0] hover:bg-[#E6DDD0] text-[#2E2926] text-[10.5px] font-medium shrink-0">
-              Cerrar ✕
-            </button>
-          </div>
-        `;
-      } else if (state.searchQuery) {
+      if (state.searchQuery) {
         bannerEl.classList.remove('hidden');
         if (clearBtn) clearBtn.classList.remove('hidden');
         bannerEl.innerHTML = `
           <div class="max-w-[1380px] mx-auto flex items-center justify-between gap-3 text-[11px]">
             <span class="text-[#635C56]">
-              Filtro: <strong class="text-[#2E2926]">"${state.searchQuery}"</strong>
+              Filtro de cargo: <strong class="text-[#2E2926]">"${state.searchQuery}"</strong>
             </span>
             <button onclick="clearFilters()" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#EFE9E0] hover:bg-[#E6DDD0] text-[#2E2926] text-[10.5px] font-medium">
               Limpiar ✕
@@ -1092,7 +1012,6 @@
       `;
     }
 
-    /* CABECERA DE DEPARTAMENTO SILENCIOSA (SOLO NOMBRE Y DOTACIÓN) */
     function renderDeptPillarHeader(dept) {
       const capacityLabel = getDeptCapacitySummary(dept.id);
       return `
@@ -1108,7 +1027,6 @@
       `;
     }
 
-    /* TARJETA DE ROL ULTRA-MINIMALISTA (2 DATOS: TÍTULO Y DOTACIÓN + PUNTO DE VÍNCULO) */
     function renderRoleCard(role, dept) {
       const isExternal = role.linkType === 'Externo';
       const filtering = hasActiveFilter();
@@ -1121,14 +1039,6 @@
           <div class="text-[12.5px] font-medium text-[#2E2926] leading-snug group-hover:text-[#7D5459] transition-colors">
             ${role.title}
           </div>
-
-          ${state.activeSop && matches ? `
-            <div>
-              <span class="px-1.5 py-0.5 rounded bg-[#7D5459]/10 text-[#7D5459] text-[9.5px] font-medium">
-                ${state.activeSop}
-              </span>
-            </div>
-          ` : ''}
           
           <div class="flex items-center justify-between gap-2 text-[10px] text-[#7D756D]">
             <div class="flex items-center gap-1.5">
@@ -1291,15 +1201,15 @@
       `;
     }
 
+    /* BLOQUE DE REFERENCIA INTERNA DE SOPs DENTRO DE CADA TARJETA */
     function renderSopListInModal(sops) {
       return sops.map(code => {
         const sop = SOP_DETAILS[code];
         if (!sop) return '';
         return `
-          <div onclick="closeModal(); toggleSopFilter('${code}');" 
-               class="cursor-pointer group bg-[#FFFFFF] border border-[#DDD2C2] hover:border-[#7D5459] rounded-xl p-3 transition-all">
+          <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3">
             <div class="flex items-center justify-between gap-2 mb-1">
-              <div class="font-medium text-[#7D5459] group-hover:underline">
+              <div class="font-medium text-[#7D5459]">
                 ${code} · ${sop.title}
               </div>
               <span class="text-[9.5px] px-1.5 py-0.5 rounded bg-[#EFE9E0] text-[#6E665F] shrink-0">
@@ -1389,7 +1299,7 @@
 
             <div>
               <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6E665F] mb-2">
-                2. KPIs Internos (Eficiencia de los 10 SOPs)
+                2. KPIs Internos (Eficiencia Operativa)
               </div>
               <div class="space-y-2">
                 ${MASTER_KPIS.internal.map(k => `
@@ -1417,7 +1327,7 @@
               <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7D5459] mb-0.5">
                 Versionado Semántico (X.Y)
               </div>
-              <h3 class="text-base font-semibold text-[#2E2926]">Control de Versiones · ORG-EA V. 2.9</h3>
+              <h3 class="text-base font-semibold text-[#2E2926]">Control de Versiones · ORG-EA V. 3.0</h3>
             </div>
             <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
               ✕
@@ -1439,7 +1349,7 @@
                 </thead>
                 <tbody class="divide-y divide-[#ECE4D8]">
                   ${VERSION_HISTORY.map(v => `
-                    <tr class="${v.ver === '2.9' ? 'bg-[#F8F3F1]' : ''}">
+                    <tr class="${v.ver === '3.0' ? 'bg-[#F8F3F1]' : ''}">
                       <td class="py-2 px-3 font-medium text-[#7D5459] whitespace-nowrap">V. ${v.ver}</td>
                       <td class="py-2 px-3 text-[#756D65] whitespace-nowrap">${v.date}</td>
                       <td class="py-2 px-3 text-[#3A3430] leading-relaxed">${v.desc}</td>
@@ -1509,7 +1419,7 @@
             ${renderDeliverablesAndRisks(exec.deliverables, exec.risksMitigated)}
 
             <div>
-              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">SOPs Clave</div>
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">SOPs Referenciados</div>
               <div class="space-y-2">${renderSopListInModal(exec.sops)}</div>
             </div>
           </div>
@@ -1553,7 +1463,7 @@
             ${renderDeliverablesAndRisks(staff.deliverables, staff.risksMitigated)}
 
             <div>
-              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">SOPs Diseñados y Auditados</div>
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">SOPs Referenciados</div>
               <div class="space-y-2">${renderSopListInModal(staff.sops)}</div>
             </div>
           </div>
@@ -1608,7 +1518,7 @@
           ${renderDeliverablesAndRisks(role.deliverables, role.risksMitigated)}
 
           <div>
-            <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">SOPs Vinculados (${role.sops.length})</div>
+            <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">SOPs Referenciados (${role.sops.length})</div>
             <div class="space-y-2">${renderSopListInModal(role.sops)}</div>
           </div>
 
@@ -1636,12 +1546,8 @@
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => {
-        populateSopDropdown();
-        renderAll();
-      });
+      document.addEventListener('DOMContentLoaded', renderAll);
     } else {
-      populateSopDropdown();
       renderAll();
     }
   </script>
