@@ -9,35 +9,35 @@
   <style>
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #EFE9E0;
+      background-color: #F7F3ED;
       color: #2E2926;
       -webkit-font-smoothing: antialiased;
     }
     .role-card {
       position: relative;
       z-index: 10;
-      box-shadow: 0 1px 3px rgba(46, 41, 38, 0.035);
+      box-shadow: 0 1px 3px rgba(46, 41, 38, 0.03);
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
     }
     .role-card:hover {
       transform: translateY(-1.5px);
-      box-shadow: 0 8px 18px -6px rgba(46, 41, 38, 0.10);
+      box-shadow: 0 8px 18px -6px rgba(46, 41, 38, 0.08);
       border-color: #9E8E82;
       background-color: #FFFFFF;
     }
     .role-card.is-highlighted {
       border-color: #7D5459 !important;
-      box-shadow: 0 6px 16px -4px rgba(125, 84, 89, 0.18);
+      box-shadow: 0 6px 16px -4px rgba(125, 84, 89, 0.16);
       background-color: #FFFFFF;
     }
     .role-card.is-origin {
       border-color: #7D5459 !important;
-      box-shadow: 0 0 0 2px rgba(125, 84, 89, 0.22), 0 8px 20px -4px rgba(125, 84, 89, 0.22);
+      box-shadow: 0 0 0 2px rgba(125, 84, 89, 0.20), 0 8px 20px -4px rgba(125, 84, 89, 0.18);
       background-color: #FFFFFF;
     }
     .role-card.is-connected {
       border-color: #9E827E !important;
-      box-shadow: 0 6px 14px -4px rgba(46, 41, 38, 0.12);
+      box-shadow: 0 6px 14px -4px rgba(46, 41, 38, 0.10);
       background-color: #FFFFFF;
     }
     .role-card.is-dimmed {
@@ -56,8 +56,8 @@
       animation: modalFade 0.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
     ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: #E6DDD0; }
-    ::-webkit-scrollbar-thumb { background: #C4B8A8; border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: #EFE9E0; }
+    ::-webkit-scrollbar-thumb { background: #CFC4B6; border-radius: 3px; }
 
     /* ESTÁNDAR DE PROPORCIÓN HOJA CARTA HORIZONTAL (11" x 8.5") */
     .letter-canvas-frame {
@@ -69,7 +69,7 @@
 
     /* MODO PRESENTACIÓN / VISTA PRELIMINAR HOJA CARTA */
     body.presentation-mode {
-      background-color: #E3D9CA;
+      background-color: #EDE6DC;
       padding: 20px 16px 64px 16px;
     }
     body.presentation-mode #app-header,
@@ -78,13 +78,13 @@
       display: none !important;
     }
     body.presentation-mode #letter-sheet-wrapper {
-      background-color: #F6F1E9;
+      background-color: #FAF7F2;
       max-width: 1120px;
       width: 100%;
       margin: 0 auto;
       border-radius: 12px;
-      border: 1px solid #D1C4B2;
-      box-shadow: 0 18px 42px -12px rgba(46, 41, 38, 0.16);
+      border: 1px solid #DDD2C2;
+      box-shadow: 0 18px 42px -12px rgba(46, 41, 38, 0.12);
       padding: 18px 24px 16px 24px;
     }
     body.presentation-mode #presentation-header,
@@ -113,7 +113,7 @@
         height: auto;
         margin: 0 !important;
         padding: 0 !important;
-        background-color: #F6F1E9 !important;
+        background-color: #FAF7F2 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
@@ -128,7 +128,7 @@
         display: none !important;
       }
       #letter-sheet-wrapper {
-        background-color: #F6F1E9 !important;
+        background-color: #FAF7F2 !important;
         max-width: 100% !important;
         width: 100% !important;
         margin: 0 !important;
@@ -200,7 +200,7 @@
   </div>
 
   <!-- CABECERA INTERACTIVA MINIMALISTA -->
-  <header id="app-header" class="bg-[#FAF7F2]/90 backdrop-blur-md border-b border-[#DDD2C2] sticky top-0 z-30">
+  <header id="app-header" class="bg-[#FDFCFA]/90 backdrop-blur-md border-b border-[#E5DDD0] sticky top-0 z-30">
     <div class="letter-canvas-frame px-5 md:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
       
       <!-- Identidad y Título -->
@@ -208,7 +208,7 @@
         <h1 class="text-base md:text-lg font-semibold tracking-tight text-[#2E2926]">
           Estudio Afín SpA
         </h1>
-        <span class="hidden sm:inline-block text-[#C9BDAE] font-light">/</span>
+        <span class="hidden sm:inline-block text-[#D4C9BA] font-light">/</span>
         <span class="text-xs md:text-sm font-medium text-[#7D5459]">
           Estructura y Roles
         </span>
@@ -223,7 +223,7 @@
             id="quick-search"
             oninput="handleSearch(this.value)"
             placeholder="Buscar cargo o función..."
-            class="w-40 sm:w-44 pl-7 pr-6 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] text-[11px] text-[#2E2926] placeholder-[#968D84] focus:outline-none focus:border-[#7D5459] transition-all"
+            class="w-40 sm:w-44 pl-7 pr-6 py-1 rounded-full border border-[#DED4C5] bg-[#FFFFFF] text-[11px] text-[#2E2926] placeholder-[#968D84] focus:outline-none focus:border-[#7D5459] transition-all"
           />
           <svg class="w-3 h-3 text-[#8A8178] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="8"></circle>
@@ -238,7 +238,7 @@
         </div>
 
         <!-- Filtro de Vínculo -->
-        <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D8CCB9] flex items-center text-[11px]">
+        <div class="bg-[#EFE9E0] p-0.5 rounded-full border border-[#E2D8C9] flex items-center text-[11px]">
           <button onclick="setLinkFilter('ALL')" id="btn-link-ALL" class="px-2.5 py-0.5 rounded-full font-medium transition-all bg-[#7D5459] text-[#FFFFFF]">
             Todos
           </button>
@@ -251,7 +251,7 @@
         </div>
 
         <!-- Vista PC / Móvil -->
-        <div class="hidden sm:flex bg-[#E6DDD0] p-0.5 rounded-full border border-[#D8CCB9] items-center text-[11px]">
+        <div class="hidden sm:flex bg-[#EFE9E0] p-0.5 rounded-full border border-[#E2D8C9] items-center text-[11px]">
           <button onclick="setDeviceMode('desktop')" id="btn-view-desktop" class="px-2 py-0.5 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#2E2926] shadow-2xs">
             PC
           </button>
@@ -261,7 +261,7 @@
         </div>
 
         <!-- Botón Vista Hoja Carta / PDF -->
-        <button onclick="togglePresentationMode()" title="Previsualizar en Hoja Carta y guardar PDF" class="px-2.5 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] hover:border-[#7D5459] text-[#59524C] hover:text-[#7D5459] text-[11px] font-medium transition-all flex items-center gap-1.5">
+        <button onclick="togglePresentationMode()" title="Previsualizar en Hoja Carta y guardar PDF" class="px-2.5 py-1 rounded-full border border-[#DED4C5] bg-[#FFFFFF] hover:border-[#7D5459] text-[#59524C] hover:text-[#7D5459] text-[11px] font-medium transition-all flex items-center gap-1.5">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
@@ -272,30 +272,30 @@
     </div>
 
     <!-- Sub-barra silenciosa de áreas y accesos -->
-    <div class="bg-[#EAE2D6]/75 border-t border-[#DDD2C2] px-5 md:px-6 py-1.5">
+    <div class="bg-[#F2ECE3]/75 border-t border-[#E5DDD0] px-5 md:px-6 py-1.5">
       <div class="letter-canvas-frame flex flex-wrap items-center justify-between gap-2 text-[11px]">
         <div id="dept-filters" class="flex items-center gap-1 overflow-x-auto pb-0.5 md:pb-0"></div>
         <div class="flex items-center gap-2">
           <div id="load-summary" class="hidden xl:flex items-center gap-2.5 text-[10.5px] text-[#756D65] mr-1"></div>
-          <button onclick="openSpecialModal('kpis')" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#FFFFFF]/90 hover:border-[#7D5459] text-[#4F4842] hover:text-[#7D5459] text-[10.5px] font-medium transition-all">
+          <button onclick="openSpecialModal('kpis')" class="px-2.5 py-0.5 rounded-full border border-[#DDD2C2] bg-[#FFFFFF] hover:border-[#7D5459] text-[#4F4842] hover:text-[#7D5459] text-[10.5px] font-medium transition-all">
             KPIs
           </button>
-          <button onclick="openSpecialModal('versions')" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#FFFFFF]/90 hover:border-[#7D5459] text-[#6E665F] hover:text-[#7D5459] text-[10.5px] font-medium transition-all">
-            V. 3.2
+          <button onclick="openSpecialModal('versions')" class="px-2.5 py-0.5 rounded-full border border-[#DDD2C2] bg-[#FFFFFF] hover:border-[#7D5459] text-[#6E665F] hover:text-[#7D5459] text-[10.5px] font-medium transition-all">
+            V. 3.3
           </button>
         </div>
       </div>
     </div>
 
     <!-- Banner dinámico discreto (Búsqueda o Mapa de Interdependencia activo) -->
-    <div id="active-context-banner" class="hidden bg-[#FAF7F2] border-t border-[#D6C9B7] px-5 md:px-6 py-2"></div>
+    <div id="active-context-banner" class="hidden bg-[#FDFCFA] border-t border-[#DED4C5] px-5 md:px-6 py-2"></div>
   </header>
 
   <!-- CONTENEDOR ESTANDARIZADO HOJA CARTA -->
   <div id="letter-sheet-wrapper" class="flex-1 flex flex-col">
     
     <!-- CABECERA FORMAL DE LÁMINA (PRESENTACIÓN E IMPRESIÓN PDF CARTA) -->
-    <div id="presentation-header" class="hidden letter-canvas-frame px-5 md:px-6 pt-3 pb-2.5 border-b border-[#D6C9B7] items-end justify-between">
+    <div id="presentation-header" class="hidden letter-canvas-frame px-5 md:px-6 pt-3 pb-2.5 border-b border-[#DED4C5] items-end justify-between">
       <div>
         <div class="text-[9.5px] uppercase tracking-[0.2em] text-[#7D5459] font-semibold mb-0.5">
           ESTUDIO AFÍN SpA · RUT 78.560.882-8
@@ -313,61 +313,61 @@
     </main>
 
     <!-- PIE DE PÁGINA FORMAL (PRESENTACIÓN / PDF CARTA) -->
-    <footer id="presentation-footer" class="hidden letter-canvas-frame px-5 md:px-6 py-2.5 border-t border-[#D6C9B7] items-center justify-between text-[9.5px] text-[#6E665F]">
-      <span>ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional (ORG-EA V. 3.2)</span>
+    <footer id="presentation-footer" class="hidden letter-canvas-frame px-5 md:px-6 py-2.5 border-t border-[#DED4C5] items-center justify-between text-[9.5px] text-[#6E665F]">
+      <span>ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional (ORG-EA V. 3.3)</span>
       <span>● Interno &nbsp;·&nbsp; ○ Externo / Staff</span>
     </footer>
 
   </div>
 
   <!-- MODAL FLOTANTE CON PESTAÑAS INTERNAS (DETALLE PROFUNDO AL HACER CLIC EN UNA TARJETA) -->
-  <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#2E2926]/30 backdrop-blur-[2px] flex items-center justify-center p-4">
-    <div class="modal-animate w-full max-w-xl max-h-[88vh] overflow-y-auto bg-[#FAF7F2] rounded-2xl border border-[#D4C7B5] shadow-[0_20px_40px_-12px_rgba(46,41,38,0.2)] p-6">
+  <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#2E2926]/25 backdrop-blur-[2px] flex items-center justify-center p-4">
+    <div class="modal-animate w-full max-w-xl max-h-[88vh] overflow-y-auto bg-[#FDFCFA] rounded-2xl border border-[#DDD2C2] shadow-[0_20px_40px_-12px_rgba(46,41,38,0.18)] p-6">
       <div id="modal-content"></div>
     </div>
   </div>
 
   <script>
-    /* PALETA CASI IMPERCEPTIBLE: VARIACIONES TONALES DE PIEDRA, LINO Y ARENA */
+    /* PALETA CASI IMPERCEPTIBLE: VARIACIONES TONALES CLARAS DE PIEDRA, LINO Y ARENA */
     const DEPARTMENTS = [
       {
         id: 'COM',
         name: 'Comercial & Cliente',
         color: '#9E827E',
-        tintBg: '#EFE7E3',
-        tintBorder: '#DFD4CE',
+        tintBg: '#F4ECE8',
+        tintBorder: '#E6DBD5',
         sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04']
       },
       {
         id: 'DIS',
         name: 'Diseño Estratégico',
         color: '#A38879',
-        tintBg: '#F0E9E2',
-        tintBorder: '#E0D5CB',
+        tintBg: '#F5EFE8',
+        tintBorder: '#E7DDD3',
         sops: ['DIS-01']
       },
       {
         id: 'LOG',
         name: 'Operaciones & Logística',
         color: '#8B8A82',
-        tintBg: '#ECEAE4',
-        tintBorder: '#DBD7CF',
+        tintBg: '#F1EFE9',
+        tintBorder: '#E2DFD7',
         sops: ['LOG-01', 'LOG-02']
       },
       {
         id: 'TER',
         name: 'Montaje & Terreno',
         color: '#888E82',
-        tintBg: '#EDEBE4',
-        tintBorder: '#DCD9CF',
+        tintBg: '#F2F0E9',
+        tintBorder: '#E3E0D7',
         sops: ['TER-01', 'TER-02']
       },
       {
         id: 'FIN',
         name: 'Admin & Finanzas',
         color: '#9B8E78',
-        tintBg: '#F1ECE1',
-        tintBorder: '#E1D9C9',
+        tintBg: '#F6F1E7',
+        tintBorder: '#E8E0D1',
         sops: ['FIN-01']
       }
     ];
@@ -379,7 +379,6 @@
       { id: 4, num: 'N4', title: 'Aliados' }
     ];
 
-    /* REFERENCIA INTERNA DE SOPs DENTRO DE LA PESTAÑA RED & SOPs */
     const SOP_DETAILS = {
       'COM-01': {
         dept: 'COM',
@@ -463,11 +462,11 @@
     const VERSION_HISTORY = [
       { ver: '1.0', date: 'Abr 2026', desc: 'Estructura base inicial de roles y procedimientos operativos.' },
       { ver: '2.0', date: 'Nov 2026', desc: 'Alineación al modelo Ultra-Lean (5 áreas) para renta corta y segundas viviendas.' },
-      { ver: '2.7', date: '20 Nov 2026', desc: 'Incorporación de nodo Staff lateral: Consultor Estratégico & Control de Gestión.' },
       { ver: '2.9', date: '21 Nov 2026', desc: 'Mimetismo tonal casi imperceptible, tarjetas de 2 datos y bandas de nivel ultraligeras.' },
       { ver: '3.0', date: '21 Nov 2026', desc: 'Separación de arquitectura: se retira el filtro macro de SOPs para delegarlo al Dashboard Operativo.' },
       { ver: '3.1', date: '23 Nov 2026', desc: 'Integración de ficha modal en 3 pestañas y Modo Mapa de Interdependencia (⇄).' },
-      { ver: '3.2', date: '24 Nov 2026', desc: 'Estandarización de lienzo a formato Hoja Carta horizontal (279 × 216 mm) para ajuste exacto en 1 página al imprimir o exportar PDF.' }
+      { ver: '3.2', date: '24 Nov 2026', desc: 'Estandarización de lienzo a formato Hoja Carta horizontal (279 × 216 mm) en 1 página.' },
+      { ver: '3.3', date: '25 Nov 2026', desc: 'Fondo general y superficies aclaradas (#F7F3ED / #FCFBF9) para mayor luminosidad visual y lectura descansada.' }
     ];
 
     const EXECUTIVE_ROLE = {
@@ -1066,7 +1065,7 @@
       const today = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' });
       metaEl.innerHTML = `
         <div class="font-medium text-[#2E2926]">${filterLabel}</div>
-        <div>${today} · ORG-EA V. 3.2 · Carta</div>
+        <div>${today} · ORG-EA V. 3.3 · Carta</div>
       `;
     }
 
@@ -1190,14 +1189,14 @@
       if (!filtersEl) return;
       const allActive = state.activeDept === 'ALL';
       let html = `
-        <button onclick="setDeptFilter('ALL')" class="px-2.5 py-0.5 rounded-full font-medium transition-all shrink-0 ${allActive ? 'bg-[#3D3632] text-[#FAF7F2]' : 'text-[#635C56] hover:bg-[#DFD5C7]'}">
+        <button onclick="setDeptFilter('ALL')" class="px-2.5 py-0.5 rounded-full font-medium transition-all shrink-0 ${allActive ? 'bg-[#3D3632] text-[#FAF7F2]' : 'text-[#635C56] hover:bg-[#E6DDD0]'}">
           Todas
         </button>
       `;
       DEPARTMENTS.forEach(d => {
         const active = state.activeDept === d.id;
         html += `
-          <button onclick="setDeptFilter('${d.id}')" class="px-2.5 py-0.5 rounded-full font-medium transition-all flex items-center gap-1.5 shrink-0 ${active ? 'bg-[#FFFFFF] text-[#2E2926] border border-[#CFC3B2]' : 'text-[#635C56] hover:bg-[#DFD5C7]'}">
+          <button onclick="setDeptFilter('${d.id}')" class="px-2.5 py-0.5 rounded-full font-medium transition-all flex items-center gap-1.5 shrink-0 ${active ? 'bg-[#FFFFFF] text-[#2E2926] border border-[#D4C9BA]' : 'text-[#635C56] hover:bg-[#E6DDD0]'}">
             <span class="w-1.5 h-1.5 rounded-full" style="background:${d.color}"></span>
             <span>${d.name}</span>
           </button>
@@ -1237,10 +1236,10 @@
               <span class="text-[#635C56]">(${upCount} entradas · ${downCount} salidas directas)</span>
             </div>
             <div class="flex items-center gap-2">
-              <button onclick="openRoleModal('${state.networkFocusRoleId}', 'red')" class="px-2.5 py-0.5 rounded-full border border-[#7D5459]/40 bg-[#FFFFFF] hover:bg-[#F5EFE6] text-[#7D5459] text-[10.5px] font-medium">
+              <button onclick="openRoleModal('${state.networkFocusRoleId}', 'red')" class="px-2.5 py-0.5 rounded-full border border-[#7D5459]/40 bg-[#FFFFFF] hover:bg-[#F7F3ED] text-[#7D5459] text-[10.5px] font-medium">
                 Ver detalle de flujo ↗
               </button>
-              <button onclick="clearNetworkFocus()" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#EFE9E0] hover:bg-[#E6DDD0] text-[#2E2926] text-[10.5px] font-medium">
+              <button onclick="clearNetworkFocus()" class="px-2.5 py-0.5 rounded-full border border-[#DDD2C2] bg-[#F2ECE3] hover:bg-[#E8E0D4] text-[#2E2926] text-[10.5px] font-medium">
                 Salir de vista red ✕
               </button>
             </div>
@@ -1254,7 +1253,7 @@
             <span class="text-[#635C56]">
               Filtro de cargo: <strong class="text-[#2E2926]">"${state.searchQuery}"</strong>
             </span>
-            <button onclick="clearFilters()" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#EFE9E0] hover:bg-[#E6DDD0] text-[#2E2926] text-[10.5px] font-medium">
+            <button onclick="clearFilters()" class="px-2.5 py-0.5 rounded-full border border-[#DDD2C2] bg-[#F2ECE3] hover:bg-[#E8E0D4] text-[#2E2926] text-[10.5px] font-medium">
               Limpiar ✕
             </button>
           </div>
@@ -1272,8 +1271,8 @@
       const styleClass = isOrigin
         ? 'bg-[#7D5459] text-[#FFFFFF]'
         : isUp
-          ? 'bg-[#F0E9E2] text-[#5C4B42] border border-[#D8CBBF]'
-          : 'bg-[#ECEAE4] text-[#4C4D47] border border-[#D2D0C8]';
+          ? 'bg-[#F5EFE8] text-[#5C4B42] border border-[#DFD4C8]'
+          : 'bg-[#F1EFE9] text-[#4C4D47] border border-[#DAD8D0]';
       return `
         <div>
           <span class="inline-block px-1.5 py-0.5 rounded text-[9.5px] font-medium ${styleClass}">
@@ -1295,13 +1294,13 @@
 
           <!-- Nodo Central: Gerencia General -->
           <div onclick="openRoleModal('gerencia-general')" 
-               class="role-card ${execVis.stateClass} group cursor-pointer w-full max-w-sm bg-[#FAF7F2] rounded-2xl border border-[#D4C8B8] px-5 py-3 text-center relative overflow-hidden shrink-0">
+               class="role-card ${execVis.stateClass} group cursor-pointer w-full max-w-sm bg-[#FCFBF9] rounded-2xl border border-[#DDD2C2] px-5 py-3 text-center relative overflow-hidden shrink-0">
             <div class="absolute top-0 inset-x-0 h-[2px] bg-[#7D5459]"></div>
             <button
               type="button"
               onclick="toggleNetworkFocus('gerencia-general', event)"
               title="Iluminar red de colaboración"
-              class="network-trigger absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center text-[11px] transition-all ${execActiveNet ? 'bg-[#7D5459] text-[#FFFFFF]' : 'text-[#9E948A] opacity-70 hover:opacity-100 hover:bg-[#EFE9E0] hover:text-[#7D5459]'}"
+              class="network-trigger absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center text-[11px] transition-all ${execActiveNet ? 'bg-[#7D5459] text-[#FFFFFF]' : 'text-[#9E948A] opacity-70 hover:opacity-100 hover:bg-[#F2ECE3] hover:text-[#7D5459]'}"
             >⇄</button>
             <div class="text-[9px] uppercase tracking-[0.2em] text-[#7D5459] font-medium mb-0.5">
               Nivel 0 · 2 Socias
@@ -1317,15 +1316,15 @@
 
           <!-- Conector punteado hacia Staff Asesor -->
           <div class="flex lg:hidden flex-col items-center">
-            <div class="w-px h-3 border-l border-dashed border-[#B5A898]"></div>
+            <div class="w-px h-3 border-l border-dashed border-[#BEB2A3]"></div>
           </div>
           <div class="hidden lg:flex items-center w-6 shrink-0">
-            <div class="w-full border-t border-dashed border-[#B5A898]"></div>
+            <div class="w-full border-t border-dashed border-[#BEB2A3]"></div>
           </div>
 
           <!-- Nodo Lateral Staff -->
           <div onclick="openRoleModal('staff-consultor')"
-               class="role-card ${staffVis.stateClass} group cursor-pointer w-full max-w-sm lg:w-[210px] bg-[#F5F0E8] rounded-xl border border-dashed border-[#C4B8A8] px-3 py-2 text-left relative shrink-0">
+               class="role-card ${staffVis.stateClass} group cursor-pointer w-full max-w-sm lg:w-[210px] bg-[#FAF7F1] rounded-xl border border-dashed border-[#CFC4B5] px-3 py-2 text-left relative shrink-0">
             <div class="flex items-start justify-between gap-1">
               <div class="text-[11.5px] font-medium text-[#2E2926] leading-snug group-hover:text-[#7D5459] transition-colors">
                 Consultor Estratégico & Control de Gestión
@@ -1334,7 +1333,7 @@
                 type="button"
                 onclick="toggleNetworkFocus('staff-consultor', event)"
                 title="Iluminar red de colaboración"
-                class="network-trigger shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition-all ${staffActiveNet ? 'bg-[#7D5459] text-[#FFFFFF]' : 'text-[#9E948A] opacity-60 group-hover:opacity-100 hover:bg-[#E8DFD2] hover:text-[#7D5459]'}"
+                class="network-trigger shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition-all ${staffActiveNet ? 'bg-[#7D5459] text-[#FFFFFF]' : 'text-[#9E948A] opacity-60 group-hover:opacity-100 hover:bg-[#EFE8DD] hover:text-[#7D5459]'}"
               >⇄</button>
             </div>
             ${staffVis.relationTag ? `<div class="mt-1">${renderRelationBadge(staffVis.relationTag)}</div>` : ''}
@@ -1372,7 +1371,7 @@
 
       return `
         <div onclick="openRoleModal('${role.id}')" 
-             class="role-card ${vis.stateClass} group cursor-pointer bg-[#FAF7F2] rounded-xl border border-[#DFD5C7] px-3 py-2.5 flex flex-col justify-between gap-1.5">
+             class="role-card ${vis.stateClass} group cursor-pointer bg-[#FCFBF9] rounded-xl border border-[#E5DDD0] px-3 py-2.5 flex flex-col justify-between gap-1.5">
           <div class="flex items-start justify-between gap-1">
             <div class="text-[12px] font-medium text-[#2E2926] leading-snug group-hover:text-[#7D5459] transition-colors">
               ${role.title}
@@ -1381,7 +1380,7 @@
               type="button"
               onclick="toggleNetworkFocus('${role.id}', event)"
               title="Iluminar conexiones de este rol"
-              class="network-trigger shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition-all ${isNetOrigin ? 'bg-[#7D5459] text-[#FFFFFF]' : 'text-[#9E948A] opacity-55 group-hover:opacity-100 hover:bg-[#EFE9E0] hover:text-[#7D5459]'}"
+              class="network-trigger shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition-all ${isNetOrigin ? 'bg-[#7D5459] text-[#FFFFFF]' : 'text-[#9E948A] opacity-55 group-hover:opacity-100 hover:bg-[#F2ECE3] hover:text-[#7D5459]'}"
             >⇄</button>
           </div>
 
@@ -1412,7 +1411,7 @@
           <div class="max-w-md mx-auto">
             ${levelZeroBlock}
             <div class="flex justify-center">
-              <div class="w-px h-5 bg-[#C9BDAE]"></div>
+              <div class="w-px h-5 bg-[#D4C9BA]"></div>
             </div>
             <div class="space-y-5">
         `;
@@ -1424,10 +1423,10 @@
                 ${renderDeptPillarHeader(dept)}
               </div>
               <div class="relative pl-3.5 space-y-2.5">
-                <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#C9BDAE]"></div>
+                <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#D4C9BA]"></div>
                 ${deptRoles.map(r => `
                   <div class="relative">
-                    <div class="absolute -left-2 top-4 w-2 h-px bg-[#C9BDAE]"></div>
+                    <div class="absolute -left-2 top-4 w-2 h-px bg-[#D4C9BA]"></div>
                     <div class="text-[9.5px] uppercase tracking-widest text-[#7D756D] mb-1">N${r.level}</div>
                     ${renderRoleCard(r, dept)}
                   </div>
@@ -1445,15 +1444,15 @@
       const gridCols = isSingle ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-5';
 
       const topBranchHtml = isSingle
-        ? `<div class="flex justify-center"><div class="w-px h-5 bg-[#C9BDAE]"></div></div>`
+        ? `<div class="flex justify-center"><div class="w-px h-5 bg-[#D4C9BA]"></div></div>`
         : `
           <div class="relative h-6">
-            <div class="absolute left-1/2 top-0 w-px h-3 -translate-x-1/2 bg-[#C9BDAE]"></div>
-            <div class="absolute top-3 left-[10%] right-[10%] h-px bg-[#C9BDAE]"></div>
+            <div class="absolute left-1/2 top-0 w-px h-3 -translate-x-1/2 bg-[#D4C9BA]"></div>
+            <div class="absolute top-3 left-[10%] right-[10%] h-px bg-[#D4C9BA]"></div>
             <div class="grid grid-cols-5 gap-3.5 h-full">
               ${visibleDepts.map(() => `
                 <div class="relative h-full">
-                  <div class="absolute left-1/2 top-3 bottom-0 w-px -translate-x-1/2 bg-[#C9BDAE]"></div>
+                  <div class="absolute left-1/2 top-3 bottom-0 w-px -translate-x-1/2 bg-[#D4C9BA]"></div>
                 </div>
               `).join('')}
             </div>
@@ -1481,7 +1480,7 @@
                   const lineHeightClass = maxLvl === 4 ? 'bottom-7' : 'bottom-[24%]';
                   return `
                     <div class="relative h-full">
-                      <div class="absolute left-1/2 top-0 ${lineHeightClass} w-px -translate-x-1/2 bg-[#CEC3B4]"></div>
+                      <div class="absolute left-1/2 top-0 ${lineHeightClass} w-px -translate-x-1/2 bg-[#D6CCC0]"></div>
                     </div>
                   `;
                 }).join('')}
@@ -1489,7 +1488,7 @@
 
               <div class="space-y-2.5 relative z-10">
                 ${LEVELS.map(lvl => `
-                  <div class="level-band pt-2 pb-0.5 border-t border-[#D8CCB9]">
+                  <div class="level-band pt-2 pb-0.5 border-t border-[#E2D8C9]">
                     <div class="flex items-center gap-2 mb-1.5 px-0.5">
                       <span class="text-[9px] font-semibold text-[#7D5459]">${lvl.num}</span>
                       <span class="text-[9px] uppercase tracking-[0.16em] text-[#7D756D]">${lvl.title}</span>
@@ -1525,11 +1524,11 @@
     function renderAuditAccordion(auditText) {
       const isOpen = state.modalAuditExpanded;
       return `
-        <div class="rounded-xl border ${isOpen ? 'border-[#7D5459]/35 bg-[#EFE9E0]' : 'border-[#DDD2C2] bg-[#FFFFFF]'} overflow-hidden transition-all">
+        <div class="rounded-xl border ${isOpen ? 'border-[#7D5459]/35 bg-[#F5EFE6]' : 'border-[#E2D8C9] bg-[#FFFFFF]'} overflow-hidden transition-all">
           <button
             type="button"
             onclick="toggleModalAudit()"
-            class="w-full px-4 py-2.5 flex items-center justify-between gap-3 text-left hover:bg-[#F5EFE6] transition-colors"
+            class="w-full px-4 py-2.5 flex items-center justify-between gap-3 text-left hover:bg-[#F7F3ED] transition-colors"
           >
             <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7D5459]">
               Criterio de Diseño Organizacional
@@ -1540,7 +1539,7 @@
             </span>
           </button>
           ${isOpen ? `
-            <div class="px-4 pb-3 pt-1 border-t border-[#E2D8C9] text-[#453E39] leading-relaxed">
+            <div class="px-4 pb-3 pt-1 border-t border-[#E6DDD0] text-[#453E39] leading-relaxed">
               ${auditText}
             </div>
           ` : ''}
@@ -1553,12 +1552,12 @@
         const sop = SOP_DETAILS[code];
         if (!sop) return '';
         return `
-          <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3">
+          <div class="bg-[#FFFFFF] border border-[#E2D8C9] rounded-xl p-3">
             <div class="flex items-center justify-between gap-2 mb-1">
               <div class="font-medium text-[#7D5459]">
                 ${code} · ${sop.title}
               </div>
-              <span class="text-[9.5px] px-1.5 py-0.5 rounded bg-[#EFE9E0] text-[#6E665F] shrink-0">
+              <span class="text-[9.5px] px-1.5 py-0.5 rounded bg-[#F5EFE6] text-[#6E665F] shrink-0">
                 ${sop.version}
               </span>
             </div>
@@ -1575,7 +1574,7 @@
         { id: 'red', label: 'Red & SOPs' }
       ];
       return `
-        <div class="mt-3.5 border-b border-[#E2D8C9] flex items-center gap-1">
+        <div class="mt-3.5 border-b border-[#E6DDD0] flex items-center gap-1">
           ${tabs.map(t => {
             const active = state.activeModalTab === t.id;
             return `
@@ -1614,11 +1613,11 @@
               return `
                 <div
                   onclick="openRoleModal('${targetRole.id}', 'rol')"
-                  class="cursor-pointer group bg-[#FFFFFF] border border-[#DDD2C2] hover:border-[#7D5459] rounded-xl p-2.5 flex items-center justify-between gap-3 transition-all"
+                  class="cursor-pointer group bg-[#FFFFFF] border border-[#E2D8C9] hover:border-[#7D5459] rounded-xl p-2.5 flex items-center justify-between gap-3 transition-all"
                 >
                   <div>
                     <div class="flex items-center gap-1.5">
-                      <span class="text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.2 rounded bg-[#EFE9E0] text-[#6E665F]">${areaLabel}</span>
+                      <span class="text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.2 rounded bg-[#F5EFE6] text-[#6E665F]">${areaLabel}</span>
                       <span class="font-medium text-[#2E2926] group-hover:text-[#7D5459] transition-colors">${targetRole.title}</span>
                     </div>
                     <div class="text-[#635C56] text-[11px] mt-0.5 leading-snug">${item.note}</div>
@@ -1633,7 +1632,7 @@
 
       return `
         <div class="space-y-4">
-          <div class="bg-[#EFE9E0]/80 border border-[#D8CCB9] rounded-xl p-3 flex flex-wrap items-center justify-between gap-2">
+          <div class="bg-[#F5EFE6]/90 border border-[#E2D8C9] rounded-xl p-3 flex flex-wrap items-center justify-between gap-2">
             <span class="text-[11px] text-[#4F4842]">
               Visualiza estas conexiones directamente sobre el organigrama.
             </span>
@@ -1660,7 +1659,7 @@
             ${renderConnectionCards(downstream)}
           </div>
 
-          <div class="pt-1 border-t border-[#E2D8C9]">
+          <div class="pt-1 border-t border-[#E6DDD0]">
             <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">
               SOPs Referenciados (${(role.sops || []).length})
             </div>
@@ -1679,7 +1678,7 @@
         <div class="space-y-4">
           <div>
             <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">Entregables y Control</div>
-            <ul class="space-y-1.5 bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3.5 text-[#3A3430]">
+            <ul class="space-y-1.5 bg-[#FFFFFF] border border-[#E2D8C9] rounded-xl p-3.5 text-[#3A3430]">
               ${deliverables.map(item => `
                 <li class="flex items-start gap-2 leading-relaxed">
                   <span class="text-[#7D5459] mt-0.5">•</span>
@@ -1694,7 +1693,7 @@
               <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">Riesgos Mitigados</div>
               <div class="space-y-1.5">
                 ${risks.map(risk => `
-                  <div class="bg-[#F2ECE2] border border-[#DFD4C4] rounded-lg px-3 py-2 text-[#4F4842] flex items-start gap-2 leading-relaxed">
+                  <div class="bg-[#F6F1E9] border border-[#E5DDD0] rounded-lg px-3 py-2 text-[#4F4842] flex items-start gap-2 leading-relaxed">
                     <span class="text-[#7D5459] shrink-0">▪</span>
                     <span>${risk}</span>
                   </div>
@@ -1708,7 +1707,7 @@
               <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">Indicadores Clave (KPIs)</div>
               <div class="flex flex-wrap gap-1.5">
                 ${kpis.map(k => `
-                  <span class="px-2.5 py-1 rounded-full bg-[#FFFFFF] border border-[#D4C7B5] text-[#3A3430] text-[11px] font-medium">${k}</span>
+                  <span class="px-2.5 py-1 rounded-full bg-[#FFFFFF] border border-[#DDD2C2] text-[#3A3430] text-[11px] font-medium">${k}</span>
                 `).join('')}
               </div>
             </div>
@@ -1725,14 +1724,14 @@
 
       if (state.specialModal === 'kpis') {
         content.innerHTML = `
-          <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E2D8C9]">
+          <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E6DDD0]">
             <div>
               <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7D5459] mb-0.5">
                 Documento Maestro V. 2.6
               </div>
               <h3 class="text-base font-semibold text-[#2E2926]">KPIs Estratégicos y Operativos</h3>
             </div>
-            <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
+            <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#DDD2C2] bg-[#FFFFFF] hover:bg-[#F5EFE6] text-[#635C56] flex items-center justify-center text-xs shrink-0">
               ✕
             </button>
           </div>
@@ -1744,12 +1743,12 @@
               </div>
               <div class="space-y-2">
                 ${MASTER_KPIS.external.map(k => `
-                  <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3 flex items-start justify-between gap-3">
+                  <div class="bg-[#FFFFFF] border border-[#E2D8C9] rounded-xl p-3 flex items-start justify-between gap-3">
                     <div>
                       <div class="font-medium text-[#2E2926]">${k.name}</div>
                       <div class="text-[#635C56] mt-0.5 leading-relaxed">${k.desc}</div>
                     </div>
-                    <span class="px-2 py-0.5 rounded-full bg-[#F3ECEA] text-[#7D5459] font-medium text-[10px] shrink-0">
+                    <span class="px-2 py-0.5 rounded-full bg-[#F7F0EE] text-[#7D5459] font-medium text-[10px] shrink-0">
                       ${k.target}
                     </span>
                   </div>
@@ -1763,12 +1762,12 @@
               </div>
               <div class="space-y-2">
                 ${MASTER_KPIS.internal.map(k => `
-                  <div class="bg-[#EFE9E0] border border-[#D8CCB9] rounded-xl p-3 flex items-start justify-between gap-3">
+                  <div class="bg-[#F6F1E9] border border-[#E2D8C9] rounded-xl p-3 flex items-start justify-between gap-3">
                     <div>
                       <div class="font-medium text-[#2E2926]">${k.name}</div>
                       <div class="text-[#635C56] mt-0.5 leading-relaxed">${k.desc}</div>
                     </div>
-                    <span class="px-2 py-0.5 rounded-full bg-[#FFFFFF] border border-[#D4C7B5] text-[#453E39] font-medium text-[10px] shrink-0">
+                    <span class="px-2 py-0.5 rounded-full bg-[#FFFFFF] border border-[#DDD2C2] text-[#453E39] font-medium text-[10px] shrink-0">
                       ${k.target}
                     </span>
                   </div>
@@ -1782,14 +1781,14 @@
 
       if (state.specialModal === 'versions') {
         content.innerHTML = `
-          <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E2D8C9]">
+          <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E6DDD0]">
             <div>
               <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7D5459] mb-0.5">
                 Versionado Semántico (X.Y)
               </div>
-              <h3 class="text-base font-semibold text-[#2E2926]">Control de Versiones · ORG-EA V. 3.2</h3>
+              <h3 class="text-base font-semibold text-[#2E2926]">Control de Versiones · ORG-EA V. 3.3</h3>
             </div>
-            <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
+            <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#DDD2C2] bg-[#FFFFFF] hover:bg-[#F5EFE6] text-[#635C56] flex items-center justify-center text-xs shrink-0">
               ✕
             </button>
           </div>
@@ -1798,18 +1797,18 @@
             <p class="text-[#635C56] leading-relaxed">
               Sincronizado con <strong class="text-[#2E2926]">DOC-MAESTRO V. 2.6</strong> de ESTUDIO AFÍN SpA.
             </p>
-            <div class="border border-[#DDD2C2] rounded-xl overflow-hidden bg-[#FFFFFF]">
+            <div class="border border-[#E2D8C9] rounded-xl overflow-hidden bg-[#FFFFFF]">
               <table class="w-full text-left border-collapse">
                 <thead>
-                  <tr class="bg-[#EAE2D6] text-[10px] uppercase tracking-wider text-[#635C56] border-b border-[#DDD2C2]">
+                  <tr class="bg-[#F2ECE3] text-[10px] uppercase tracking-wider text-[#635C56] border-b border-[#E2D8C9]">
                     <th class="py-2 px-3 font-semibold">Versión</th>
                     <th class="py-2 px-3 font-semibold">Fecha</th>
                     <th class="py-2 px-3 font-semibold">Cambio</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-[#ECE4D8]">
+                <tbody class="divide-y divide-[#F0E9DF]">
                   ${VERSION_HISTORY.map(v => `
-                    <tr class="${v.ver === '3.2' ? 'bg-[#F8F3F1]' : ''}">
+                    <tr class="${v.ver === '3.3' ? 'bg-[#FAF5F3]' : ''}">
                       <td class="py-2 px-3 font-medium text-[#7D5459] whitespace-nowrap">V. ${v.ver}</td>
                       <td class="py-2 px-3 text-[#756D65] whitespace-nowrap">${v.date}</td>
                       <td class="py-2 px-3 text-[#3A3430] leading-relaxed">${v.desc}</td>
@@ -1852,7 +1851,7 @@
         headerSub = `Staff Nivel 0 · Asesoría Externa`;
         badgeHtml = `
           <div class="mt-1.5">
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#F1ECE1] text-[#6E6352] border border-[#E1D9C9]">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#F6F1E7] text-[#6E6352] border border-[#E8E0D1]">
               ${role.headcountBadge}
             </span>
           </div>
@@ -1866,7 +1865,7 @@
                   style="background-color:${dept.tintBg}; border-color:${dept.tintBorder};">
               ${role.headcountBadge}
             </span>
-            <span class="px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-[#DDD2C2] text-[10px] text-[#635C56]">
+            <span class="px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-[#E2D8C9] text-[10px] text-[#635C56]">
               ${role.linkType}
             </span>
           </div>
@@ -1878,7 +1877,7 @@
         tabBodyHtml = `
           <div class="space-y-4">
             ${role.legalEntity ? `
-              <div class="bg-[#FFFFFF] border border-[#D4C7B5] rounded-xl p-3">
+              <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3">
                 <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#7D5459] mb-0.5">Identidad Jurídica</div>
                 <div class="font-medium text-[#2E2926]">${role.legalEntity}</div>
               </div>
@@ -1889,7 +1888,7 @@
               <p class="text-[#2E2926] leading-relaxed">${role.mission}</p>
             </div>
 
-            <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3">
+            <div class="bg-[#FFFFFF] border border-[#E2D8C9] rounded-xl p-3">
               <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#7D5459] mb-0.5">
                 Dotación y Escalabilidad
               </div>
@@ -1897,7 +1896,7 @@
             </div>
 
             ${role.fireLine ? `
-              <div class="bg-[#EFE9E0] border border-[#D8CCB9] rounded-xl p-3.5">
+              <div class="bg-[#F6F1E9] border border-[#E2D8C9] rounded-xl p-3.5">
                 <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#7D5459] mb-0.5">Línea de Fuego Corporativa</div>
                 <p class="text-[#453E39] leading-relaxed">${role.fireLine}</p>
               </div>
@@ -1913,7 +1912,7 @@
       }
 
       content.innerHTML = `
-        <div class="flex items-start justify-between gap-4 pb-3 border-b border-[#E2D8C9]">
+        <div class="flex items-start justify-between gap-4 pb-3 border-b border-[#E6DDD0]">
           <div>
             <div class="text-[10px] font-semibold uppercase tracking-[0.15em] mb-0.5 text-[#756D65]">
               ${headerSub}
@@ -1921,7 +1920,7 @@
             <h3 class="text-base font-semibold text-[#2E2926]">${role.title}</h3>
             ${badgeHtml}
           </div>
-          <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
+          <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#DDD2C2] bg-[#FFFFFF] hover:bg-[#F5EFE6] text-[#635C56] flex items-center justify-center text-xs shrink-0">
             ✕
           </button>
         </div>
