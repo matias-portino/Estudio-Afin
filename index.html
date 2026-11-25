@@ -185,4 +185,1771 @@
 <body class="min-h-screen flex flex-col selection:bg-[#7D5459]/15 selection:text-[#7D5459]">
 
   <!-- BARRA FLOTANTE DE MODO PRESENTACIÓN / CARTA -->
-  <div id="presentation-toolbar" class="hidden fixed bottom-5 right-6 z-40 items-center gap-2 bg-[#2E2926
+  <div id="presentation-toolbar" class="hidden fixed bottom-5 right-6 z-40 items-center gap-2 bg-[#2E2926] text-[#FAF7F2] px-3.5 py-2 rounded-full shadow-lg border border-[#4D4540] text-xs">
+    <span class="text-[#D4CBC0] pr-1">Formato Carta (279 × 216 mm)</span>
+    <button onclick="window.print()" class="px-3 py-1 rounded-full bg-[#7D5459] hover:bg-[#8E6268] text-[#FFFFFF] font-medium transition-colors flex items-center gap-1.5">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+        <rect x="6" y="14" width="12" height="8"></rect>
+      </svg>
+      <span>Guardar PDF / Imprimir</span>
+    </button>
+    <button onclick="togglePresentationMode()" class="px-2.5 py-1 rounded-full bg-[#4A423D] hover:bg-[#5C534D] text-[#FFFFFF] font-medium transition-colors">
+      Salir
+    </button>
+  </div>
+
+  <!-- CABECERA INTERACTIVA MINIMALISTA -->
+  <header id="app-header" class="bg-[#FAF7F2]/90 backdrop-blur-md border-b border-[#DDD2C2] sticky top-0 z-30">
+    <div class="letter-canvas-frame px-5 md:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Identidad y Título -->
+      <div class="flex items-baseline gap-2.5">
+        <h1 class="text-base md:text-lg font-semibold tracking-tight text-[#2E2926]">
+          Estudio Afín SpA
+        </h1>
+        <span class="hidden sm:inline-block text-[#C9BDAE] font-light">/</span>
+        <span class="text-xs md:text-sm font-medium text-[#7D5459]">
+          Estructura y Roles
+        </span>
+      </div>
+
+      <!-- Controles Despejados -->
+      <div class="flex flex-wrap items-center gap-2">
+        <!-- Buscador Rápido de Cargos -->
+        <div class="relative">
+          <input
+            type="text"
+            id="quick-search"
+            oninput="handleSearch(this.value)"
+            placeholder="Buscar cargo o función..."
+            class="w-40 sm:w-44 pl-7 pr-6 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] text-[11px] text-[#2E2926] placeholder-[#968D84] focus:outline-none focus:border-[#7D5459] transition-all"
+          />
+          <svg class="w-3 h-3 text-[#8A8178] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <button
+            id="btn-clear-search"
+            onclick="clearFilters()"
+            title="Limpiar"
+            class="hidden absolute right-2 top-1/2 -translate-y-1/2 text-[10px] text-[#6E665F] hover:text-[#7D5459] font-semibold"
+          >✕</button>
+        </div>
+
+        <!-- Filtro de Vínculo -->
+        <div class="bg-[#E6DDD0] p-0.5 rounded-full border border-[#D8CCB9] flex items-center text-[11px]">
+          <button onclick="setLinkFilter('ALL')" id="btn-link-ALL" class="px-2.5 py-0.5 rounded-full font-medium transition-all bg-[#7D5459] text-[#FFFFFF]">
+            Todos
+          </button>
+          <button onclick="setLinkFilter('Interno')" id="btn-link-Interno" class="px-2.5 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]">
+            Interno
+          </button>
+          <button onclick="setLinkFilter('Externo')" id="btn-link-Externo" class="px-2.5 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]">
+            Externo
+          </button>
+        </div>
+
+        <!-- Vista PC / Móvil -->
+        <div class="hidden sm:flex bg-[#E6DDD0] p-0.5 rounded-full border border-[#D8CCB9] items-center text-[11px]">
+          <button onclick="setDeviceMode('desktop')" id="btn-view-desktop" class="px-2 py-0.5 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#2E2926] shadow-2xs">
+            PC
+          </button>
+          <button onclick="setDeviceMode('mobile')" id="btn-view-mobile" class="px-2 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]">
+            Móvil
+          </button>
+        </div>
+
+        <!-- Botón Vista Hoja Carta / PDF -->
+        <button onclick="togglePresentationMode()" title="Previsualizar en Hoja Carta y guardar PDF" class="px-2.5 py-1 rounded-full border border-[#D6C9B7] bg-[#FFFFFF] hover:border-[#7D5459] text-[#59524C] hover:text-[#7D5459] text-[11px] font-medium transition-all flex items-center gap-1.5">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          <span>Carta / PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sub-barra silenciosa de áreas y accesos -->
+    <div class="bg-[#EAE2D6]/75 border-t border-[#DDD2C2] px-5 md:px-6 py-1.5">
+      <div class="letter-canvas-frame flex flex-wrap items-center justify-between gap-2 text-[11px]">
+        <div id="dept-filters" class="flex items-center gap-1 overflow-x-auto pb-0.5 md:pb-0"></div>
+        <div class="flex items-center gap-2">
+          <div id="load-summary" class="hidden xl:flex items-center gap-2.5 text-[10.5px] text-[#756D65] mr-1"></div>
+          <button onclick="openSpecialModal('kpis')" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#FFFFFF]/90 hover:border-[#7D5459] text-[#4F4842] hover:text-[#7D5459] text-[10.5px] font-medium transition-all">
+            KPIs
+          </button>
+          <button onclick="openSpecialModal('versions')" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#FFFFFF]/90 hover:border-[#7D5459] text-[#6E665F] hover:text-[#7D5459] text-[10.5px] font-medium transition-all">
+            V. 3.2
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Banner dinámico discreto (Búsqueda o Mapa de Interdependencia activo) -->
+    <div id="active-context-banner" class="hidden bg-[#FAF7F2] border-t border-[#D6C9B7] px-5 md:px-6 py-2"></div>
+  </header>
+
+  <!-- CONTENEDOR ESTANDARIZADO HOJA CARTA -->
+  <div id="letter-sheet-wrapper" class="flex-1 flex flex-col">
+    
+    <!-- CABECERA FORMAL DE LÁMINA (PRESENTACIÓN E IMPRESIÓN PDF CARTA) -->
+    <div id="presentation-header" class="hidden letter-canvas-frame px-5 md:px-6 pt-3 pb-2.5 border-b border-[#D6C9B7] items-end justify-between">
+      <div>
+        <div class="text-[9.5px] uppercase tracking-[0.2em] text-[#7D5459] font-semibold mb-0.5">
+          ESTUDIO AFÍN SpA · RUT 78.560.882-8
+        </div>
+        <h1 class="text-base font-semibold tracking-tight text-[#2E2926]">
+          Organigrama Corporativo y Estructura de Roles
+        </h1>
+      </div>
+      <div id="presentation-meta" class="text-right text-[10.5px] text-[#6E665F]"></div>
+    </div>
+
+    <!-- LIENZO PRINCIPAL ESTANDARIZADO -->
+    <main class="flex-1 letter-canvas-frame px-5 md:px-6 py-5">
+      <div id="org-canvas" class="w-full"></div>
+    </main>
+
+    <!-- PIE DE PÁGINA FORMAL (PRESENTACIÓN / PDF CARTA) -->
+    <footer id="presentation-footer" class="hidden letter-canvas-frame px-5 md:px-6 py-2.5 border-t border-[#D6C9B7] items-center justify-between text-[9.5px] text-[#6E665F]">
+      <span>ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Arquitectura Organizacional (ORG-EA V. 3.2)</span>
+      <span>● Interno &nbsp;·&nbsp; ○ Externo / Staff</span>
+    </footer>
+
+  </div>
+
+  <!-- MODAL FLOTANTE CON PESTAÑAS INTERNAS (DETALLE PROFUNDO AL HACER CLIC EN UNA TARJETA) -->
+  <div id="floating-modal" onclick="handleBackdropClick(event)" class="hidden fixed inset-0 z-50 bg-[#2E2926]/30 backdrop-blur-[2px] flex items-center justify-center p-4">
+    <div class="modal-animate w-full max-w-xl max-h-[88vh] overflow-y-auto bg-[#FAF7F2] rounded-2xl border border-[#D4C7B5] shadow-[0_20px_40px_-12px_rgba(46,41,38,0.2)] p-6">
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script>
+    /* PALETA CASI IMPERCEPTIBLE: VARIACIONES TONALES DE PIEDRA, LINO Y ARENA */
+    const DEPARTMENTS = [
+      {
+        id: 'COM',
+        name: 'Comercial & Cliente',
+        color: '#9E827E',
+        tintBg: '#EFE7E3',
+        tintBorder: '#DFD4CE',
+        sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04']
+      },
+      {
+        id: 'DIS',
+        name: 'Diseño Estratégico',
+        color: '#A38879',
+        tintBg: '#F0E9E2',
+        tintBorder: '#E0D5CB',
+        sops: ['DIS-01']
+      },
+      {
+        id: 'LOG',
+        name: 'Operaciones & Logística',
+        color: '#8B8A82',
+        tintBg: '#ECEAE4',
+        tintBorder: '#DBD7CF',
+        sops: ['LOG-01', 'LOG-02']
+      },
+      {
+        id: 'TER',
+        name: 'Montaje & Terreno',
+        color: '#888E82',
+        tintBg: '#EDEBE4',
+        tintBorder: '#DCD9CF',
+        sops: ['TER-01', 'TER-02']
+      },
+      {
+        id: 'FIN',
+        name: 'Admin & Finanzas',
+        color: '#9B8E78',
+        tintBg: '#F1ECE1',
+        tintBorder: '#E1D9C9',
+        sops: ['FIN-01']
+      }
+    ];
+
+    const LEVELS = [
+      { id: 1, num: 'N1', title: 'Dirección' },
+      { id: 2, num: 'N2', title: 'Liderazgo' },
+      { id: 3, num: 'N3', title: 'Ejecución' },
+      { id: 4, num: 'N4', title: 'Aliados' }
+    ];
+
+    /* REFERENCIA INTERNA DE SOPs DENTRO DE LA PESTAÑA RED & SOPs */
+    const SOP_DETAILS = {
+      'COM-01': {
+        dept: 'COM',
+        version: 'V. 1.0',
+        title: 'Prospección, Calificación y Bienvenida',
+        desc: 'Filtro de calificación (presupuesto, plazos y exclusión de anti-clientes), firma de contrato marco y activación condicionada al Hito 1 (50%).'
+      },
+      'COM-02': {
+        dept: 'COM',
+        version: 'V. 2.1',
+        title: 'Comunicación Oficial y Gestión de Cambios',
+        desc: 'Correo como único canal vinculante, tiempos máximos de respuesta (< 8h hábiles) y órdenes de cambio pagadas por adelantado antes de ejecutar.'
+      },
+      'COM-03': {
+        dept: 'COM',
+        version: 'V. 2.1',
+        title: 'Entrega Formal y Cierre de Proyecto',
+        desc: 'Inspección final, entrega de Manual para Administrador, guía de bienvenida del huésped, encuesta de satisfacción y cobro del 20% final.'
+      },
+      'COM-04': {
+        dept: 'COM',
+        version: 'V. 1.1',
+        title: 'Post-Venta, Garantías y Reposición Rápida',
+        desc: 'Garantía acotada de montaje (30 días), exclusión de daños por huéspedes y flujo de reposición rápida prepagado con respaldo fotográfico.'
+      },
+      'DIS-01': {
+        dept: 'DIS',
+        version: 'V. 2.1',
+        title: 'Conceptualización Espacial y Mobiliario',
+        desc: 'Levantamiento, tablero conceptual (máx. 2 revisiones, sin modelados 3D lentos) y matriz de compras a Libro Abierto con alternativas de respaldo.'
+      },
+      'LOG-01': {
+        dept: 'LOG',
+        version: 'V. 2.1',
+        title: 'Procura, Recepción y Acopio',
+        desc: 'Órdenes de compra tras Hito 2 (30%), acopio transitorio y control de calidad binario en ventana de 24h antes de firmar guía.'
+      },
+      'LOG-02': {
+        dept: 'LOG',
+        version: 'V. 2.1',
+        title: 'Supervisión de Fabricación Externa a Medida',
+        desc: 'Control por excepción de mueblistas externos homologados: aprobación de muestras físicas y tolerancia máxima de ±2 mm.'
+      },
+      'TER-01': {
+        dept: 'TER',
+        version: 'V. 2.1',
+        title: 'Traslado a Obra, Instalación y Reglas de Terreno',
+        desc: 'Protocolo Obra Limpia: permisos en conserjería 48h antes, protección de ascensores y retiro total de embalajes el mismo día.'
+      },
+      'TER-02': {
+        dept: 'TER',
+        version: 'V. 1.0',
+        title: 'Aseo Profundo, Ambientación y Dirección Fotográfica',
+        desc: 'Limpieza fina post-obra, montaje escénico hotelero y pauta fotográfica estándar para plataformas (Airbnb/Booking).'
+      },
+      'FIN-01': {
+        dept: 'FIN',
+        version: 'V. 1.0',
+        title: 'Flujos de Caja, Hitos y Liquidación Libro Abierto',
+        desc: 'Calendario inamovible 50%-30%-20%, regla de cero financiamiento propio del mobiliario y rendición transparente a Libro Abierto.'
+      }
+    };
+
+    const MASTER_KPIS = {
+      external: [
+        { name: 'Índice de Satisfacción', target: '> 85% (≥ 4,25/5)', desc: 'Valida eficiencia del modelo llave en mano y cumplimiento de plazos.' },
+        { name: 'Índice de Recomendación', target: '9 a 10 puntos', desc: 'Convierte a inversionistas en canal de adquisición orgánica.' },
+        { name: 'Facilidad de Servicio', target: 'Baja fricción', desc: 'Confirma el alivio operativo y de carga mental del propietario.' },
+        { name: 'Retención y Recompra', target: '> 50% a 12 meses', desc: 'Asegura recurrencia de cartera para cumplir los 7 proyectos/año.' },
+        { name: 'Capacidad de Ajuste de Tarifas', target: '> 4,5 / 5', desc: 'Luz verde para ajustar al alza honorarios de diseño o margen logístico.' }
+      ],
+      internal: [
+        { name: 'Plazo de Diseño', target: 'Según tipología', desc: 'Días desde reunión inicial hasta aprobación de tablero conceptual y matriz.' },
+        { name: 'Tasa de Retrabajo', target: '≤ 2 rondas', desc: 'Evita iteraciones infinitas; mide precisión del levantamiento inicial.' },
+        { name: 'Desviación Presupuestaria', target: '~ 0% desviación', desc: 'Diferencia entre presupuesto aprobado y gasto real ejecutado.' },
+        { name: 'Eficiencia Logística', target: '> 95% a tiempo', desc: 'Despachos recibidos sin defectos ni mermas en ventana de 24h.' },
+        { name: 'Estabilidad de Cuadrillas', target: 'Rotación mínima', desc: 'Continuidad de instaladores y cumplimiento del protocolo Obra Limpia.' }
+      ]
+    };
+
+    const VERSION_HISTORY = [
+      { ver: '1.0', date: 'Abr 2026', desc: 'Estructura base inicial de roles y procedimientos operativos.' },
+      { ver: '2.0', date: 'Nov 2026', desc: 'Alineación al modelo Ultra-Lean (5 áreas) para renta corta y segundas viviendas.' },
+      { ver: '2.7', date: '20 Nov 2026', desc: 'Incorporación de nodo Staff lateral: Consultor Estratégico & Control de Gestión.' },
+      { ver: '2.9', date: '21 Nov 2026', desc: 'Mimetismo tonal casi imperceptible, tarjetas de 2 datos y bandas de nivel ultraligeras.' },
+      { ver: '3.0', date: '21 Nov 2026', desc: 'Separación de arquitectura: se retira el filtro macro de SOPs para delegarlo al Dashboard Operativo.' },
+      { ver: '3.1', date: '23 Nov 2026', desc: 'Integración de ficha modal en 3 pestañas y Modo Mapa de Interdependencia (⇄).' },
+      { ver: '3.2', date: '24 Nov 2026', desc: 'Estandarización de lienzo a formato Hoja Carta horizontal (279 × 216 mm) para ajuste exacto en 1 página al imprimir o exportar PDF.' }
+    ];
+
+    const EXECUTIVE_ROLE = {
+      id: 'gerencia-general',
+      dept: 'DIR',
+      deptName: 'Gobierno Corporativo',
+      color: '#7D5459',
+      level: 0,
+      linkType: 'Interno',
+      minHeadcount: 2,
+      maxHeadcount: 2,
+      shortDotacion: '2 Socias',
+      headcountBadge: '2 Socias · Gobierno Corporativo',
+      teamStructure: 'Dirección ejecutiva bicéfala ejercida por las dos socias fundadoras de Estudio Afín SpA. Ambas comparten la visión estratégica y se dividen el liderazgo directo de las áreas clave según su especialidad.',
+      title: 'Gerencia General · Socias Fundadoras',
+      legalEntity: 'ESTUDIO AFÍN SpA · RUT 78.560.882-8 · Constituida el 18/11/2026 (Ley N° 20.659)',
+      fireLine: 'El núcleo de Estudio Afín SpA es estrictamente el diseño y la implementación física llave en mano. La empresa se desmarca de la administración comercial, fijación de tarifas o gestión de reservas de la propiedad (responsabilidad exclusiva del cliente o administrador externo).',
+      mission: 'Liderar la estrategia global de Estudio Afín SpA, aprobar alianzas comerciales clave, custodiar la cultura corporativa y dirigir transversalmente las 5 áreas de la firma.',
+      audit: 'Estructura ejecutiva compartida en la cúspide (Nivel 0). Las fundadoras dirigen las áreas clave y deciden con autonomía cuándo incorporar nuevos especialistas según la demanda de proyectos.',
+      deliverables: [
+        'Aprobación de alianzas con administradores de propiedades y corredoras boutique.',
+        'Firma de Contratos Marco de Prestación de Servicios y validación de excepciones.',
+        'Revisión trimestral de tableros de KPIs Externos e Internos (meta 7 proyectos/año).'
+      ],
+      risksMitigated: [
+        'Desviación de alcance hacia administración hotelera o gestión de reservas.',
+        'Ingreso de clientes incompatibles con la capacidad operativa del estudio.'
+      ],
+      upstream: [
+        { roleId: 'staff-consultor', note: 'Tableros KPIs, modelos de rentabilidad y auditoría de procesos' },
+        { roleId: 'fin-dir', note: 'Reportes de flujo de caja por hitos y cierre financiero por proyecto' }
+      ],
+      downstream: [
+        { roleId: 'com-dir', note: 'Directrices de alianzas B2B y aprobación de contratos marco' },
+        { roleId: 'dis-dir', note: 'Lineamientos curatoriales y validación de propuestas estratégicas' },
+        { roleId: 'log-dir', note: 'Priorización de cartera de proyectos activos' },
+        { roleId: 'ter-dir', note: 'Validación de hitos críticos de entrega llave en mano' }
+      ],
+      sops: ['COM-01', 'DIS-01', 'FIN-01'],
+      kpis: ['7 proyectos/año', 'Satisfacción > 85%', 'Recomendación 9–10']
+    };
+
+    const STAFF_CONSULTANT_ROLE = {
+      id: 'staff-consultor',
+      dept: 'STAFF',
+      deptName: 'Asesoría Externa',
+      color: '#9B8E78',
+      level: 0,
+      linkType: 'Externo',
+      minHeadcount: 1,
+      maxHeadcount: 1,
+      shortDotacion: '1 Staff',
+      headcountBadge: '1 especialista externo · Soporte transversal',
+      teamStructure: 'Rol de staff externo (consultoría especializada independiente, sin subordinación de línea ni costo fijo interino). Reporta y asesora directamente a la Gerencia General en arquitectura organizacional, mejora de procesos y control de gestión.',
+      title: 'Consultor Estratégico & Control de Gestión',
+      mission: 'Diseñar la arquitectura organizacional, estandarizar procedimientos operativos (SOPs), estructurar tableros de KPIs y brindar soporte analítico transversal a la Gerencia General.',
+      audit: 'Ubicado como nodo Staff de línea punteada junto a Gerencia General: aporta metodología corporativa, control de gestión y auditoría de procesos sin inflar la planilla fija ni interferir en la dirección creativa de las socias.',
+      deliverables: [
+        'Diseño y actualización del Documento Maestro Corporativo y arquitectura de 10 SOPs.',
+        'Construcción y análisis de tableros de KPIs Externos (experiencia) e Internos (eficiencia).',
+        'Modelamiento de estructura de rentabilidad por proyecto, flujos de caja y escalabilidad.'
+      ],
+      risksMitigated: [
+        'Crecimiento desordenado sin procesos escritos ni indicadores de alerta temprana.',
+        'Sobrecarga administrativa de las socias fundadoras al intentar estructurar y operar simultáneamente.'
+      ],
+      upstream: [
+        { roleId: 'fin-lead', note: 'Datos de desviación presupuestaria y conciliaciones Libro Abierto' },
+        { roleId: 'com-lead', note: 'Resultados de encuestas post-entrega (CSAT, NPS, CES)' }
+      ],
+      downstream: [
+        { roleId: 'gerencia-general', note: 'Diagnósticos estratégicos, tableros ejecutivos y diseño organizacional' }
+      ],
+      sops: ['COM-01', 'COM-03', 'DIS-01', 'LOG-01', 'FIN-01'],
+      kpis: ['10 SOPs estandarizados', 'Tableros KPI activos', 'Control desviación ~0%']
+    };
+
+    const rolesData = [
+      // NIVEL 1
+      {
+        id: 'com-dir', dept: 'COM', level: 1, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
+        headcountBadge: '1 especialista · Dirección',
+        teamStructure: 'Rol de conducción comercial asumido a nivel directivo (1 especialista con dedicación compartida junto a gestión de cuentas).',
+        title: 'Dirección Comercial & Cuentas',
+        mission: 'Liderar alianzas con administradores de propiedades, filtrar inversionistas y cerrar contratos.',
+        audit: 'Fusión total de prospección, cuentas y cierre comercial en un solo liderazgo para evitar dispersión.',
+        deliverables: [
+          'Formulario de Calificación de Inversión aplicado antes de cotizar.',
+          'Aplicación estricta de Criterios de Exclusión Comercial (anti-clientes y muebles reciclados).',
+          'Contrato Marco firmado y activación condicionada al pago del Hito 1 (50%).'
+        ],
+        risksMitigated: [
+          'Desgaste en cotizaciones infructuosas o clientes sin presupuesto definido.',
+          'Reclamos post-entrega por desgaste de huéspedes no cubiertos por garantía.'
+        ],
+        upstream: [
+          { roleId: 'gerencia-general', note: 'Lineamientos comerciales y aprobación de alianzas B2B' },
+          { roleId: 'fin-dir', note: 'Validación de condiciones de pago y cobro Hito 1 (50%)' }
+        ],
+        downstream: [
+          { roleId: 'com-lead', note: 'Traspaso de cliente calificado y contrato marco firmado' },
+          { roleId: 'dis-dir', note: 'Brief inicial y luz verde de arranque tras Hito 1' }
+        ],
+        sops: ['COM-01', 'COM-02', 'COM-04'],
+        kpis: ['7 proyectos/año', 'Recomendación 9–10']
+      },
+      {
+        id: 'dis-dir', dept: 'DIS', level: 1, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
+        headcountBadge: '1 especialista · Dirección',
+        teamStructure: 'Liderazgo creativo y curatorial ejercido por 1 especialista con formación en arquitectura o diseño interior.',
+        title: 'Dirección Creativa & Mobiliario',
+        mission: 'Definir el concepto visual adaptado al entorno y aprobar el presupuesto de equipamiento.',
+        audit: 'Elimina modelados 3D lentos; prioriza tableros conceptuales ágiles orientados a conversión y confort.',
+        deliverables: [
+          'Tablero conceptual aprobado en máximo 2 rondas de revisión.',
+          'Matriz de Compras valorizada con opciones de respaldo ante quiebres de stock.',
+          'Curaduría de mobiliario de alto tráfico alineada a la identidad del inmueble.'
+        ],
+        risksMitigated: [
+          'Cuellos de botella por modelados 3D lentos o fabricación a medida innecesaria.',
+          'Desviación del presupuesto inicial comprometido con el propietario.'
+        ],
+        upstream: [
+          { roleId: 'com-dir', note: 'Brief comercial, perfil del inversionista y presupuesto aprobado' },
+          { roleId: 'fin-dir', note: 'Techo presupuestario de equipamiento por tipología' }
+        ],
+        downstream: [
+          { roleId: 'dis-lead', note: 'Directrices estéticas y validación final de matriz de compra' },
+          { roleId: 'log-dir', note: 'Matriz de compras aprobada para activar procura' }
+        ],
+        sops: ['DIS-01'],
+        kpis: ['Máx. 2 rondas revisión', 'Plazo de diseño']
+      },
+      {
+        id: 'log-dir', dept: 'LOG', level: 1, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
+        headcountBadge: '1 especialista · Dirección',
+        teamStructure: 'Conducción estratégica de abastecimiento y cadena de suministro ejercida por 1 especialista.',
+        title: 'Dirección de Operaciones',
+        mission: 'Controlar cadena de abastecimiento, negociar con proveedores y velar por plazos.',
+        audit: 'Absorbe dirección de compras y control de proveedores bajo una sola cabeza operativa.',
+        deliverables: [
+          'Plan maestro de compras ejecutado solo tras confirmación del Hito 2 (30%).',
+          'Red de proveedores de retail y talleres externos homologados.',
+          'Protocolo de recepción binaria (aceptación/rechazo en 24h) y acopio transitorio.'
+        ],
+        risksMitigated: [
+          'Quiebres de stock en tiendas que retrasen la puesta en marcha.',
+          'Recepción de mobiliario dañado o fuera de medida (±2 mm en talleres).'
+        ],
+        upstream: [
+          { roleId: 'dis-dir', note: 'Matriz de compras aprobada por el cliente' },
+          { roleId: 'fin-dir', note: 'Acreditación de pago Hito 2 (30%) para liberar fondos' }
+        ],
+        downstream: [
+          { roleId: 'log-lead', note: 'Orden de ejecución de compras y control de acopio' },
+          { roleId: 'ter-dir', note: 'Fecha comprometida de disponibilidad total para montaje' }
+        ],
+        sops: ['LOG-01', 'LOG-02'],
+        kpis: ['Cumplimiento proveedores', 'Cero quiebres']
+      },
+      {
+        id: 'ter-dir', dept: 'TER', level: 1, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
+        headcountBadge: '1 especialista · Dirección',
+        teamStructure: 'Dirección técnica de obra y puesta en escena liderada por 1 especialista.',
+        title: 'Dirección de Montaje',
+        mission: 'Asegurar ejecución llave en mano sin fricciones en edificios y entrega conforme.',
+        audit: 'Unificada junto a Operaciones para evitar brechas entre la compra y la instalación en obra.',
+        deliverables: [
+          'Cumplimiento del Protocolo Obra Limpia (permisos en conserjería 48h antes).',
+          'Ambientación escénica hotelera y pauta fotográfica profesional para plataformas.',
+          'Acta de Entrega conforme firmada junto al cliente o administrador.'
+        ],
+        risksMitigated: [
+          'Multas de copropiedad por ruidos, daños en ascensores o retiro tardío de embalajes.',
+          'Disputas post-venta gracias al respaldo fotográfico de cierre (TER-02).'
+        ],
+        upstream: [
+          { roleId: 'log-dir', note: 'Mobiliario consolidado y listo para despacho a obra' },
+          { roleId: 'dis-lead', note: 'Planos de distribución y guía de ambientación por ambiente' }
+        ],
+        downstream: [
+          { roleId: 'ter-lead', note: 'Cronograma de montaje y estándares Obra Limpia' },
+          { roleId: 'com-lead', note: 'Inmueble montado, fotografiado y listo para Acta de Entrega' }
+        ],
+        sops: ['TER-01', 'TER-02', 'COM-03'],
+        kpis: ['Satisfacción > 85%', 'Entrega en fecha']
+      },
+      {
+        id: 'fin-dir', dept: 'FIN', level: 1, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
+        headcountBadge: '1 especialista · Dirección',
+        teamStructure: 'Gobernanza financiera y resguardo de caja ejercida por 1 especialista a nivel directivo.',
+        title: 'Dirección Financiera & Control',
+        mission: 'Custodiar flujo de caja por hitos (50-30-20), aprobar pagos y validar rentabilidad.',
+        audit: 'Regla estricta de cero financiamiento propio del mobiliario con capital de la sociedad.',
+        deliverables: [
+          'Calendario de cobros inamovible 50% (firma) - 30% (pre-compra) - 20% (entrega).',
+          'Carpetas de liquidación transparente a Libro Abierto con respaldo tributario.',
+          'Control de margen neto por proyecto y fondo de reserva para garantías.'
+        ],
+        risksMitigated: [
+          'Descalce de caja o financiamiento de muebles del cliente con capital propio.',
+          'Inconsistencias tributarias ante el SII en el manejo de fondos a rendir.'
+        ],
+        upstream: [
+          { roleId: 'fin-lead', note: 'Conciliación a Libro Abierto y reportes de margen por proyecto' },
+          { roleId: 'fin-ext', note: 'Balances mensuales, F29 y validación tributaria SII' }
+        ],
+        downstream: [
+          { roleId: 'gerencia-general', note: 'Estado de caja, rentabilidad neta y alertas financieras' },
+          { roleId: 'log-dir', note: 'Autorización financiera para liberar compras tras Hito 2' }
+        ],
+        sops: ['FIN-01'],
+        kpis: ['Desviación ~ 0%', 'Margen logístico']
+      },
+
+      // NIVEL 2
+      {
+        id: 'com-lead', dept: 'COM', level: 2, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
+        headcountBadge: '1 especialista · Rol dedicado',
+        teamStructure: '1 especialista dedicado a gestionar de punta a punta la relación con clientes activos (hasta 7 proyectos anuales sin perder calidad de atención).',
+        title: 'Especialista Comercial & Entrega',
+        mission: 'Gestionar comunicaciones oficiales, órdenes de cambio, entrega de llaves y garantías post-venta.',
+        audit: 'Fusiona bienvenida, gestión de cambios, entrega final y post-venta en un solo flujo continuo.',
+        deliverables: [
+          'Bitácora oficial vía correo electrónico (único canal vinculante).',
+          'Órdenes de Cambio formalizadas y prepagadas antes de ejecutar.',
+          'Kit de Entrega: Manual para Administrador, guía del huésped y encuesta de 7 preguntas.'
+        ],
+        risksMitigated: [
+          'Cambios informales pedidos por mensajería sin respaldo ni pago previo.',
+          'Reclamos fuera de plazo (post 30 días) o por daños causados por huéspedes.'
+        ],
+        upstream: [
+          { roleId: 'com-dir', note: 'Cliente incorporado con Contrato Marco firmado' },
+          { roleId: 'ter-dir', note: 'Obra terminada y galería fotográfica para cierre' }
+        ],
+        downstream: [
+          { roleId: 'fin-lead', note: 'Órdenes de cambio aprobadas y gatillo de cobro Hito 3 (20%)' },
+          { roleId: 'dis-exec', note: 'Solicitudes de cotización rápida para reposiciones post-venta' }
+        ],
+        sops: ['COM-01', 'COM-02', 'COM-03', 'COM-04'],
+        kpis: ['Respuesta < 8h', 'Satisfacción cierre']
+      },
+      {
+        id: 'dis-lead', dept: 'DIS', level: 2, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 2,
+        shortDotacion: '1–2 esp.',
+        headcountBadge: '1–2 especialistas · Escalable',
+        teamStructure: '1 especialista titular por cada 3–4 proyectos activos; escala a 2 especialistas cuando coinciden habilitaciones simultáneas o segundas viviendas fuera de Santiago.',
+        title: 'Especialista en Diseño de Mobiliario',
+        mission: 'Ejecutar levantamiento en terreno, armar tableros conceptuales y cerrar matriz de compra.',
+        audit: 'Absorbe interiorismo y especificación técnica en un perfil integral orientado a agilidad.',
+        deliverables: [
+          'Ficha de levantamiento métrico y fotográfico en terreno.',
+          'Láminas conceptuales por ambiente y ficha técnica de mobiliario a medida.',
+          'Matriz de compras cerrada con enlaces, códigos, precios netos y alternativas de respaldo.'
+        ],
+        risksMitigated: [
+          'Errores de dimensiones en accesos, ascensores o distribución de recintos.'
+        ],
+        upstream: [
+          { roleId: 'dis-dir', note: 'Dirección creativa y aprobación de tablero conceptual' },
+          { roleId: 'dis-exec', note: 'Verificación de stock real y cotizaciones actualizadas' }
+        ],
+        downstream: [
+          { roleId: 'log-lead', note: 'Matriz de compras cerrada con SKUs y planes B' },
+          { roleId: 'ter-lead', note: 'Planos de ubicación y criterios de montaje en recinto' }
+        ],
+        sops: ['DIS-01'],
+        kpis: ['85–90% compra retail', 'Precisión medidas']
+      },
+      {
+        id: 'log-lead', dept: 'LOG', level: 2, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
+        headcountBadge: '1 especialista · Rol dedicado',
+        teamStructure: '1 especialista dedicado al control centralizado de compras, recepción física en ventana de 24h y trazabilidad de bodega.',
+        title: 'Especialista de Procura & Acopio',
+        mission: 'Emitir órdenes de compra, recibir despachos con lista de chequeo y coordinar bodega.',
+        audit: 'Centraliza el seguimiento de compras y el filtro de recepción física antes de llevar todo a obra.',
+        deliverables: [
+          'Órdenes de compra emitidas y seguimiento consolidado de despachos.',
+          'Lista de chequeo de recepción física firmada antes de aceptar guías de despacho.',
+          'Inventario actualizado de acopio transitorio por proyecto.'
+        ],
+        risksMitigated: [
+          'Aceptación tácita de productos fallados o incompletos por falta de revisión.'
+        ],
+        upstream: [
+          { roleId: 'dis-lead', note: 'Matriz de compras cerrada y fichas técnicas a medida' },
+          { roleId: 'log-ext', note: 'Entrega de piezas a medida y custodia en acopio' }
+        ],
+        downstream: [
+          { roleId: 'ter-exec', note: 'Carga consolidada y etiquetada por recinto para despacho a obra' },
+          { roleId: 'fin-lead', note: 'Boletas y facturas de compra para rendición Libro Abierto' }
+        ],
+        sops: ['LOG-01', 'LOG-02'],
+        kpis: ['Rechazo en 24h', '0 mermas en bodega']
+      },
+      {
+        id: 'ter-lead', dept: 'TER', level: 2, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 2,
+        shortDotacion: '1–2 esp.',
+        headcountBadge: '1–2 especialistas · Escalable',
+        teamStructure: '1 especialista en terreno por obra activa; escala a 2 especialistas cuando hay montajes paralelos en distintas comunas o regiones.',
+        title: 'Especialista de Obra & Ambientación',
+        mission: 'Coordinar permisos en conserjería, supervisar maestros y dirigir ambientación final.',
+        audit: 'Fusiona supervisión técnica en obra y dirección de arte fotográfica en terreno.',
+        deliverables: [
+          'Autorización de ingreso y protección de áreas comunes gestionada 48h antes.',
+          'Revisión de terminaciones, limpieza fina post-obra y montaje escénico.',
+          'Dirección en terreno de la sesión fotográfica estándar para plataformas.'
+        ],
+        risksMitigated: [
+          'Atrasos en montaje por restricciones horarias o de ascensores en edificios.'
+        ],
+        upstream: [
+          { roleId: 'ter-dir', note: 'Planificación de obra y pauta fotográfica' },
+          { roleId: 'ter-exec', note: 'Recepción en edificio y logística de desembalaje' }
+        ],
+        downstream: [
+          { roleId: 'ter-ext', note: 'Instrucciones en terreno a instaladores, aseo y fotógrafo' },
+          { roleId: 'com-lead', note: 'Registro fotográfico de cierre y conformidad técnica' }
+        ],
+        sops: ['TER-01', 'TER-02'],
+        kpis: ['Obra limpia 100%', '0 multas edificio']
+      },
+      {
+        id: 'fin-lead', dept: 'FIN', level: 2, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 1,
+        shortDotacion: '1 esp.',
+        headcountBadge: '1 especialista · Rol dedicado',
+        teamStructure: '1 especialista dedicado a conciliación a Libro Abierto, facturación por hitos y control presupuestario.',
+        title: 'Especialista Control & Libro Abierto',
+        mission: 'Emitir facturas por hitos, rendir boletas a Libro Abierto y controlar márgenes.',
+        audit: 'Mantiene el control administrativo interno mientras la contabilidad tributaria opera 100% externa.',
+        deliverables: [
+          'Documentos tributarios emitidos por hitos (50% - 30% - 20%) y órdenes de cambio.',
+          'Planilla de conciliación a Libro Abierto con boletas y facturas adjuntas.',
+          'Reporte de rentabilidad neta por proyecto cerrado.'
+        ],
+        risksMitigated: [
+          'Ejecución de compras o cambios sin transferencia acreditada en cuenta SpA.'
+        ],
+        upstream: [
+          { roleId: 'log-lead', note: 'Respaldos tributarios (boletas/facturas) de compras ejecutadas' },
+          { roleId: 'com-lead', note: 'Órdenes de cambio aprobadas e hitos de cierre' }
+        ],
+        downstream: [
+          { roleId: 'fin-dir', note: 'Conciliación final Libro Abierto y margen real del proyecto' },
+          { roleId: 'fin-ext', note: 'Carpeta contable mensual ordenada para declaración F29' }
+        ],
+        sops: ['FIN-01'],
+        kpis: ['Cobro 100% pre-compra', 'Cierre Libro Abierto']
+      },
+
+      // NIVEL 3
+      {
+        id: 'dis-exec', dept: 'DIS', level: 3, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 2,
+        shortDotacion: '1–2 esp.',
+        headcountBadge: '1–2 especialistas · Célula apoyo',
+        teamStructure: '1 especialista técnico en especificación y cotizaciones; amplía a 2 integrantes en temporadas peak para validar stock sin frenar entregas.',
+        title: 'Especialista Técnico & Cotizaciones',
+        mission: 'Armar láminas conceptuales, verificar disponibilidad en tiendas y actualizar planillas.',
+        audit: 'Célula de apoyo técnico para verificar stock en tiempo real y acelerar cotizaciones de reposición.',
+        deliverables: [
+          'Validación de disponibilidad de stock en tiempo real previo a aprobar matriz de compras.',
+          'Cotizaciones rápidas para reposiciones post-venta (COM-04).'
+        ],
+        upstream: [
+          { roleId: 'dis-lead', note: 'Selección de piezas y requerimientos técnicos de cada recinto' },
+          { roleId: 'com-lead', note: 'Requerimientos de reposición rápida post-venta' }
+        ],
+        downstream: [
+          { roleId: 'dis-lead', note: 'Planilla de precios, links y disponibilidad validada' }
+        ],
+        sops: ['DIS-01', 'COM-04'],
+        kpis: ['Stock validado 100%', 'Cotización < 48h']
+      },
+      {
+        id: 'ter-exec', dept: 'TER', level: 3, linkType: 'Interno',
+        minHeadcount: 1, maxHeadcount: 2,
+        shortDotacion: '1–2 esp.',
+        headcountBadge: '1–2 especialistas · Célula puente',
+        teamStructure: 'Célula operativa de 1 a 2 especialistas compartidos entre bodega y obra para cubrir recepciones y montajes simultáneos.',
+        title: 'Especialista Logística & Montaje',
+        mission: 'Ejecutar recepciones físicas, proteger ascensores y asistir armado en terreno.',
+        audit: 'Rol puente compartido entre Logística y Terreno para eliminar tiempos muertos en días de montaje.',
+        deliverables: [
+          'Protección física de pasillos/ascensores y retiro total de embalajes en el día.',
+          'Apoyo en recepción de despachos y etiquetado por recinto.'
+        ],
+        upstream: [
+          { roleId: 'log-lead', note: 'Lista de chequeo de recepción y carga etiquetada desde acopio' }
+        ],
+        downstream: [
+          { roleId: 'ter-lead', note: 'Insumos ingresados sin daños y áreas comunes protegidas' }
+        ],
+        sops: ['LOG-01', 'TER-01'],
+        kpis: ['Chequeo 100% firmado', 'Retiro embalajes día 1']
+      },
+
+      // NIVEL 4
+      {
+        id: 'log-ext', dept: 'LOG', level: 4, linkType: 'Externo',
+        minHeadcount: 0, maxHeadcount: 0,
+        shortDotacion: 'Célula ext.',
+        headcountBadge: 'Célula externa · Por proyecto',
+        teamStructure: 'Red homologada de talleres mueblistas y operadores de bodega activados bajo orden de trabajo según requerimientos a medida.',
+        title: 'Talleres Externos & Bodega',
+        mission: 'Fabricar piezas especiales bajo plano y proveer acopio temporal por proyecto.',
+        audit: 'Cero taller de carpintería propio (costo fijo eliminado). Contratación 100% variable bajo demanda.',
+        deliverables: [
+          'Muestras físicas de terminación aprobadas y piezas fabricadas bajo tolerancia ±2 mm.',
+          'Almacenaje seguro y despacho consolidado a obra.'
+        ],
+        upstream: [
+          { roleId: 'log-lead', note: 'Orden de fabricación con planos técnicos y aprobación de muestras' }
+        ],
+        downstream: [
+          { roleId: 'log-lead', note: 'Mobiliario a medida terminado y consolidación de despacho' }
+        ],
+        sops: ['LOG-01', 'LOG-02'],
+        kpis: ['Tolerancia +/- 2mm', 'Entrega puntual']
+      },
+      {
+        id: 'ter-ext', dept: 'TER', level: 4, linkType: 'Externo',
+        minHeadcount: 0, maxHeadcount: 0,
+        shortDotacion: '2–4 téc.',
+        headcountBadge: 'Célula externa · 2–4 técnicos/obra',
+        teamStructure: 'Célula variable de 2 a 4 técnicos especialistas (instaladores, aseo fino y fotógrafo comercial) dimensionada según metraje del inmueble.',
+        title: 'Cuadrillas, Aseo & Fotografía',
+        mission: 'Ejecutar pintura, instalaciones, aseo profundo y fotografía comercial para plataformas.',
+        audit: 'Equipos externos variables contratados por obra bajo estricto cumplimiento del protocolo Obra Limpia.',
+        deliverables: [
+          'Instalación de cortinas, luminarias, arte y armado de mobiliario sin daños.',
+          'Aseo profundo final y galería fotográfica editada en 48h.'
+        ],
+        upstream: [
+          { roleId: 'ter-lead', note: 'Supervisión directa en obra y pauta de montaje/fotografía' }
+        ],
+        downstream: [
+          { roleId: 'ter-lead', note: 'Inmueble instalado, limpio y galería fotográfica entregada' }
+        ],
+        sops: ['TER-01', 'TER-02', 'COM-04'],
+        kpis: ['0 daños áreas comunes', 'Fotos listas en 48h']
+      },
+      {
+        id: 'fin-ext', dept: 'FIN', level: 4, linkType: 'Externo',
+        minHeadcount: 0, maxHeadcount: 0,
+        shortDotacion: 'Estudio ext.',
+        headcountBadge: 'Estudio externo · Mensual',
+        teamStructure: 'Equipo externo de contabilidad y asesoría tributaria con dedicación mensual permanente para cumplimiento ante el SII.',
+        title: 'Contador & Asesor Tributario',
+        mission: 'Llevar contabilidad mensual, declaraciones F29/Renta y cumplimiento ante el SII.',
+        audit: 'Externalizado desde el día 1 mediante honorario mensual fijo para mantener estructura liviana.',
+        deliverables: [
+          'Declaración mensual F29, libros contables al día y Operación Renta anual.',
+          'Asesoría tributaria sobre tratamiento de fondos a Libro Abierto ante el SII.'
+        ],
+        upstream: [
+          { roleId: 'fin-lead', note: 'Registros de facturación y respaldos de gastos a rendir' }
+        ],
+        downstream: [
+          { roleId: 'fin-dir', note: 'Cumplimiento tributario F29/Renta y reportes contables' }
+        ],
+        sops: ['FIN-01'],
+        kpis: ['0 multas SII', 'Balance al día']
+      }
+    ];
+
+    let state = {
+      linkFilter: 'ALL',
+      activeDept: 'ALL',
+      searchQuery: '',
+      networkFocusRoleId: null,
+      selectedRoleId: null,
+      activeModalTab: 'rol',
+      modalAuditExpanded: false,
+      specialModal: null,
+      presentationMode: false,
+      deviceMode: window.innerWidth < 860 ? 'mobile' : 'desktop'
+    };
+
+    function getAllRolesList() {
+      return [EXECUTIVE_ROLE, STAFF_CONSULTANT_ROLE, ...rolesData];
+    }
+
+    function findRoleById(id) {
+      return getAllRolesList().find(r => r.id === id) || null;
+    }
+
+    function getDeptCapacitySummary(deptId) {
+      const deptRoles = rolesData.filter(r => r.dept === deptId);
+      const internalRoles = deptRoles.filter(r => r.linkType === 'Interno');
+      const externalRoles = deptRoles.filter(r => r.linkType === 'Externo');
+
+      const minInt = internalRoles.reduce((acc, r) => acc + (r.minHeadcount || 0), 0);
+      const maxInt = internalRoles.reduce((acc, r) => acc + (r.maxHeadcount || 0), 0);
+      const intLabel = minInt === maxInt ? `${minInt} esp.` : `${minInt}–${maxInt} esp.`;
+
+      return externalRoles.length > 0 ? `${intLabel} + ext.` : intLabel;
+    }
+
+    function toggleNetworkFocus(roleId, event) {
+      if (event) event.stopPropagation();
+      if (state.networkFocusRoleId === roleId) {
+        state.networkFocusRoleId = null;
+      } else {
+        state.networkFocusRoleId = roleId;
+        state.activeDept = 'ALL';
+      }
+      renderAll();
+    }
+
+    function focusNetworkFromModal(roleId) {
+      closeModal();
+      state.networkFocusRoleId = roleId;
+      state.activeDept = 'ALL';
+      renderAll();
+    }
+
+    function clearNetworkFocus() {
+      state.networkFocusRoleId = null;
+      renderAll();
+    }
+
+    function getNetworkRelation(roleId) {
+      if (!state.networkFocusRoleId) return null;
+      if (roleId === state.networkFocusRoleId) return 'origin';
+      const originRole = findRoleById(state.networkFocusRoleId);
+      if (!originRole) return null;
+      if ((originRole.upstream || []).some(u => u.roleId === roleId)) return 'upstream';
+      if ((originRole.downstream || []).some(d => d.roleId === roleId)) return 'downstream';
+      return 'unrelated';
+    }
+
+    function setLinkFilter(filter) {
+      state.linkFilter = filter;
+      ['ALL', 'Interno', 'Externo'].forEach(f => {
+        const btn = document.getElementById(`btn-link-${f}`);
+        if (!btn) return;
+        btn.className = f === filter
+          ? 'px-2.5 py-0.5 rounded-full font-medium transition-all bg-[#7D5459] text-[#FFFFFF]'
+          : 'px-2.5 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]';
+      });
+      renderAll();
+    }
+
+    function setModalTab(tab) {
+      state.activeModalTab = tab;
+      renderModal();
+    }
+
+    function toggleModalAudit() {
+      state.modalAuditExpanded = !state.modalAuditExpanded;
+      renderModal();
+    }
+
+    function togglePresentationMode() {
+      state.presentationMode = !state.presentationMode;
+      if (state.presentationMode) {
+        if (state.deviceMode === 'mobile') {
+          setDeviceMode('desktop');
+        }
+        state.networkFocusRoleId = null;
+        document.body.classList.add('presentation-mode');
+        updatePresentationMeta();
+        renderAll();
+      } else {
+        document.body.classList.remove('presentation-mode');
+      }
+    }
+
+    function updatePresentationMeta() {
+      const metaEl = document.getElementById('presentation-meta');
+      if (!metaEl) return;
+      const filterLabel = state.linkFilter === 'ALL'
+        ? 'Estructura Integral · 12–16 Especialistas + Staff + 3 Células'
+        : state.linkFilter === 'Interno'
+          ? 'Núcleo Interno Estudio Afín SpA'
+          : 'Staff y Células Externas';
+      const today = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' });
+      metaEl.innerHTML = `
+        <div class="font-medium text-[#2E2926]">${filterLabel}</div>
+        <div>${today} · ORG-EA V. 3.2 · Carta</div>
+      `;
+    }
+
+    function setDeviceMode(mode) {
+      state.deviceMode = mode;
+      const desktopBtn = document.getElementById('btn-view-desktop');
+      const mobileBtn = document.getElementById('btn-view-mobile');
+      if (desktopBtn) {
+        desktopBtn.className = mode === 'desktop'
+          ? 'px-2 py-0.5 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#2E2926] shadow-2xs'
+          : 'px-2 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]';
+      }
+      if (mobileBtn) {
+        mobileBtn.className = mode === 'mobile'
+          ? 'px-2 py-0.5 rounded-full font-medium transition-all bg-[#FFFFFF] text-[#2E2926] shadow-2xs'
+          : 'px-2 py-0.5 rounded-full font-medium transition-all text-[#635C56] hover:text-[#2E2926]';
+      }
+      renderAll();
+    }
+
+    function setDeptFilter(deptId) {
+      state.activeDept = deptId;
+      renderAll();
+    }
+
+    function handleSearch(val) {
+      state.searchQuery = val.trim();
+      if (state.searchQuery) {
+        state.networkFocusRoleId = null;
+      }
+      renderAll();
+    }
+
+    function clearFilters() {
+      state.searchQuery = '';
+      state.networkFocusRoleId = null;
+      state.linkFilter = 'ALL';
+      setLinkFilter('ALL');
+      const input = document.getElementById('quick-search');
+      if (input) input.value = '';
+      renderAll();
+    }
+
+    function openRoleModal(roleId, initialTab) {
+      state.specialModal = null;
+      state.selectedRoleId = roleId;
+      state.activeModalTab = initialTab || 'rol';
+      state.modalAuditExpanded = false;
+      renderModal();
+    }
+
+    function openSpecialModal(type) {
+      state.selectedRoleId = null;
+      state.specialModal = type;
+      renderModal();
+    }
+
+    function closeModal() {
+      state.selectedRoleId = null;
+      state.specialModal = null;
+      const modal = document.getElementById('floating-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target && e.target.id === 'floating-modal') {
+        closeModal();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (state.selectedRoleId || state.specialModal) {
+          closeModal();
+        } else if (state.networkFocusRoleId) {
+          clearNetworkFocus();
+        } else if (state.presentationMode) {
+          togglePresentationMode();
+        }
+      }
+    });
+
+    function isRoleMatch(role) {
+      if (state.linkFilter !== 'ALL' && role.linkType !== state.linkFilter) {
+        return false;
+      }
+      if (state.searchQuery) {
+        const q = state.searchQuery.toLowerCase();
+        const inTitle = role.title.toLowerCase().includes(q);
+        const inMission = role.mission.toLowerCase().includes(q);
+        const inBadge = (role.headcountBadge || '').toLowerCase().includes(q);
+        const inDeliverables = (role.deliverables || []).some(d => d.toLowerCase().includes(q));
+        return inTitle || inMission || inBadge || inDeliverables;
+      }
+      return true;
+    }
+
+    function hasActiveFilter() {
+      return Boolean(state.searchQuery || state.linkFilter !== 'ALL');
+    }
+
+    function getCardVisualState(role) {
+      if (state.networkFocusRoleId) {
+        const rel = getNetworkRelation(role.id);
+        if (rel === 'origin') return { stateClass: 'is-origin', relationTag: 'Nodo activo' };
+        if (rel === 'upstream') return { stateClass: 'is-connected', relationTag: '← Entrega insumo' };
+        if (rel === 'downstream') return { stateClass: 'is-connected', relationTag: '→ Recibe entrega' };
+        return { stateClass: 'is-dimmed', relationTag: null };
+      }
+      if (hasActiveFilter()) {
+        return {
+          stateClass: isRoleMatch(role) ? 'is-highlighted' : 'is-dimmed',
+          relationTag: null
+        };
+      }
+      return { stateClass: '', relationTag: null };
+    }
+
+    function renderFiltersAndSummary() {
+      const filtersEl = document.getElementById('dept-filters');
+      if (!filtersEl) return;
+      const allActive = state.activeDept === 'ALL';
+      let html = `
+        <button onclick="setDeptFilter('ALL')" class="px-2.5 py-0.5 rounded-full font-medium transition-all shrink-0 ${allActive ? 'bg-[#3D3632] text-[#FAF7F2]' : 'text-[#635C56] hover:bg-[#DFD5C7]'}">
+          Todas
+        </button>
+      `;
+      DEPARTMENTS.forEach(d => {
+        const active = state.activeDept === d.id;
+        html += `
+          <button onclick="setDeptFilter('${d.id}')" class="px-2.5 py-0.5 rounded-full font-medium transition-all flex items-center gap-1.5 shrink-0 ${active ? 'bg-[#FFFFFF] text-[#2E2926] border border-[#CFC3B2]' : 'text-[#635C56] hover:bg-[#DFD5C7]'}">
+            <span class="w-1.5 h-1.5 rounded-full" style="background:${d.color}"></span>
+            <span>${d.name}</span>
+          </button>
+        `;
+      });
+      filtersEl.innerHTML = html;
+
+      const internalRoles = rolesData.filter(r => r.linkType === 'Interno');
+      const minSpec = internalRoles.reduce((acc, r) => acc + r.minHeadcount, 0);
+      const maxSpec = internalRoles.reduce((acc, r) => acc + r.maxHeadcount, 0);
+
+      const summaryEl = document.getElementById('load-summary');
+      if (summaryEl) {
+        summaryEl.innerHTML = `
+          <span>${minSpec}–${maxSpec} especialistas + staff</span>
+          <span>·</span>
+          <span>⇄ Conexiones &nbsp;·&nbsp; ● Interno &nbsp;○ Externo</span>
+        `;
+      }
+
+      const bannerEl = document.getElementById('active-context-banner');
+      const clearBtn = document.getElementById('btn-clear-search');
+      if (!bannerEl) return;
+
+      if (state.networkFocusRoleId) {
+        const focusRole = findRoleById(state.networkFocusRoleId);
+        const upCount = (focusRole?.upstream || []).length;
+        const downCount = (focusRole?.downstream || []).length;
+        bannerEl.classList.remove('hidden');
+        bannerEl.innerHTML = `
+          <div class="letter-canvas-frame flex flex-wrap items-center justify-between gap-3 text-[11px]">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="px-2 py-0.5 rounded bg-[#7D5459] text-[#FFFFFF] text-[10px] font-semibold">
+                ⇄ Red de Interdependencia
+              </span>
+              <span class="font-semibold text-[#2E2926]">${focusRole ? focusRole.title : ''}</span>
+              <span class="text-[#635C56]">(${upCount} entradas · ${downCount} salidas directas)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="openRoleModal('${state.networkFocusRoleId}', 'red')" class="px-2.5 py-0.5 rounded-full border border-[#7D5459]/40 bg-[#FFFFFF] hover:bg-[#F5EFE6] text-[#7D5459] text-[10.5px] font-medium">
+                Ver detalle de flujo ↗
+              </button>
+              <button onclick="clearNetworkFocus()" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#EFE9E0] hover:bg-[#E6DDD0] text-[#2E2926] text-[10.5px] font-medium">
+                Salir de vista red ✕
+              </button>
+            </div>
+          </div>
+        `;
+      } else if (state.searchQuery) {
+        bannerEl.classList.remove('hidden');
+        if (clearBtn) clearBtn.classList.remove('hidden');
+        bannerEl.innerHTML = `
+          <div class="letter-canvas-frame flex items-center justify-between gap-3 text-[11px]">
+            <span class="text-[#635C56]">
+              Filtro de cargo: <strong class="text-[#2E2926]">"${state.searchQuery}"</strong>
+            </span>
+            <button onclick="clearFilters()" class="px-2.5 py-0.5 rounded-full border border-[#D4C7B5] bg-[#EFE9E0] hover:bg-[#E6DDD0] text-[#2E2926] text-[10.5px] font-medium">
+              Limpiar ✕
+            </button>
+          </div>
+        `;
+      } else {
+        bannerEl.classList.add('hidden');
+        if (clearBtn) clearBtn.classList.add('hidden');
+      }
+    }
+
+    function renderRelationBadge(tag) {
+      if (!tag) return '';
+      const isOrigin = tag === 'Nodo activo';
+      const isUp = tag.startsWith('←');
+      const styleClass = isOrigin
+        ? 'bg-[#7D5459] text-[#FFFFFF]'
+        : isUp
+          ? 'bg-[#F0E9E2] text-[#5C4B42] border border-[#D8CBBF]'
+          : 'bg-[#ECEAE4] text-[#4C4D47] border border-[#D2D0C8]';
+      return `
+        <div>
+          <span class="inline-block px-1.5 py-0.5 rounded text-[9.5px] font-medium ${styleClass}">
+            ${tag}
+          </span>
+        </div>
+      `;
+    }
+
+    function renderLevelZeroHeader() {
+      const execVis = getCardVisualState(EXECUTIVE_ROLE);
+      const staffVis = getCardVisualState(STAFF_CONSULTANT_ROLE);
+      const execActiveNet = state.networkFocusRoleId === EXECUTIVE_ROLE.id;
+      const staffActiveNet = state.networkFocusRoleId === STAFF_CONSULTANT_ROLE.id;
+
+      return `
+        <div class="max-w-3xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-3 lg:gap-0 relative">
+          <div class="hidden lg:block lg:w-[215px] shrink-0"></div>
+
+          <!-- Nodo Central: Gerencia General -->
+          <div onclick="openRoleModal('gerencia-general')" 
+               class="role-card ${execVis.stateClass} group cursor-pointer w-full max-w-sm bg-[#FAF7F2] rounded-2xl border border-[#D4C8B8] px-5 py-3 text-center relative overflow-hidden shrink-0">
+            <div class="absolute top-0 inset-x-0 h-[2px] bg-[#7D5459]"></div>
+            <button
+              type="button"
+              onclick="toggleNetworkFocus('gerencia-general', event)"
+              title="Iluminar red de colaboración"
+              class="network-trigger absolute top-2 right-2 w-6 h-6 rounded-full flex items-center justify-center text-[11px] transition-all ${execActiveNet ? 'bg-[#7D5459] text-[#FFFFFF]' : 'text-[#9E948A] opacity-70 hover:opacity-100 hover:bg-[#EFE9E0] hover:text-[#7D5459]'}"
+            >⇄</button>
+            <div class="text-[9px] uppercase tracking-[0.2em] text-[#7D5459] font-medium mb-0.5">
+              Nivel 0 · 2 Socias
+            </div>
+            <h2 class="text-[15.5px] font-semibold tracking-tight text-[#2E2926] group-hover:text-[#7D5459] transition-colors">
+              Gerencia General
+            </h2>
+            <p class="text-[10px] text-[#7D756D] mt-0.5">
+              ESTUDIO AFÍN SpA
+            </p>
+            ${execVis.relationTag ? `<div class="mt-1">${renderRelationBadge(execVis.relationTag)}</div>` : ''}
+          </div>
+
+          <!-- Conector punteado hacia Staff Asesor -->
+          <div class="flex lg:hidden flex-col items-center">
+            <div class="w-px h-3 border-l border-dashed border-[#B5A898]"></div>
+          </div>
+          <div class="hidden lg:flex items-center w-6 shrink-0">
+            <div class="w-full border-t border-dashed border-[#B5A898]"></div>
+          </div>
+
+          <!-- Nodo Lateral Staff -->
+          <div onclick="openRoleModal('staff-consultor')"
+               class="role-card ${staffVis.stateClass} group cursor-pointer w-full max-w-sm lg:w-[210px] bg-[#F5F0E8] rounded-xl border border-dashed border-[#C4B8A8] px-3 py-2 text-left relative shrink-0">
+            <div class="flex items-start justify-between gap-1">
+              <div class="text-[11.5px] font-medium text-[#2E2926] leading-snug group-hover:text-[#7D5459] transition-colors">
+                Consultor Estratégico & Control de Gestión
+              </div>
+              <button
+                type="button"
+                onclick="toggleNetworkFocus('staff-consultor', event)"
+                title="Iluminar red de colaboración"
+                class="network-trigger shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition-all ${staffActiveNet ? 'bg-[#7D5459] text-[#FFFFFF]' : 'text-[#9E948A] opacity-60 group-hover:opacity-100 hover:bg-[#E8DFD2] hover:text-[#7D5459]'}"
+              >⇄</button>
+            </div>
+            ${staffVis.relationTag ? `<div class="mt-1">${renderRelationBadge(staffVis.relationTag)}</div>` : ''}
+            <div class="flex items-center justify-between gap-2 mt-1 text-[9.5px] text-[#7D756D]">
+              <div class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full border border-[#8C7E6A]"></span>
+                <span>Staff · 1 esp.</span>
+              </div>
+              <span class="interactive-arrow text-[#A3998E] group-hover:text-[#7D5459] transition-colors">↗</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDeptPillarHeader(dept) {
+      const capacityLabel = getDeptCapacitySummary(dept.id);
+      return `
+        <div class="relative py-2 px-3 rounded-xl flex items-center justify-between gap-1.5 transition-all"
+             style="background-color:${dept.tintBg}; border-top: 2px solid ${dept.color}; border-bottom: 1px solid ${dept.tintBorder}; border-left: 1px solid ${dept.tintBorder}; border-right: 1px solid ${dept.tintBorder};">
+          <h3 class="text-[12px] font-semibold tracking-tight text-[#2E2926] leading-tight text-left">
+            ${dept.name}
+          </h3>
+          <span class="text-[9.5px] text-[#756D65] shrink-0">
+            ${capacityLabel}
+          </span>
+        </div>
+      `;
+    }
+
+    function renderRoleCard(role, dept) {
+      const isExternal = role.linkType === 'Externo';
+      const vis = getCardVisualState(role);
+      const isNetOrigin = state.networkFocusRoleId === role.id;
+
+      return `
+        <div onclick="openRoleModal('${role.id}')" 
+             class="role-card ${vis.stateClass} group cursor-pointer bg-[#FAF7F2] rounded-xl border border-[#DFD5C7] px-3 py-2.5 flex flex-col justify-between gap-1.5">
+          <div class="flex items-start justify-between gap-1">
+            <div class="text-[12px] font-medium text-[#2E2926] leading-snug group-hover:text-[#7D5459] transition-colors">
+              ${role.title}
+            </div>
+            <button
+              type="button"
+              onclick="toggleNetworkFocus('${role.id}', event)"
+              title="Iluminar conexiones de este rol"
+              class="network-trigger shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] transition-all ${isNetOrigin ? 'bg-[#7D5459] text-[#FFFFFF]' : 'text-[#9E948A] opacity-55 group-hover:opacity-100 hover:bg-[#EFE9E0] hover:text-[#7D5459]'}"
+            >⇄</button>
+          </div>
+
+          ${vis.relationTag ? renderRelationBadge(vis.relationTag) : ''}
+          
+          <div class="flex items-center justify-between gap-2 text-[9.5px] text-[#7D756D] pt-0.5">
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full ${isExternal ? 'border border-[#7D756D]' : ''}" style="${!isExternal ? `background:${dept.color}` : ''}"></span>
+              <span>${role.shortDotacion}</span>
+            </div>
+            <span class="interactive-arrow text-[#A3998E] group-hover:text-[#7D5459] group-hover:translate-x-0.5 transition-all">↗</span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCanvas() {
+      const canvas = document.getElementById('org-canvas');
+      if (!canvas) return;
+      const visibleDepts = state.activeDept === 'ALL'
+        ? DEPARTMENTS
+        : DEPARTMENTS.filter(d => d.id === state.activeDept);
+
+      const levelZeroBlock = renderLevelZeroHeader();
+
+      if (state.deviceMode === 'mobile') {
+        let html = `
+          <div class="max-w-md mx-auto">
+            ${levelZeroBlock}
+            <div class="flex justify-center">
+              <div class="w-px h-5 bg-[#C9BDAE]"></div>
+            </div>
+            <div class="space-y-5">
+        `;
+        visibleDepts.forEach(dept => {
+          const deptRoles = rolesData.filter(r => r.dept === dept.id);
+          html += `
+            <section class="pt-1 relative">
+              <div class="mb-3">
+                ${renderDeptPillarHeader(dept)}
+              </div>
+              <div class="relative pl-3.5 space-y-2.5">
+                <div class="absolute left-1.5 top-2 bottom-4 w-px bg-[#C9BDAE]"></div>
+                ${deptRoles.map(r => `
+                  <div class="relative">
+                    <div class="absolute -left-2 top-4 w-2 h-px bg-[#C9BDAE]"></div>
+                    <div class="text-[9.5px] uppercase tracking-widest text-[#7D756D] mb-1">N${r.level}</div>
+                    ${renderRoleCard(r, dept)}
+                  </div>
+                `).join('')}
+              </div>
+            </section>
+          `;
+        });
+        html += `</div></div>`;
+        canvas.innerHTML = html;
+        return;
+      }
+
+      const isSingle = visibleDepts.length === 1;
+      const gridCols = isSingle ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-5';
+
+      const topBranchHtml = isSingle
+        ? `<div class="flex justify-center"><div class="w-px h-5 bg-[#C9BDAE]"></div></div>`
+        : `
+          <div class="relative h-6">
+            <div class="absolute left-1/2 top-0 w-px h-3 -translate-x-1/2 bg-[#C9BDAE]"></div>
+            <div class="absolute top-3 left-[10%] right-[10%] h-px bg-[#C9BDAE]"></div>
+            <div class="grid grid-cols-5 gap-3.5 h-full">
+              ${visibleDepts.map(() => `
+                <div class="relative h-full">
+                  <div class="absolute left-1/2 top-3 bottom-0 w-px -translate-x-1/2 bg-[#C9BDAE]"></div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+
+      let html = `
+        ${levelZeroBlock}
+        <div class="org-scroll-container overflow-x-auto pb-2">
+          <div class="${isSingle ? 'max-w-md mx-auto' : 'org-min-grid min-w-[940px]'}">
+            
+            ${topBranchHtml}
+
+            <!-- Pilares Minimalistas de Departamento -->
+            <div class="grid ${gridCols} gap-3.5 relative z-10">
+              ${visibleDepts.map(dept => renderDeptPillarHeader(dept)).join('')}
+            </div>
+
+            <!-- Ejes verticales y Bandas Ultraligeras de Nivel -->
+            <div class="relative pt-2.5">
+              <div class="grid ${gridCols} gap-3.5 absolute inset-0 pointer-events-none z-0">
+                ${visibleDepts.map(dept => {
+                  const deptRoles = rolesData.filter(r => r.dept === dept.id);
+                  const maxLvl = deptRoles.length > 0 ? Math.max(...deptRoles.map(r => r.level)) : 1;
+                  const lineHeightClass = maxLvl === 4 ? 'bottom-7' : 'bottom-[24%]';
+                  return `
+                    <div class="relative h-full">
+                      <div class="absolute left-1/2 top-0 ${lineHeightClass} w-px -translate-x-1/2 bg-[#CEC3B4]"></div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+
+              <div class="space-y-2.5 relative z-10">
+                ${LEVELS.map(lvl => `
+                  <div class="level-band pt-2 pb-0.5 border-t border-[#D8CCB9]">
+                    <div class="flex items-center gap-2 mb-1.5 px-0.5">
+                      <span class="text-[9px] font-semibold text-[#7D5459]">${lvl.num}</span>
+                      <span class="text-[9px] uppercase tracking-[0.16em] text-[#7D756D]">${lvl.title}</span>
+                    </div>
+                    <div class="grid ${gridCols} gap-3.5">
+                      ${visibleDepts.map(dept => {
+                        const cellRoles = rolesData.filter(r => r.dept === dept.id && r.level === lvl.id);
+                        if (cellRoles.length === 0) {
+                          return `<div class="min-h-[54px]"></div>`;
+                        }
+                        return `
+                          <div class="space-y-1.5 relative">
+                            ${cellRoles.map(r => `
+                              <div class="relative">
+                                ${renderRoleCard(r, dept)}
+                              </div>
+                            `).join('')}
+                          </div>
+                        `;
+                      }).join('')}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      `;
+      canvas.innerHTML = html;
+    }
+
+    function renderAuditAccordion(auditText) {
+      const isOpen = state.modalAuditExpanded;
+      return `
+        <div class="rounded-xl border ${isOpen ? 'border-[#7D5459]/35 bg-[#EFE9E0]' : 'border-[#DDD2C2] bg-[#FFFFFF]'} overflow-hidden transition-all">
+          <button
+            type="button"
+            onclick="toggleModalAudit()"
+            class="w-full px-4 py-2.5 flex items-center justify-between gap-3 text-left hover:bg-[#F5EFE6] transition-colors"
+          >
+            <span class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7D5459]">
+              Criterio de Diseño Organizacional
+            </span>
+            <span class="text-[10.5px] font-medium text-[#7D5459] flex items-center gap-1 shrink-0">
+              <span>${isOpen ? 'Ocultar' : 'Ver fundamento'}</span>
+              <span class="transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}">▾</span>
+            </span>
+          </button>
+          ${isOpen ? `
+            <div class="px-4 pb-3 pt-1 border-t border-[#E2D8C9] text-[#453E39] leading-relaxed">
+              ${auditText}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function renderSopListInModal(sops) {
+      return sops.map(code => {
+        const sop = SOP_DETAILS[code];
+        if (!sop) return '';
+        return `
+          <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3">
+            <div class="flex items-center justify-between gap-2 mb-1">
+              <div class="font-medium text-[#7D5459]">
+                ${code} · ${sop.title}
+              </div>
+              <span class="text-[9.5px] px-1.5 py-0.5 rounded bg-[#EFE9E0] text-[#6E665F] shrink-0">
+                ${sop.version}
+              </span>
+            </div>
+            <div class="text-[#635C56] leading-relaxed">${sop.desc}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderModalTabsBar(role) {
+      const tabs = [
+        { id: 'rol', label: 'Rol & Dotación' },
+        { id: 'entregables', label: 'Entregables & Control' },
+        { id: 'red', label: 'Red & SOPs' }
+      ];
+      return `
+        <div class="mt-3.5 border-b border-[#E2D8C9] flex items-center gap-1">
+          ${tabs.map(t => {
+            const active = state.activeModalTab === t.id;
+            return `
+              <button
+                type="button"
+                onclick="setModalTab('${t.id}')"
+                class="px-3 py-2 text-[11px] font-medium border-b-2 transition-all ${
+                  active
+                    ? 'border-[#7D5459] text-[#7D5459]'
+                    : 'border-transparent text-[#756D65] hover:text-[#2E2926]'
+                }"
+              >
+                ${t.label}
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function renderNetworkTabContent(role) {
+      const upstream = role.upstream || [];
+      const downstream = role.downstream || [];
+
+      const renderConnectionCards = (items) => {
+        if (items.length === 0) {
+          return `<div class="text-[11px] text-[#8A8178] italic px-1">Sin dependencias directas en esta dirección.</div>`;
+        }
+        return `
+          <div class="space-y-1.5">
+            ${items.map(item => {
+              const targetRole = findRoleById(item.roleId);
+              if (!targetRole) return '';
+              const deptObj = DEPARTMENTS.find(d => d.id === targetRole.dept);
+              const areaLabel = deptObj ? deptObj.id : (targetRole.dept || 'DIR');
+              return `
+                <div
+                  onclick="openRoleModal('${targetRole.id}', 'rol')"
+                  class="cursor-pointer group bg-[#FFFFFF] border border-[#DDD2C2] hover:border-[#7D5459] rounded-xl p-2.5 flex items-center justify-between gap-3 transition-all"
+                >
+                  <div>
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-[9px] font-semibold uppercase tracking-wider px-1.5 py-0.2 rounded bg-[#EFE9E0] text-[#6E665F]">${areaLabel}</span>
+                      <span class="font-medium text-[#2E2926] group-hover:text-[#7D5459] transition-colors">${targetRole.title}</span>
+                    </div>
+                    <div class="text-[#635C56] text-[11px] mt-0.5 leading-snug">${item.note}</div>
+                  </div>
+                  <span class="text-[#A3998E] group-hover:text-[#7D5459] text-xs shrink-0">↗</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      };
+
+      return `
+        <div class="space-y-4">
+          <div class="bg-[#EFE9E0]/80 border border-[#D8CCB9] rounded-xl p-3 flex flex-wrap items-center justify-between gap-2">
+            <span class="text-[11px] text-[#4F4842]">
+              Visualiza estas conexiones directamente sobre el organigrama.
+            </span>
+            <button
+              type="button"
+              onclick="focusNetworkFromModal('${role.id}')"
+              class="px-3 py-1 rounded-full bg-[#7D5459] hover:bg-[#8E6268] text-[#FFFFFF] text-[10.5px] font-medium transition-colors shrink-0"
+            >
+              ⇄ Iluminar en el mapa
+            </button>
+          </div>
+
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">
+              ← Recibe insumos de (${upstream.length})
+            </div>
+            ${renderConnectionCards(upstream)}
+          </div>
+
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">
+              → Entrega resultados a (${downstream.length})
+            </div>
+            ${renderConnectionCards(downstream)}
+          </div>
+
+          <div class="pt-1 border-t border-[#E2D8C9]">
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">
+              SOPs Referenciados (${(role.sops || []).length})
+            </div>
+            <div class="space-y-2">${renderSopListInModal(role.sops || [])}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDeliverablesTabContent(role) {
+      const deliverables = role.deliverables || [];
+      const risks = role.risksMitigated || [];
+      const kpis = role.kpis || [];
+
+      return `
+        <div class="space-y-4">
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">Entregables y Control</div>
+            <ul class="space-y-1.5 bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3.5 text-[#3A3430]">
+              ${deliverables.map(item => `
+                <li class="flex items-start gap-2 leading-relaxed">
+                  <span class="text-[#7D5459] mt-0.5">•</span>
+                  <span>${item}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+
+          ${risks.length > 0 ? `
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">Riesgos Mitigados</div>
+              <div class="space-y-1.5">
+                ${risks.map(risk => `
+                  <div class="bg-[#F2ECE2] border border-[#DFD4C4] rounded-lg px-3 py-2 text-[#4F4842] flex items-start gap-2 leading-relaxed">
+                    <span class="text-[#7D5459] shrink-0">▪</span>
+                    <span>${risk}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+
+          ${kpis.length > 0 ? `
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1.5">Indicadores Clave (KPIs)</div>
+              <div class="flex flex-wrap gap-1.5">
+                ${kpis.map(k => `
+                  <span class="px-2.5 py-1 rounded-full bg-[#FFFFFF] border border-[#D4C7B5] text-[#3A3430] text-[11px] font-medium">${k}</span>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function renderSpecialModals() {
+      const modal = document.getElementById('floating-modal');
+      const content = document.getElementById('modal-content');
+      if (!modal || !content) return;
+      modal.classList.remove('hidden');
+
+      if (state.specialModal === 'kpis') {
+        content.innerHTML = `
+          <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E2D8C9]">
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7D5459] mb-0.5">
+                Documento Maestro V. 2.6
+              </div>
+              <h3 class="text-base font-semibold text-[#2E2926]">KPIs Estratégicos y Operativos</h3>
+            </div>
+            <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
+              ✕
+            </button>
+          </div>
+
+          <div class="mt-4 space-y-4 text-xs">
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#7D5459] mb-2">
+                1. KPIs Externos (Experiencia del Propietario)
+              </div>
+              <div class="space-y-2">
+                ${MASTER_KPIS.external.map(k => `
+                  <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3 flex items-start justify-between gap-3">
+                    <div>
+                      <div class="font-medium text-[#2E2926]">${k.name}</div>
+                      <div class="text-[#635C56] mt-0.5 leading-relaxed">${k.desc}</div>
+                    </div>
+                    <span class="px-2 py-0.5 rounded-full bg-[#F3ECEA] text-[#7D5459] font-medium text-[10px] shrink-0">
+                      ${k.target}
+                    </span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#6E665F] mb-2">
+                2. KPIs Internos (Eficiencia Operativa)
+              </div>
+              <div class="space-y-2">
+                ${MASTER_KPIS.internal.map(k => `
+                  <div class="bg-[#EFE9E0] border border-[#D8CCB9] rounded-xl p-3 flex items-start justify-between gap-3">
+                    <div>
+                      <div class="font-medium text-[#2E2926]">${k.name}</div>
+                      <div class="text-[#635C56] mt-0.5 leading-relaxed">${k.desc}</div>
+                    </div>
+                    <span class="px-2 py-0.5 rounded-full bg-[#FFFFFF] border border-[#D4C7B5] text-[#453E39] font-medium text-[10px] shrink-0">
+                      ${k.target}
+                    </span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (state.specialModal === 'versions') {
+        content.innerHTML = `
+          <div class="flex items-start justify-between gap-4 pb-3.5 border-b border-[#E2D8C9]">
+            <div>
+              <div class="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#7D5459] mb-0.5">
+                Versionado Semántico (X.Y)
+              </div>
+              <h3 class="text-base font-semibold text-[#2E2926]">Control de Versiones · ORG-EA V. 3.2</h3>
+            </div>
+            <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
+              ✕
+            </button>
+          </div>
+
+          <div class="mt-4 space-y-3.5 text-xs">
+            <p class="text-[#635C56] leading-relaxed">
+              Sincronizado con <strong class="text-[#2E2926]">DOC-MAESTRO V. 2.6</strong> de ESTUDIO AFÍN SpA.
+            </p>
+            <div class="border border-[#DDD2C2] rounded-xl overflow-hidden bg-[#FFFFFF]">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-[#EAE2D6] text-[10px] uppercase tracking-wider text-[#635C56] border-b border-[#DDD2C2]">
+                    <th class="py-2 px-3 font-semibold">Versión</th>
+                    <th class="py-2 px-3 font-semibold">Fecha</th>
+                    <th class="py-2 px-3 font-semibold">Cambio</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-[#ECE4D8]">
+                  ${VERSION_HISTORY.map(v => `
+                    <tr class="${v.ver === '3.2' ? 'bg-[#F8F3F1]' : ''}">
+                      <td class="py-2 px-3 font-medium text-[#7D5459] whitespace-nowrap">V. ${v.ver}</td>
+                      <td class="py-2 px-3 text-[#756D65] whitespace-nowrap">${v.date}</td>
+                      <td class="py-2 px-3 text-[#3A3430] leading-relaxed">${v.desc}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function renderModal() {
+      const modal = document.getElementById('floating-modal');
+      const content = document.getElementById('modal-content');
+      if (!modal || !content) return;
+
+      if (state.specialModal) {
+        renderSpecialModals();
+        return;
+      }
+
+      if (!state.selectedRoleId) {
+        modal.classList.add('hidden');
+        return;
+      }
+
+      const role = findRoleById(state.selectedRoleId);
+      if (!role) return;
+
+      modal.classList.remove('hidden');
+
+      let headerSub = '';
+      let badgeHtml = '';
+
+      if (role.id === 'gerencia-general') {
+        headerSub = `Nivel 0 · ${role.headcountBadge}`;
+      } else if (role.id === 'staff-consultor') {
+        headerSub = `Staff Nivel 0 · Asesoría Externa`;
+        badgeHtml = `
+          <div class="mt-1.5">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[#F1ECE1] text-[#6E6352] border border-[#E1D9C9]">
+              ${role.headcountBadge}
+            </span>
+          </div>
+        `;
+      } else {
+        const dept = DEPARTMENTS.find(d => d.id === role.dept);
+        headerSub = `${dept.id} · ${dept.name} · Nivel ${role.level}`;
+        badgeHtml = `
+          <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-medium border text-[#4A433E]"
+                  style="background-color:${dept.tintBg}; border-color:${dept.tintBorder};">
+              ${role.headcountBadge}
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full bg-[#FFFFFF] border border-[#DDD2C2] text-[10px] text-[#635C56]">
+              ${role.linkType}
+            </span>
+          </div>
+        `;
+      }
+
+      let tabBodyHtml = '';
+      if (state.activeModalTab === 'rol') {
+        tabBodyHtml = `
+          <div class="space-y-4">
+            ${role.legalEntity ? `
+              <div class="bg-[#FFFFFF] border border-[#D4C7B5] rounded-xl p-3">
+                <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#7D5459] mb-0.5">Identidad Jurídica</div>
+                <div class="font-medium text-[#2E2926]">${role.legalEntity}</div>
+              </div>
+            ` : ''}
+
+            <div>
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#8A8178] mb-1">Responsabilidad Principal</div>
+              <p class="text-[#2E2926] leading-relaxed">${role.mission}</p>
+            </div>
+
+            <div class="bg-[#FFFFFF] border border-[#DDD2C2] rounded-xl p-3">
+              <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#7D5459] mb-0.5">
+                Dotación y Escalabilidad
+              </div>
+              <p class="text-[#3A3430] leading-relaxed">${role.teamStructure}</p>
+            </div>
+
+            ${role.fireLine ? `
+              <div class="bg-[#EFE9E0] border border-[#D8CCB9] rounded-xl p-3.5">
+                <div class="text-[9.5px] font-semibold uppercase tracking-[0.14em] text-[#7D5459] mb-0.5">Línea de Fuego Corporativa</div>
+                <p class="text-[#453E39] leading-relaxed">${role.fireLine}</p>
+              </div>
+            ` : ''}
+
+            ${renderAuditAccordion(role.audit)}
+          </div>
+        `;
+      } else if (state.activeModalTab === 'entregables') {
+        tabBodyHtml = renderDeliverablesTabContent(role);
+      } else if (state.activeModalTab === 'red') {
+        tabBodyHtml = renderNetworkTabContent(role);
+      }
+
+      content.innerHTML = `
+        <div class="flex items-start justify-between gap-4 pb-3 border-b border-[#E2D8C9]">
+          <div>
+            <div class="text-[10px] font-semibold uppercase tracking-[0.15em] mb-0.5 text-[#756D65]">
+              ${headerSub}
+            </div>
+            <h3 class="text-base font-semibold text-[#2E2926]">${role.title}</h3>
+            ${badgeHtml}
+          </div>
+          <button onclick="closeModal()" class="w-7 h-7 rounded-full border border-[#D4C7B5] bg-[#FFFFFF] hover:bg-[#EFE9E0] text-[#635C56] flex items-center justify-center text-xs shrink-0">
+            ✕
+          </button>
+        </div>
+
+        ${renderModalTabsBar(role)}
+
+        <div class="mt-4 text-xs">
+          ${tabBodyHtml}
+        </div>
+      `;
+    }
+
+    function renderAll() {
+      try {
+        renderFiltersAndSummary();
+        renderCanvas();
+        renderModal();
+        updatePresentationMeta();
+      } catch (err) {
+        console.error('Error al renderizar organigrama:', err);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderAll);
+    } else {
+      renderAll();
+    }
+  </script>
+</body>
+</html>
